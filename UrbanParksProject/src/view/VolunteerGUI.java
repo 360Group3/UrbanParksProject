@@ -69,6 +69,7 @@ public class VolunteerGUI extends JFrame{
 	 */
 	private void startUp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 865, 475);
 		setResizable(false);
 		setLayout(new BorderLayout());
 

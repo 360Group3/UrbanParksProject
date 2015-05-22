@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import view.AdministratorGUI;
 import view.ParkManagerGUI;
+import view.VolunteerGUI;
 
 public class Main {
 	
@@ -152,6 +153,11 @@ public class Main {
 		// These need to be changed with GUI object instantiations - need to call diff constructors!
 		
 		if(userType.equals("Volunteer")) {
+			Volunteer vol = pollster.getVolunteer(email);
+			VolunteerGUI vGUI = new VolunteerGUI(vol, mySchedule);
+			vGUI.setVisible(true);
+			
+			stallMainLoop(vGUI);
 //			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
 //			volunteer.initialize();
 		}
