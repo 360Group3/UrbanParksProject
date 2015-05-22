@@ -127,165 +127,8 @@ public class Schedule {
 		return okToAdd;
 	}
 
-	/**
-	 * This method is made for business rule 2.
-	 * It checks either side of the jobs date and returns false if there are already
-	 * 5 jobs set up for that 7 day period.
-	 * @return true if this job is in the clear (there are less than 5 jobs in a 7 day period), false otherwise
-	 */
-	private boolean checkThisWeek(Job theJob) {
-		//count increases for every other job that is within 3 days before start and 3 days after end.
-		int count = 0;
-		
-		//3 days before start and 3 days after end
-		Calendar aStart = (Calendar) theJob.getStartDate().clone();
-		
-		aStart.add(Calendar.DAY_OF_MONTH, -3);
+	
 
-		Calendar aEnd = (Calendar) theJob.getEndDate().clone();
-		aEnd.add(Calendar.DAY_OF_MONTH, 3);
-		
-		List<Job> aList = myJobList.getCopyList();
-		for (Job j: aList) {
-			
-			long difference =  j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
-			difference /= (3600*24*1000); //change value to days instead of milliseconds
-			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
-			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
-			
-			//if ending date of j is within 3 days before theJob, increment count
-			//if starting date of j is within 3 days after theJob, increment count
-			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
-				count++;
-			}
-			//System.out.println("Count is " + count);
-			if (count >= 5) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Adds a Volunteer to an existing Job if the given data is valid.
-	 * 
-	 * For User Story #3. Called by Volunteer.signup()
-	 * 
-	 * @param theVolunteer the Volunteer to add to a particular job.
-	 * @param theJobID the ID number for the Job to which the Volunteer will be added.
-	 * @param theWorkGrade the work grade selected by the Volunteer for a particular Job. //TODO change this javadoc!
-	 * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
-	 * @return true if the Volunteer was added to the Job and false otherwise.
-	 * @throws Exception 
-	 */
-	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
-		boolean okToAdd = true;
-		
-		//Schedule will check to make sure the Job ID is valid
-		if (theJobID < 0 || theJobID > MAX_TOTAL_NUM_JOBS) {
-			okToAdd = false;
-			
-			throw new IllegalArgumentException("This job ID does not exist");
-																	//NOTE: this exception is thrown if the user enters
-																	//an invalid ID. It will be caught in a try-catch block.
-		}
-		
-		Job addJob = null;
-		
-		//Find the job that we are adding to.
-		for(Job job : myJobList.getCopyList()) {
-			if(job.getJobID() == theJobID) {
-				addJob = job;
-			}
-		}
-		
-		GregorianCalendar startDate = addJob.getStartDate();
-		GregorianCalendar endDate = addJob.getEndDate();
-		
-		boolean sameDate = false;
-		
-		for(Job job : myJobList.getCopyList()) {
-			for(ArrayList<String> volunteer : job.getVolunteerList()) {
-				if(volunteer.get(0).equals(theVolunteer.get(0))) {
-					//Found a job with the volunteer in it!
-					if(startDate.equals(job.getStartDate())) sameDate = true;
-					if(startDate.equals(job.getEndDate())) sameDate = true;
-					if(endDate.equals(job.getStartDate())) sameDate = true;
-					if(endDate.equals(job.getEndDate())) sameDate = true;
-				}
-			}
-		}
-		
-		if(sameDate) {
-			System.out.println("\nSorry, but you are already signed up for a job that occurs the same date!");
-			return false;
-		}
-		
-		//Calls JobList.getJobList() to get the master job list which is editable
-		List<Job> editableJobList = myJobList.getJobList();
-		
-		final GregorianCalendar now = new GregorianCalendar();
-		final List<Job> validJobList = new ArrayList<>(myJobList.getJobList().size());
-		for (int i = 0; i < editableJobList.size(); i++) {
-			final Job j = editableJobList.get(i);
-			if (j.getStartDate().after(now)) { // BIZ RULE #6 - doesn't work!
-				validJobList.add(j);
-			}
-		}
-		
-		boolean jobExists = false;
-		Job j = null;
-		for (int i = 0; i < validJobList.size(); i++) {
-			// If invalid, return else get Job object with that Job ID
-			j = validJobList.get(i);
-			
-			if (j.getJobID() == theJobID) {
-				jobExists = true;
-				break;
-			}
-		}
-		
-		// If the job doesn't exist, return false.
-		if (j == null)
-			return false;
-		
-		// Schedule will check to make sure there is a slot open in the grade using 
-		// the Job object from before
-		boolean openGrade = false;
-		switch (theVolunteer.get(1)) {
-			case "Light":
-				if (j.hasLightRoom()) {
-					openGrade = true;
-				}
-				break;
-			case "Medium":
-				if (j.hasMediumRoom()) {
-					openGrade = true;
-				}
-				break;
-			case "Heavy":
-				if (j.hasHeavyRoom()) {
-					openGrade = true;
-				}
-				break;
-			default:
-					throw new IllegalStateException(theVolunteer.get(1) + " for job " + theJobID + " is full");	
-												//This will be caught in a try-catch block when the volunteer attempts
-												//to join a job grade that is not available.
-		}
-		
-		if (okToAdd && jobExists && openGrade) {
-			// If everything is okay, we add the Volunteer to the Job�s Volunteer List,
-			// increment the grade slot, and return.
-
-			j.getVolunteerList().add(theVolunteer);
-		} else {
-			// If either of these are false, we print to the console and return
-			System.out.println("Sorry, but the grade of work for this job is already full!");
-		}
-
-		return okToAdd && jobExists && openGrade;
-	}
 
 	public JobList getJobList() {
 		return myJobList;
@@ -336,5 +179,218 @@ public class Schedule {
 		this.myUserList = theUserList;
 	}
 
+	
+	
+	/**
+	 * Adds a Volunteer to an existing Job if the given data is valid.
+	 * 
+	 * For User Story #3. Called by Volunteer.signup()
+	 * 
+	 * @param theVolunteer the Volunteer to add to a particular job as well as the workgrade.
+	 * @param theJobID the ID number for the Job to which the Volunteer will be added.
+	 * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
+	 * @return true if the Volunteer was added to the Job and false otherwise.
+	 * @throws Exception 
+	 */
+	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
+		
+		//CHECK 1
+		boolean validID = checkJobValidity(theJobID); //Schedule will check to make sure the Job ID is valid
+		if (!validID){
+			throw new IllegalArgumentException("This job ID does not exist"); 
+		}
+
+		//CHECK 2
+		Job thisJob = findJob(theJobID);
+		if (thisJob == null) {
+			throw new Exception("Job does not exist");
+		}
+
+		//CHECK 3
+		boolean sameDate = checkDifDay(theVolunteer, thisJob);
+		if(sameDate) {
+			throw new IllegalArgumentException("Sorry, but you are already signed up "
+					+ "for a job that occurs the same date!");
+		}
+		
+		//CHECK 4
+		boolean inFuture = checkFutureValid(thisJob);
+		if (!inFuture) {
+			throw new IllegalArgumentException("Sorry, but this job has already completed.");
+		}
+	
+
+		//CHECK 5
+		boolean openGrade = checkGradeOpen(thisJob, theVolunteer.get(1));
+		if (!openGrade) {
+			throw new IllegalArgumentException("Sorry, but that grade in this job "
+					+ "is already full.");
+		}
+		
+
+		// If all the checks pass, we add the Volunteer to the Job's Volunteer List,
+		// Increment the grade slot, and return.
+		thisJob.getVolunteerList().add(theVolunteer);
+		return true;
+	}
+
+	/**
+	 * This method is made for business rule 2.
+	 * It checks either side of the jobs date and returns false if there are already
+	 * 5 jobs set up for that 7 day period.
+	 * @return true if this job is in the clear (there are less than 5 jobs in a 7 day period), false otherwise
+	 */
+	private boolean checkThisWeek(Job theJob) {
+		//count increases for every other job that is within 3 days before start and 3 days after end.
+		int count = 0;
+		
+		//3 days before start and 3 days after end
+		Calendar aStart = (Calendar) theJob.getStartDate().clone();
+		
+		aStart.add(Calendar.DAY_OF_MONTH, -3);
+
+		Calendar aEnd = (Calendar) theJob.getEndDate().clone();
+		aEnd.add(Calendar.DAY_OF_MONTH, 3);
+		
+		List<Job> aList = myJobList.getCopyList();
+		for (Job j: aList) {
+			
+			long difference =  j.getEndDate().getTimeInMillis() - aStart.getTimeInMillis();
+			difference /= (3600*24*1000); //change value to days instead of milliseconds
+			long difference2 =  aEnd.getTimeInMillis() - j.getStartDate().getTimeInMillis();
+			difference2 /= (3600*24*1000); //change value to days instead of milliseconds
+			
+			//if ending date of j is within 3 days before theJob, increment count
+			//if starting date of j is within 3 days after theJob, increment count
+			if ((difference <= 3 && difference >= 0)|| (difference2 <= 3 && difference2 >= 0)) {
+				count++;
+			}
+			//System.out.println("Count is " + count);
+			if (count >= 5) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	/**
+	 * Schedule will check to make sure the Job ID is valid
+	 * @param theJobID is the id number of the job.
+	 * @return false if invalid
+	 */
+	private boolean checkJobValidity(int theJobID) {
+		if (theJobID < 0 || theJobID > MAX_TOTAL_NUM_JOBS) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**Business rule #7
+	 * 
+	 * 
+	 * This method checks to make sure that the volunteer has not signed up for a job
+	 * on that same day.
+	 * 
+	 * @param theVolunteer is the volunteer with their work grade
+	 * @param theJobID is the jobs ID number
+	 * @return false if the user already has another job on that day.
+	 */
+	private boolean checkDifDay(ArrayList<String> theVolunteer, Job theJob) {		
+		
+		GregorianCalendar startDate = theJob.getStartDate();
+		GregorianCalendar endDate = theJob.getEndDate();
+
+		
+		for(Job job : myJobList.getCopyList()) {
+			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+				if(volunteer.get(0).equals(theVolunteer.get(0))) {
+					//Found a job with the volunteer in it!
+					if(startDate.equals(job.getStartDate())) return true;
+					if(startDate.equals(job.getEndDate())) return true;
+					if(endDate.equals(job.getStartDate())) return true;
+					if(endDate.equals(job.getEndDate())) return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	/**Business rule #6.
+	 * 
+	 * This method is called to check whether or not the job with the 
+	 * passed in jobID is in the future or not.
+	 * 
+	 * 
+	 * @param theID is the ID of the job.
+	 * @return false if job is not in future, true otherwise.
+	 */
+	private boolean checkFutureValid(Job theJob) {
+	
+		Calendar currentDate = new GregorianCalendar();
+
+		if(currentDate.getTimeInMillis() + 2670040009l > theJob.getStartDate().getTimeInMillis()) {
+			return false;
+		}
+		
+		return true;
+	}
+
+
+	/**
+	 * Finds the job associated with this jobID.
+	 * @param theJobID is the jobs ID
+	 * @return the Job that has this Job ID, null otherwise.
+	 */
+	private Job findJob(int theJobID) {
+		//Calls JobList.getJobList() to get the master job list which is editable
+		List<Job> editableJobList = myJobList.getJobList();
+
+
+		for (int i = 0; i < editableJobList.size(); i++) {
+			if (editableJobList.get(i).getJobID() == theJobID) {
+				return editableJobList.get(i);
+			}
+		}
+		return null;
+	}
+
+	
+	/**Business rule #3
+	 * 
+	 * Checks to make sure that the job grade chosen has an available slot.
+	 * 
+	 * @param j is the job
+	 * @param theGrade is the grade in that job
+	 * @return true if open slot, false otherwise.
+	 */
+	private boolean checkGradeOpen(Job j, String theGrade) {
+		switch (theGrade) {
+		case "Light":
+			if (j.hasLightRoom()) {
+				return true;
+			}
+			break;
+		case "Medium":
+			if (j.hasMediumRoom()) {
+				return true;
+			}
+			break;
+		case "Heavy":
+			if (j.hasHeavyRoom()) {
+				return true;
+			}
+			break;
+		default:
+			throw new IllegalStateException(theGrade
+					+ " for job " + j.getJobID() + " is full");	
+		}
+		return false;
+	}
+	
+	
+	
+	
 }
 

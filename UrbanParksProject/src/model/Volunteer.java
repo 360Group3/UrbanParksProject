@@ -204,23 +204,12 @@ public class Volunteer extends User {
 	private void signUp() {
 		int jobID = myUI.getJobID();
 
-		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
-			myUI.showJobIDError();
-			return;
-		}
+//		if(!checkPark(jobID)) { //enter this if park ID is NOT valid.
+//			myUI.showJobIDError();
+//			return;
+//		}
 		
-		Job addJob = null;
 		
-		for(Job job : myPollster.getJobListCopy()) {
-			if(job.getJobID() == jobID) addJob = job;
-		}
-		
-		Calendar currentDate = new GregorianCalendar();
-			
-			if(currentDate.getTimeInMillis() + 2670040009l > addJob.getStartDate().getTimeInMillis()) {
-				System.out.println("Sorry, but this job has already been completed.");
-				return;
-			}
 
 		String level = myUI.getDifficultyLevel();
 
@@ -291,22 +280,22 @@ public class Volunteer extends User {
 		return returnString;
 	}
 
-
-	//TODO: Should be a Schedule method
-	/**
-	 * Check to make sure that the Job ID is valid.
-	 * @return True if valid, false if not.
-	 */
-	private boolean checkPark(int theJobID) {
-		boolean status = false;
-		List<Job> aList = mySchedule.getJobList().getCopyList();
-		for (Job j: aList) {
-			if (j.getJobID() == theJobID) {
-				status = true;
-			}
-		}
-
-		return status; //if true was never return within the for-each loop then return false
-	}
+//
+//	//TODO: Should be a Schedule method
+//	/**
+//	 * Check to make sure that the Job ID is valid.
+//	 * @return True if valid, false if not.
+//	 */
+//	private boolean checkPark(int theJobID) {
+//		boolean status = false;
+//		List<Job> aList = mySchedule.getJobList().getCopyList();
+//		for (Job j: aList) {
+//			if (j.getJobID() == theJobID) {
+//				status = true;
+//			}
+//		}
+//
+//		return status; //if true was never return within the for-each loop then return false
+//	}
 
 }
