@@ -191,7 +191,7 @@ public class Schedule {
 	 * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
 	 * @return true if the Volunteer was added to the Job and false otherwise.
 	 * @throws Exception 
-	 */
+	 */ 
 	public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
 		
 		//CHECK 1
