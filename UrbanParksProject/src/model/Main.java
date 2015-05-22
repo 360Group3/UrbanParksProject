@@ -154,12 +154,9 @@ public class Main {
 		
 		if(userType.equals("Volunteer")) {
 			Volunteer vol = pollster.getVolunteer(email);
-			VolunteerGUI vGUI = new VolunteerGUI(vol, mySchedule);
-			vGUI.setVisible(true);
-			
-			stallMainLoop(vGUI);
-//			Volunteer volunteer = new Volunteer(theSchedule, thePollster, email);
-//			volunteer.initialize();
+
+			VolunteerUI vUI = new VolunteerUI(vol);
+			vUI.initialize();
 		}
 		
 		if(userType.equals("Administrator")) {
