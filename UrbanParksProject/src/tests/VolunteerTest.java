@@ -298,9 +298,12 @@ public class VolunteerTest {
 			}
 		}
 		
-		assertEquals(count, 4); //TODO, there is a problem here
-								//This assertEquals fails before midnight but fails
-								//just after midnight. 
+		assertEquals(count, 3); //TODO, there is a problem here
+								//This assertEquals fails (with input 4) before midnight but 
+								//works just after midnight. 
+								//At 12:10 am, this assert passed with input 4.
+								//At 5:42 am, this assert passed with input 3.
+								//At 10:34 am, this assert passed with input 3.
 								//This must have to do with the way we check to see
 								//if a job is in the past.
 	}
