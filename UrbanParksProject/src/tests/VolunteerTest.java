@@ -215,28 +215,34 @@ public class VolunteerTest {
 	}
 	
 	
-	
+
 	/**
-	 * Adding volunteer to a job in the past (actually, it is a job from today).
-	 * 
-	 * Note: the ParkManager can create a job for the current day BUT the volunteer 
-	 * can not sign up for a job that takes place on the current day - this means that
-	 * if the volunteer tries to sign up for a job that takes place today, he will be 
-	 * denied. Therefore, assert false.
-	 * 
-	 * TODO Note, this prints out what I want it to print out just before midnight
-	 * but it prints out something else after midnight. The problem must be the way
-	 * we compare dates. Note though that this test will still pass in either case.
-	 * 
+	 * Adding volunteer to a job in the past
 	 */
 	@Test
 	public void signUpTEST7() {
-		ArrayList<String> theVol3 = new ArrayList<String>();
-		theVol3.add("Goku@yahoo.com");
-		theVol3.add("Light");
+		JobList testJobList = new JobList();
+
+		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+
+		List<Job> myList = new ArrayList<Job>();
+		myList.add(job1);
+
+		testJobList.setJobList(myList);
+		Schedule.getInstance().setJobList(testJobList);
+		DataPollster.getInstance().setJobList(testJobList) ;
+		//System.out.println(Schedule.getInstance().getJobList().getNumberOfJobs());
 		
-		assertEquals(Goku.signUp(theVol3, 2), false);
+		
+		ArrayList<String> theVol5 = new ArrayList<String>();
+		theVol5.add("Arsh@yahoo.com");
+		theVol5.add("Heavy");
+		assertEquals(Arsh.signUp(theVol5, 5), false);
+		
 	}
+	
+	
+	
 	
 	
 	/**
@@ -292,12 +298,18 @@ public class VolunteerTest {
 			}
 		}
 		
-		assertEquals(count, 3); //TODO, there is a problem here
-								//This assertEquals passes before midnight but fails
+		assertEquals(count, 4); //TODO, there is a problem here
+								//This assertEquals fails before midnight but fails
 								//just after midnight. 
 								//This must have to do with the way we check to see
 								//if a job is in the past.
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
