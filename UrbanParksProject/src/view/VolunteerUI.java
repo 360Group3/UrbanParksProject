@@ -6,9 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
-import model.DataPollster;
 import model.Job;
-import model.Schedule;
 import model.Volunteer;
 
 
@@ -78,7 +76,7 @@ public class VolunteerUI implements UI {
 		case "view":	
 		case "v":
 		case "1":
-			displayJobs(getTheJobs());
+			displayJobs(myVol.getTheJobs());
 			break;
 
 		case "sign up":
@@ -143,23 +141,14 @@ public class VolunteerUI implements UI {
 	 * The volunteer can view the jobs that he/she has signed up for.
 	 */
 	private void viewMyJobs() {
-		List<Job> jobList = myVol.getJobs(); //get the list of jobs so we can traverse it.
-		boolean jobFound = false;
-
-		//go through each job in the list and see if the volunteer has signed up for that job.
-		for(Job job : jobList) {
-			ArrayList<ArrayList<String>> volunteerList = job.getVolunteerList();
+		List<Job> jobList = myVol.getMyJobs(); //get the list of jobs so we can traverse it.
+		if (jobList.size() > 0) {
 			
-			
-			for(ArrayList<String> volunteer : volunteerList) {
-				if(volunteer.get(0).equals(myVol.getEmail())) {
-					printJobInfo(job);
-					jobFound = true;
-				}
+			for(Job job : jobList) {
+				printJobInfo(job);
 			}
-		}
-		
-		if(!jobFound) {
+			
+		} else {
 			System.out.println("\nYou are not signed up for any upcoming jobs.");
 		}
 	}
@@ -187,29 +176,6 @@ public class VolunteerUI implements UI {
 		System.out.println(jobString);
 	}
 
-	
-	
-	
-	/**
-	 * This method gets the list of jobs from DataPollster and sends it on to
-	 * wherever its needed.
-	 * It also sets each jobs 'myPast' field which indicates whether or not 
-	 * the job is in the past.
-	 */
-	private List<Job> getTheJobs() {
-		List<Job> daJobs = myVol.getJobs();
-		Calendar currentDate = new GregorianCalendar();
-		
-		for (Job j: daJobs) { //go through each job and find out what job is in the past.
-								//then change that job's JobID to -1 so that it can be
-								//checked for and ignored when displaying the jobs.
-			if(currentDate.getTimeInMillis() + 2670040009l > j.getStartDate().getTimeInMillis()) {
-				j.setIfPast(true);
-			}
-		}
-
-		return daJobs;
-	}
 	
 
 	/**

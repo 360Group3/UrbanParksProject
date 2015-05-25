@@ -156,7 +156,7 @@ public class Schedule implements Serializable {
 		//CHECK 1
 		boolean validID = checkJobValidity(theJobID); //Schedule will check to make sure the Job ID is valid
 		if (!validID){
-			throw new IllegalArgumentException("This job ID does not exist"); 
+			throw new IllegalArgumentException("This job ID cannot exist"); 
 		}
 
 		//CHECK 2
@@ -164,18 +164,17 @@ public class Schedule implements Serializable {
 		if (thisJob == null) {
 			throw new Exception("Job does not exist");
 		}
-		
-		//CHECK 3
-		if (new BusinessRule7().test(theVolunteer.get(0), thisJob, myJobList)) { 
-			throw new IllegalArgumentException("Sorry, but you are already signed up "
-					+ "for a job that occurs the same date!");
-		}
 
-		//CHECK 4
+		//CHECK 3
 		if (!(new BusinessRule6().test(thisJob))) {
 			throw new IllegalArgumentException("Sorry, but this job has already completed.");
 		}
 
+		//CHECK 4
+		if (new BusinessRule7().test(theVolunteer.get(0), thisJob, myJobList)) { 
+			throw new IllegalArgumentException("Sorry, but you are already signed up "
+					+ "for a job that occurs the same date!");
+		}
 
 		//CHECK 5
 		if (!(new BusinessRule3().test(thisJob,theVolunteer.get(1)))) {
