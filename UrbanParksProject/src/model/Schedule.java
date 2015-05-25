@@ -8,7 +8,10 @@ import java.util.List;
 
 import model.businessRules.BusinessRule1;
 import model.businessRules.BusinessRule2;
+import model.businessRules.BusinessRule3;
 import model.businessRules.BusinessRule4;
+import model.businessRules.BusinessRule6;
+import model.businessRules.BusinessRule7;
 
 /**
  * Defines the Schedule object for an application.
@@ -161,24 +164,26 @@ public class Schedule implements Serializable {
 		if (thisJob == null) {
 			throw new Exception("Job does not exist");
 		}
+		
 		//CHECK 3
-		boolean sameDate = checkDifDay(theVolunteer, thisJob);
-		if(sameDate) {
+		if (new BusinessRule7().test(theVolunteer.get(0), thisJob, myJobList)) { 
 			throw new IllegalArgumentException("Sorry, but you are already signed up "
 					+ "for a job that occurs the same date!");
 		}
+
 		//CHECK 4
-		boolean inFuture = checkFutureValid(thisJob);
-		if (!inFuture) {
+		if (!(new BusinessRule6().test(thisJob))) {
 			throw new IllegalArgumentException("Sorry, but this job has already completed.");
 		}
 
+
 		//CHECK 5
-		boolean openGrade = checkGradeOpen(thisJob, theVolunteer.get(1));
-		if (!openGrade) {
+		if (!(new BusinessRule3().test(thisJob,theVolunteer.get(1)))) {
 			throw new IllegalArgumentException("Sorry, but that grade in this job "
 					+ "is already full.");
 		}
+		
+		
 
 		// If all the checks pass, we add the Volunteer to the Job's Volunteer List,
 		// Increment the grade slot, and return.
@@ -201,57 +206,6 @@ public class Schedule implements Serializable {
 		return true;
 	}
 	
-	/**Business rule #7
-	 * 
-	 * 
-	 * This method checks to make sure that the volunteer has not signed up for a job
-	 * on that same day.
-	 * 
-	 * @param theVolunteer is the volunteer with their work grade
-	 * @param theJobID is the jobs ID number
-	 * @return false if the user already has another job on that day.
-	 */
-	private boolean checkDifDay(ArrayList<String> theVolunteer, Job theJob) {		
-		
-		GregorianCalendar startDate = theJob.getStartDate();
-		GregorianCalendar endDate = theJob.getEndDate();
-
-		
-		for(Job job : myJobList.getCopyList()) {
-			for(ArrayList<String> volunteer : job.getVolunteerList()) {
-				if(volunteer.get(0).equals(theVolunteer.get(0))) {
-					//Found a job with the volunteer in it!
-					if(startDate.equals(job.getStartDate())) return true;
-					if(startDate.equals(job.getEndDate())) return true;
-					if(endDate.equals(job.getStartDate())) return true;
-					if(endDate.equals(job.getEndDate())) return true;
-				}
-			}
-		}
-		return false;
-	}
-
-
-	/**Business rule #6.
-	 * 
-	 * This method is called to check whether or not the job with the 
-	 * passed in jobID is in the future or not.
-	 * 
-	 * 
-	 * @param theID is the ID of the job.
-	 * @return false if job is not in future, true otherwise.
-	 */
-	private boolean checkFutureValid(Job theJob) {
-	
-		Calendar currentDate = new GregorianCalendar();
-
-		if(currentDate.getTimeInMillis() + 2670040009l > theJob.getStartDate().getTimeInMillis()) {
-			return false;
-		}
-		
-		return true;
-	}
-
 
 	/**
 	 * Finds the job associated with this jobID.
@@ -269,39 +223,6 @@ public class Schedule implements Serializable {
 			}
 		}
 		return null;
-	}
-
-	
-	/**Business rule #3
-	 * 
-	 * Checks to make sure that the job grade chosen has an available slot.
-	 * 
-	 * @param j is the job
-	 * @param theGrade is the grade in that job
-	 * @return true if open slot, false otherwise.
-	 */
-	private boolean checkGradeOpen(Job j, String theGrade) {
-		switch (theGrade) {
-		case "Light":
-			if (j.hasLightRoom()) {
-				return true;
-			}
-			break;
-		case "Medium":
-			if (j.hasMediumRoom()) {
-				return true;
-			}
-			break;
-		case "Heavy":
-			if (j.hasHeavyRoom()) {
-				return true;
-			}
-			break;
-		default:
-			throw new IllegalStateException(theGrade
-					+ " for job " + j.getJobID() + " is full");	
-		}
-		return false;
 	}
 	
 	

@@ -51,7 +51,6 @@ public class Volunteer extends User implements Serializable {
 	
 	
 	
-	
 	@Override
 	public boolean equals(Object theO)
 	{
