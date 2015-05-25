@@ -2,6 +2,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -20,6 +22,36 @@ public class Volunteer extends User implements Serializable {
 		super(theFirstName, theLastName, theEmail);
 	}
 
+	
+	/**
+	 * This signs the volunteer up for a job.
+	 * @param theVol is the volunteer's email and work grade.
+	 * @param theID is the jobs id number
+	 * @return true if the volunteer was signed up, false otherwise.
+	 */
+	public boolean signUp(ArrayList<String> theVol, int theID) {
+		try {
+			return Schedule.getInstance().addVolunteerToJob(theVol, theID);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * This returns a copy of the list of jobs.
+	 * @return the list of jobs.
+	 */
+	public List<Job> getJobs() {
+		return Schedule.getInstance().getJobList().getCopyList();
+	}
+	
+	
+	
+	
+	
 	@Override
 	public boolean equals(Object theO)
 	{

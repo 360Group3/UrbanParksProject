@@ -128,19 +128,14 @@ public class VolunteerUI implements UI {
 
 		String level = getDifficultyLevel();
 
-		try {	//attempt to add this volunteer
-			ArrayList<String> volArray = new ArrayList<String>();
-			
-			volArray.add(myVol.getEmail());
-			volArray.add(level);
-			
-			if(Schedule.getInstance().addVolunteerToJob(volArray, jobID)) {
-				displaySuccessMessage();
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return;
+		ArrayList<String> volArray = new ArrayList<String>();
+		volArray.add(myVol.getEmail());
+		volArray.add(level);
+
+		if(myVol.signUp(volArray, jobID)) {
+			displaySuccessMessage();
 		}
+
 	}
 
 
@@ -148,7 +143,7 @@ public class VolunteerUI implements UI {
 	 * The volunteer can view the jobs that he/she has signed up for.
 	 */
 	private void viewMyJobs() {
-		List<Job> jobList = Schedule.getInstance().getJobList().getCopyList(); //get the list of jobs so we can traverse it.
+		List<Job> jobList = myVol.getJobs(); //get the list of jobs so we can traverse it.
 		boolean jobFound = false;
 
 		//go through each job in the list and see if the volunteer has signed up for that job.
@@ -202,7 +197,7 @@ public class VolunteerUI implements UI {
 	 * the job is in the past.
 	 */
 	private List<Job> getTheJobs() {
-		List<Job> daJobs = DataPollster.getInstance().getJobListCopy();
+		List<Job> daJobs = myVol.getJobs();
 		Calendar currentDate = new GregorianCalendar();
 		
 		for (Job j: daJobs) { //go through each job and find out what job is in the past.
@@ -227,36 +222,28 @@ public class VolunteerUI implements UI {
 		if(theJobList.size() == 0) {
 			System.out.println("\nThere are no upcoming jobs to display..");
 		}
-		
-		//GregorianCalendar currentDate = new GregorianCalendar();
-		
+
 		for(Job job : theJobList) {
-			
-		//	if(currentDate.getTimeInMillis() + 2670040009l > job.getStartDate().getTimeInMillis()) {
-		//		continue;
-		//	} //TODO look at this "continue" here, what does it do?
-				//Can I first call getTheJobs() method and then pass it into this method?...
-				//...if so, then I dont need to be checking for the past jobs here.
-			
-			
-			String startDate = calendarToString(job.getStartDate());
-			String endDate = calendarToString(job.getEndDate());
-			
-			String jobString = "\n";
-			jobString += "Job ID: " + job.getJobID();
-			jobString += "\n    " + job.getPark();
-			
-			jobString += "\n    Begins: " + startDate;
-			jobString += " , Ends: " + endDate;
-			
-			jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
-			jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
-			jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
-			
-			System.out.println(jobString);
+			if (!job.isInPast()) {
+				String startDate = calendarToString(job.getStartDate());
+				String endDate = calendarToString(job.getEndDate());
+
+				String jobString = "\n";
+				jobString += "Job ID: " + job.getJobID();
+				jobString += "\n    " + job.getPark();
+
+				jobString += "\n    Begins: " + startDate;
+				jobString += " , Ends: " + endDate;
+
+				jobString += "\n    Light Slots: " + job.getLightCurrent() + "/" + job.getLightMax();
+				jobString += "\n    Medium Slots: " + job.getMediumCurrent() + "/" + job.getMediumMax();
+				jobString += "\n    Heavy Slots: " + job.getHeavyCurrent() + "/" + job.getHeavyMax() + "\n";
+
+				System.out.println(jobString);
+			}
 		}
 	}
-	
+
 	
 	/**
 	 * Prompts the user to enter a number which represents the job's ID.
@@ -319,8 +306,7 @@ public class VolunteerUI implements UI {
 	private String getUserString() {		
 		String userInput = myScanner.nextLine();
 		
-		if(userInput.equals("")) { //TODO, maybe make this a while so that it will continuously 
-									//prompt the user, instead of just once? - Reid agrees.
+		if(userInput.equals("")) { 
 			userInput = myScanner.nextLine();
 		}
 		return userInput;
