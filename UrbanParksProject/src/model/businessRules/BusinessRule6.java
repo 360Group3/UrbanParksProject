@@ -18,7 +18,7 @@ public class BusinessRule6 extends BusinessRule {
 	 * passed in jobID is in the future or not.
 	 * 
 	 * 
-	 * @param theID is the ID of the job.
+	 * @param theTestedObjects : theID is the ID of the job.
 	 * @return false if job is not in future, true otherwise.
 	 */
 	@Override

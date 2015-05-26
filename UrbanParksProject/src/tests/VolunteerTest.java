@@ -266,7 +266,7 @@ public class VolunteerTest {
 	
 	/**
 	 * Get a list of the jobs a volunteer has signed up for.
-	 * (volunteer has so far signed up for 1 job so the 
+	 * (volunteer will sign up for 1 job so the 
 	 * size of the list should be 1.
 	 * 
 	 */
@@ -282,7 +282,6 @@ public class VolunteerTest {
 	
 	@Test
 	public void getTheJobsTest() {
-		
 		
 		List<Job> daJobs = Arsh.getTheJobs();
 		int count = 0;
