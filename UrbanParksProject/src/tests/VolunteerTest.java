@@ -69,6 +69,9 @@ public class VolunteerTest {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
+		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		
+		
 		//This part is necessary to create a job for todays date.
 		Calendar now = new GregorianCalendar();
 		//now.get(5) is the day
@@ -85,20 +88,19 @@ public class VolunteerTest {
 		Job catchMew;
 		if (now.get(4) >= 10 && now.get(5) >= 10) { //everything good
 			//System.out.println(todaysDate0);
-			catchMew = new Job(2, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		} else if (now.get(4) >= 10 && now.get(5) < 10) { //bad day
 			//System.out.println(todaysDate1);
-			catchMew = new Job(2, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		} else if (now.get(4) < 10 && now.get(5) >= 10) { //bad month
 			//System.out.println(todaysDate2);
-			catchMew = new Job(2, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		} else { //bad both
 			//System.out.println(todaysDate3);
-			catchMew = new Job(2, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		}
 		
 		
-		Job tradeForBlueEyesWhiteDragon = new Job(3, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);
 		Schedule.getInstance().receiveJob(findSasuke);
@@ -150,9 +152,7 @@ public class VolunteerTest {
 		
 		ArrayList<String> theVol2 = new ArrayList<String>();
 		theVol2.add("Ash@yahoo.com");
-		theVol2.add("Medium");
-		
-		
+		theVol2.add("Medium");	
 		assertEquals(Ash.signUp(theVol2, 0), false);
 	}
 	
@@ -170,8 +170,6 @@ public class VolunteerTest {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Heavy");
-		
-		
 		assertEquals(Goku.signUp(theVol3, 0), true);
 	}
 	
@@ -195,8 +193,6 @@ public class VolunteerTest {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
-		
-		
 		assertEquals(Goku.signUp(theVol3, 1), true);
 	}
 	
@@ -209,9 +205,7 @@ public class VolunteerTest {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
-		
-		
-		assertEquals(Goku.signUp(theVol3, 25), false);
+		assertEquals(Goku.signUp(theVol3, 279), false);
 	}
 	
 	
@@ -255,7 +249,7 @@ public class VolunteerTest {
 		theVol4.add("Medium");
 		
 		Yugi.signUp(theVol4, 0);
-		assertEquals(Yugi.signUp(theVol4, 3), false);
+		assertEquals(Yugi.signUp(theVol4, 2), false);
 	}
 	
 	
@@ -297,6 +291,12 @@ public class VolunteerTest {
 				count++;
 			}
 		}
+		
+		
+		//This is kind of an iffy test. I could just get rid of it because of the problems
+		//its having with the time of day (read line 301).	This would also mean getting 
+		//rid of the 'catchMew' job in the setup() method and then rewriting this test in
+		//a different way.
 		
 		assertEquals(count, 3); //TODO, there is a problem here
 								//This assertEquals fails (with input 4) before midnight but 
