@@ -23,8 +23,8 @@ public class Main {
         // prompt them to login again.
         // The loop continues until the user selects Exit.
         while (true) {
-            JobList jobList = saveManager.loadJobList();
-            UserList userList = saveManager.loadUserList();
+            JobList jobList = saveManager.loadJobList("jobList.ser");
+            UserList userList = saveManager.loadUserList("userList.ser");
 
             Schedule.getInstance().setJobList(jobList);
             Schedule.getInstance().setUserList(userList);
@@ -55,8 +55,8 @@ public class Main {
                 giveControl(userInfo[1]);
             }
 
-            saveManager.saveJobList(jobList);
-            saveManager.saveUserList(userList);
+            saveManager.saveJobList(jobList, "jobList.ser");
+            saveManager.saveUserList(userList, "userList.ser");
 
             UI.greetUser();
         }

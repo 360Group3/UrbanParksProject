@@ -28,8 +28,8 @@ public class SaveLoad {
      * Read jobList.txt, and generate from it a JobList containing all Jobs and their
      * information.
      */
-    public JobList loadJobList() {
-        File inFile = getListFile("jobList.ser");
+    public JobList loadJobList(String theFileName) {
+        File inFile = getListFile(theFileName);
         JobList jobList = new JobList();
 
         try {
@@ -64,8 +64,8 @@ public class SaveLoad {
      * Read userList.txt, and generate from it a UserList containing all Users and their
      * information.
      */
-    public UserList loadUserList() {
-        File inFile = getListFile("userList.ser");
+    public UserList loadUserList(String theFileName) {
+        File inFile = getListFile(theFileName);
         UserList userList = new UserList();
 
         try {
@@ -106,16 +106,13 @@ public class SaveLoad {
     private File getListFile(String fileName) {
 
         File dataFile;
-
-        // Try iOS (Console)
-        dataFile = new File("rsc/" + fileName);
-        if (dataFile.exists())
-            return dataFile;
-
-        // Try Windows (Console)
-        dataFile = new File("rsc\\" + fileName);
-        if (dataFile.exists())
-            return dataFile;
+        
+        // Try Console
+        dataFile = new File(fileName);
+        if (dataFile.exists()) {
+        	return dataFile;
+        }
+            
 
         File jarFile;
 
@@ -131,13 +128,13 @@ public class SaveLoad {
             return null;
         }
 
-        // Try iOS (Jar)
+        // Try Jar (iOS)
         jarFile = jarFile.getParentFile();
         dataFile = new File(jarFile.toString() + "/" + fileName);
         if (dataFile.exists())
             return dataFile;
 
-        // Try Windows (Jar)
+        // Try Jar (Windows)
         dataFile = new File(jarFile.toString() + "\\" + fileName);
 
         return dataFile;
@@ -152,8 +149,8 @@ public class SaveLoad {
     /**
      * Parse a JobList and write its contents to a text file.
      */
-    public boolean saveJobList(JobList theJobList) {
-        File outFile = getListFile("jobList.ser");
+    public boolean saveJobList(JobList theJobList, String theFileName) {
+        File outFile = getListFile(theFileName);
 
         try {
             FileOutputStream fileOut = new FileOutputStream(outFile.getPath());
@@ -173,8 +170,8 @@ public class SaveLoad {
     /**
      * Parse a UserList and write its contents to a text file.
      */
-    public boolean saveUserList(UserList theUserList) {
-        File outFile = getListFile("userList.ser");
+    public boolean saveUserList(UserList theUserList, String theFileName) {
+        File outFile = getListFile(theFileName);
 
         try {
             FileOutputStream fileOut = new FileOutputStream(outFile.getPath());
