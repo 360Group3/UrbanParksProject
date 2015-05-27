@@ -13,6 +13,7 @@ import model.businessRules.BusinessRule4;
 import model.businessRules.BusinessRule5;
 import model.businessRules.BusinessRule6;
 import model.businessRules.BusinessRule7;
+import model.businessRules.BusinessRule8;
 
 /**
  * Defines the Schedule object for an application.
@@ -51,9 +52,15 @@ public class Schedule implements Serializable {
 	 * @return true if theJob was added, and false otherwise.
 	 */
 	public boolean receiveJob(Job theJob) {		
-		Calendar now = new GregorianCalendar();
-		Calendar then = new GregorianCalendar();
-		then.add(Calendar.DAY_OF_MONTH, 90);
+		
+		//Check to find whether the manager manages the park that this job is at.
+		
+		if (!(new BusinessRule8().test(theJob, myUserList))) {
+			throw new IllegalArgumentException("The park for this job is not in your"
+					+ "list of managed parks.");
+		}
+		
+		
 		
 		// Checks the fields of the object to make sure they're valid.
 		boolean okToAdd = true;
@@ -109,16 +116,7 @@ public class Schedule implements Serializable {
 			okToAdd = false;
 		}
 		
-		//removed myIsRequest if-statement from here.
 		
-		
-		//NOTE: The problem with this if-statement is that it will be entered if any
-		//of Light, Medium, or Heavy has 0 spaces.
-		//Some jobs will have zero space for one or two of these levels which means when
-		//that job is passed in, it will always enter this if-statement and return false....not good.
-		
-		//I made changed here! I changed all the or (||) to and (&&). Now the if-statement wont be entered
-		//unless there is zero room in each job level. Arsh.
 		else if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
 			okToAdd = false;
 		}
