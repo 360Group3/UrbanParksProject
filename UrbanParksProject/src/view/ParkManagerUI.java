@@ -111,7 +111,15 @@ public class ParkManagerUI implements UI{
 	public void viewJobVolunteers() {
 		int jobID = getJobID();
 		List<Volunteer> volunteerList = myManager.getJobVolunteerList(jobID);
-		displayVolunteers(volunteerList);
+		
+		if(volunteerList != null) {
+			displayVolunteers(volunteerList);
+		} else {
+			//The ParkManager does not manage this job.
+			System.out.println("Sorry, but you are not the manager for this job.");
+		}
+		
+		
 	}
 	
 	/**
