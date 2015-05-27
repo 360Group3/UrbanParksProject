@@ -2,18 +2,24 @@ package view;
 
 import java.util.Scanner;
 
+import model.DataPollster;
+import model.Login;
+
 /**
  * A user interface for the login/register sequence of the program.
  * 
  * @author Taylor Gorman
+ * @author Reid Thompson - changed dependency relationship between this and Login class.
  * @version 9 May 2015
  *
  */
-public class MainUI {
+public class LoginUI implements UI {
 
+	private Login myLogin;
+	
     private Scanner myScanner;
 
-    public MainUI() {
+    public LoginUI() {
         myScanner = new Scanner(System.in);
     }
 
@@ -40,7 +46,76 @@ public class MainUI {
                 displayInvalidChoice();
         }
     }
+    
+    /**
+     * Return a String array that specifies the user as logging in, and the
+     * e-mail of the user.
+     */
+    private String[] loginUser() {
 
+        String userEmail = getReturnEmail();
+        String[] userInfo = null;
+
+        if (DataPollster.getInstance().checkEmail(userEmail)) {
+            userInfo = new String[2];
+            userInfo[0] = "login";
+            userInfo[1] = userEmail;
+
+        } else {
+            displayInvalidEmail();
+        }
+        return userInfo;
+    }
+    
+    /**
+     * Prompt the user to either login, register, or exit.<br>
+     * Then, ask the user for login or register details.
+     */
+    public String[] directLogin() {
+        int loginCommand = getLoginChoice();
+        switch (loginCommand) {
+        case 1:
+            userInfo = loginUser();
+            break;
+        case 2:
+            userInfo = registerUser();
+            break;
+        case 3:
+            displayExit();
+            myLogin.closeProgram();
+            break; // Ends program.
+        default:
+            displayInvalidChoice();
+            break;
+    }
+    return userInfo;
+    }
+    
+    /**
+     * Return a String array that specifies the user as registering, along with
+     * info on that user.
+     */
+    private String[] registerUser() {
+    	String[] userInfo = getUserInfo();    	
+        if (myLogin.duplicateUserRegistrationCheck(userInfo)) {
+            userInfo = null;
+            displayDuplicateError();
+        }
+        return myLogin.validUserRegistrationCheck(userInfo);
+    }
+    
+    private String[] getUserInfo() {
+    	String[] userInfo = new String[5];
+
+        userInfo[0] = "register";
+        userInfo[1] = getNewEmail();
+        userInfo[2] = getFirstName();
+        userInfo[3] = getLastName();
+        userInfo[4] = getUserType();
+        
+        return userInfo;
+    }
+    
     private void displayLoginChoices() {
         System.out.println("\n1) Existing User");
         System.out.println("2) New User");
@@ -131,4 +206,12 @@ public class MainUI {
 
         return userInput;
     }
+
+	
+    // TODO: replace login loop with this method!
+    @Override
+	public void commandLoop() {
+		// TODO Auto-generated method stub
+		
+	}
 }
