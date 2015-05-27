@@ -347,7 +347,7 @@ public class Schedule implements Serializable {
         switch (theUserType) {
             
             case "Volunteer":
-                u = new Volunteer(theFirstName, theLastName, theEmail);
+                u = new Volunteer(theEmail, theFirstName, theLastName);
                 break;
                 
             case "Administrator":
