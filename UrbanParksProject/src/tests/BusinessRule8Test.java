@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Job;
-import model.JobList;
-import model.ParkManager;
-import model.UserList;
 import model.businessRules.BusinessRule8;
 
 import org.junit.Before;
@@ -21,10 +18,6 @@ import org.junit.Test;
  *
  */
 public class BusinessRule8Test {
-	ParkManager Tenenberg;
-	
-	UserList myUserList;
-	JobList myJobList;
 	
     BusinessRule8 br8;
     
