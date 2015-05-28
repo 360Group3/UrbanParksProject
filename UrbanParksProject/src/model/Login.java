@@ -92,7 +92,7 @@ public class Login {
      */
     public boolean loginUser() {
     	boolean loginSuccess = false;
-        if (!duplicateUserRegistrationCheck()) {
+        if (duplicateUserRegistrationCheck()) {
             loginSuccess = true;
             if (myUserInfo[1] != null) {
         		giveControlToUser();

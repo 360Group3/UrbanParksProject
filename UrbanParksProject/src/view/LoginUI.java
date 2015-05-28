@@ -67,7 +67,10 @@ public class LoginUI implements UI {
     		handleLoginAndReg();
     	}
     	// If the command or information entered was invalid, we try and try again.
-    	if (!loginSuccess || !registerSuccess) {
+    	if (!loginSuccess) {
+    		displayNoExistingEmailMatch();
+    		handleLoginAndReg();
+    	} else if (!registerSuccess) {
     		displayDuplicateEmailError();
     		handleLoginAndReg();
     	} else if (myLogin.getUserInfo() == null) {
@@ -174,6 +177,11 @@ public class LoginUI implements UI {
 
     private void displayDuplicateEmailError() {
         System.out.println("\nSorry, but this email address is already in use.");
+    }
+    
+    private void displayNoExistingEmailMatch() {
+    	System.out.println("\nSorry, but there was no user with "
+    			+ "the specified email address in our system.");
     }
     
 	/**
