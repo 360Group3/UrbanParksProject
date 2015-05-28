@@ -55,14 +55,21 @@ public class BusinessRule6Test {
 		testJobList.setJobList(myList);
 		Schedule.getInstance().setJobList(testJobList);
 		DataPollster.getInstance().setJobList(testJobList) ;
-		//System.out.println(Schedule.getInstance().getJobList().getNumberOfJobs());
-		
 		
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Heavy");
-		assertEquals(Arsh.signUp(theVol5, 5), false);
 		
+		String ex = "Sorry, but this job has already completed.";
+		String e2 = "";
+		try {
+			Schedule.getInstance().addVolunteerToJob(theVol5, 5);
+		} catch (IllegalArgumentException e) {
+			e2 += e.getMessage();
+			
+		}
+		
+		assertEquals(ex, e2);
 	}
 
 }

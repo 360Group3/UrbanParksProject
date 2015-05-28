@@ -14,6 +14,8 @@ import model.JobList;
 import model.ParkManager;
 import model.Schedule;
 import model.UserList;
+import model.businessRules.BusinessRule2;
+import model.businessRules.BusinessRule8;
 
 /**
  * This class tests the eighth business rule.
@@ -22,9 +24,11 @@ import model.UserList;
  */
 public class BusinessRule8Test {
 	ParkManager Tenenberg;
+	List<String> parkList = new ArrayList<String>();
 	
 	UserList myUserList;
 	JobList myJobList;
+	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,7 +40,7 @@ public class BusinessRule8Test {
 		DataPollster.getInstance().setUserList(myUserList);
 		
 		
-		List<String> parkList = new ArrayList<String>();
+		
 		parkList.add("Namek");
 		parkList.add("Konoha");
 		parkList.add("Kento");
@@ -55,7 +59,7 @@ public class BusinessRule8Test {
 	public void useParkTest() {
 		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
-		assertEquals(Schedule.getInstance().receiveJob(findSasuke), true);
+		assertEquals(new BusinessRule8().test(findSasuke, parkList), true);
 	}
 	
 	
@@ -66,13 +70,8 @@ public class BusinessRule8Test {
 	public void useParkTest2() {
 		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
-		String ex = "The park for this job is not in your"
-				+ "list of managed parks.";
-		try {
-			Schedule.getInstance().receiveJob(findSasuke);
-		} catch (Exception e) {
-			assertEquals(ex, e.getMessage());
-		}
+		assertEquals(new BusinessRule8().test(findSasuke, parkList), false);
+		
 	}
 	
 }

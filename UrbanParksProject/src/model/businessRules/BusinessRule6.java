@@ -23,9 +23,9 @@ public class BusinessRule6 {
 	 */
 	public boolean test(Job theJob){
 	
-		Calendar currentDate = new GregorianCalendar();
-		
-		if(currentDate.after(theJob.getStartDate())) {
+		GregorianCalendar currentDate = new GregorianCalendar();
+	
+		if(!currentDate.before(theJob.getStartDate())) {
 			return false;
 		}
 		
