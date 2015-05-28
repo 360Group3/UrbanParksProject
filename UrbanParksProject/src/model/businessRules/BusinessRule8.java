@@ -8,27 +8,22 @@ import model.ParkManager;
 import model.User;
 import model.UserList;
 
-
 /**
- * This is the eighth business rule.
+ * A Park Manager can create jobs only for those parks that he/she manages
  * @author Arshdeep Singh
  *
  */
-public class BusinessRule8 extends BusinessRule {
+public class BusinessRule8 {
 
 	/**
 	 * This method tests whether or not the park manager runs 
 	 * the park that he is creating a job for.
 	 */
-	@Override
-	public boolean test(Object... theTestedObjects){
-		Job theJob = (Job) theTestedObjects[0];
-		UserList myUserList = (UserList) theTestedObjects[1];
-		
+	public boolean test(Job theJob, UserList theUserList){
 		String email = theJob.getManager();
 		
 		List<String> listOfParks = new ArrayList<String>();
-		List<User> usermanlist = myUserList.getParkManagerListCopy();
+		List<User> usermanlist = theUserList.getParkManagerListCopy();
 		
 		for (User man: usermanlist) {
 			if(man.getEmail().equals(email)) {

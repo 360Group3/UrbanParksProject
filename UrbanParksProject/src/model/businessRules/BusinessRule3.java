@@ -10,41 +10,36 @@ import model.Job;
  * @author Arshdeep Singh
  *
  */
-public class BusinessRule3 extends BusinessRule {
+public class BusinessRule3 {
 	
 		
 	/**
 	 * Checks to make sure that the job grade chosen has an available slot.
 	 * 
-	 * @param j is the job
+	 * @param theJob is the job
 	 * @param theGrade is the grade in that job
 	 * @return true if open slot, false otherwise.
 	 */
-	@Override
-	public boolean test(Object... theTestedObjects) {
-		
-		Job j = (Job) theTestedObjects[0];
-		String theGrade = (String) theTestedObjects[1];
-		
+	public boolean test(Job theJob, String theGrade) {
 		switch (theGrade) {
-		case "Light":
-			if (j.hasLightRoom()) {
-				return true;
-			}
-			break;
-		case "Medium":
-			if (j.hasMediumRoom()) {
-				return true;
-			}
-			break;
-		case "Heavy":
-			if (j.hasHeavyRoom()) {
-				return true;
-			}
-			break;
-		default:
-			throw new IllegalStateException(theGrade
-					+ " for job " + j.getJobID() + " is full");	
+    		case "Light":
+    			if (theJob.hasLightRoom()) {
+    				return true;
+    			}
+    			break;
+    		case "Medium":
+    			if (theJob.hasMediumRoom()) {
+    				return true;
+    			}
+    			break;
+    		case "Heavy":
+    			if (theJob.hasHeavyRoom()) {
+    				return true;
+    			}
+    			break;
+    		default:
+    			throw new IllegalStateException(theGrade
+    					        + " for job " + theJob.getJobID() + " is full");	
 		}
 		return false;
 	}

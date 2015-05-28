@@ -14,7 +14,8 @@ import model.Volunteer;
 import org.junit.Before;
 import org.junit.Test;
 
-/**Test for business rule 3
+/**
+ * Test for business rule 3
  * 
  * @author Arshdeep Singh
  *
@@ -37,7 +38,7 @@ public class BusinessRule3Test {
 		DataPollster.getInstance().setUserList(myUserList);
 		
 		Naruto = new Volunteer("Naruto@yahoo.com", "Naruto", "Uzamaki");
-		myUserList.addNewVolunteer(Naruto);
+		myUserList.addNewUser(Naruto);
 		
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5,
 				"06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());

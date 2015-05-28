@@ -82,12 +82,12 @@ public class Schedule implements Serializable {
         //BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
                 //I am going to say that the manager can only create a job on a date after today.
         
-        else if (!(new BusinessRule5().test(theJob))) {
+        else if (!(new BusinessRule5().pastTest(theJob))) {
             throw new IllegalArgumentException("Sorry but the date you entered for this "
                     + "job has already passed.");
         }
         
-        else if (!(new BusinessRule5().test2(theJob))) {
+        else if (!(new BusinessRule5().futureTest(theJob))) {
             throw new IllegalArgumentException("Sorry but the date you entered is too far"
                     + "into the future. \n We only accept jobs that are within three months"
                     + "from now. ");

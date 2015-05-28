@@ -27,17 +27,6 @@ public class BusinessRule4Test {
         myRule = new BusinessRule4();
     }
 
-    @Test(expected = MalformedParametersException.class)
-    public void testTestForTooManyArguments() {
-        myRule.test(new Job(0, "Foo Park", 4, 4, 4, "09012015", "09012015",
-                "moverby@vivaldi.com", null), new GregorianCalendar());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTestForImproperArgument() {
-        myRule.test(new GregorianCalendar());
-    }
-
     /**
      * Test method for {@link model.businessRules.BusinessRule4#test(java.lang.Object[])}.
      */

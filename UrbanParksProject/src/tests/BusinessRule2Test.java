@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.MalformedParametersException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.Job;
@@ -24,10 +22,7 @@ public class BusinessRule2Test {
     Job myJob;
 
     List<String> myWeek;
-
-    /**
-     * @throws java.lang.Exception
-     */
+    
     @Before
     public void setUp() throws Exception {
         myRule = new BusinessRule2();
@@ -41,26 +36,6 @@ public class BusinessRule2Test {
                         myWeek.get(BusinessRule2.LIMITING_DURATION / 2),
                         myWeek.get(BusinessRule2.LIMITING_DURATION / 2), 
                         "moverby@vivaldi.com", null);
-    }
-
-    @Test(expected = MalformedParametersException.class)
-    public void testTestForTooManyArguments() {
-        myRule.test(myJob, myJobList, new GregorianCalendar());
-    }
-
-    @Test(expected = MalformedParametersException.class)
-    public void testTestForTooFewArguments() {
-        myRule.test(myJob);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTestForImproperFirstArgument() {
-        myRule.test(new GregorianCalendar(), myJobList);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTestForImproperSecondArgument() {
-        myRule.test(myJob, new GregorianCalendar());
     }
 
     @Test

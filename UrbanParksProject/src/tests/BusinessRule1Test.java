@@ -3,9 +3,7 @@ package tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.MalformedParametersException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.Job;
@@ -27,16 +25,6 @@ public class BusinessRule1Test {
     public void setUp() throws Exception {
         myRule = new BusinessRule1();
         myJobList = new JobList();
-    }
-
-    @Test(expected = MalformedParametersException.class)
-    public void testTestForTooManyArguments() {
-        myRule.test(myJobList, new GregorianCalendar());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testTestForImproperArgument() {
-        myRule.test(new GregorianCalendar());
     }
 
     @Test

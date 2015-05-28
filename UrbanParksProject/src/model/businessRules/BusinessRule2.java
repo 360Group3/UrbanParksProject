@@ -1,6 +1,5 @@
 package model.businessRules;
 
-import java.lang.reflect.MalformedParametersException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import model.JobList;
  * there can be no
  * more than 5 jobs.
  */
-public class BusinessRule2 extends BusinessRule {
+public class BusinessRule2 {
 
     /**
      * The amount of time that constitutes a week.
@@ -26,27 +25,7 @@ public class BusinessRule2 extends BusinessRule {
      */
     public static final int MAX_JOBS_IN_WEEK = 5;
 
-    /**
-     * @param theTestedObjects
-     *            a Job object. {@inheritDoc}
-     */
-    @Override
-    public boolean test(Object... theTestedObjects) {
-        if (theTestedObjects.length > 2)
-            throw new MalformedParametersException("More than 2 arguments.");
-
-        if (theTestedObjects.length < 2)
-            throw new MalformedParametersException("Less than 2 arguments.");
-
-        if (!(theTestedObjects[0] instanceof Job))
-            throw new IllegalArgumentException("First arg was not Job.");
-
-        if (!(theTestedObjects[1] instanceof JobList))
-            throw new IllegalArgumentException("Second arg was not JobList.");
-
-        Job theJob = (Job) theTestedObjects[0];
-        JobList theJobList = (JobList) theTestedObjects[1];
-
+    public boolean test(Job theJob, JobList theJobList) {
         // count increases for every other job that is within 3 days before start and 3
         // days after end.
         int count = 0;
