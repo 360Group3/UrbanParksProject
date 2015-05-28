@@ -116,11 +116,4 @@ public class Login {
     public boolean validUserRegistrationCheck() {
         return myUserInfo != null && myUserInfo[4] != null;
     }
-    
-	/**
-     * Breaks out of infinite loop in main method.
-     */
-    public void closeProgram() {
-        System.exit(0);
-    }
 }

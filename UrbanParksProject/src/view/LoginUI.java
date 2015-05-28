@@ -59,7 +59,7 @@ public class LoginUI implements UI {
     			break;
     		case 3:
     			displayExit();
-    			myLogin.closeProgram();
+    			closeProgram();
     			break;
     		}
     	} else { // invalid choice selected
@@ -174,5 +174,12 @@ public class LoginUI implements UI {
 
     private void displayDuplicateEmailError() {
         System.out.println("\nSorry, but this email address is already in use.");
+    }
+    
+	/**
+     * Breaks out of infinite loop in main method.
+     */
+    private void closeProgram() {
+        System.exit(0);
     }
 }
