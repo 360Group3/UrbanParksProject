@@ -25,6 +25,7 @@ public class Job implements Serializable {
      */
     private ArrayList<ArrayList<String>> myVolunteerList;
 
+    
     /**
      * This is the start date of the job.
      */
@@ -36,8 +37,8 @@ public class Job implements Serializable {
     private GregorianCalendar myEndDate;
 
     /**
-     * This value holds the maximum number of people who can sign up for the
-     * light portion of this job.
+     * This value holds the maximum number of people who can sign up for the light portion
+     * of this job.
      */
     private int myLightMax;
 
@@ -48,8 +49,8 @@ public class Job implements Serializable {
     private int myMediumMax;
 
     /**
-     * This value holds the maximum number of people who can sign up for the
-     * heavy portion of this job.
+     * This value holds the maximum number of people who can sign up for the heavy portion
+     * of this job.
      */
     private int myHeavyMax;
 
@@ -66,6 +67,7 @@ public class Job implements Serializable {
     /**
      * This field is used by volunteer class to determine if a job's start date
      * is in the past (compared to the current time).
+     * Note: this is true if the job is in the past.
      */
     private boolean myPast = false;
 
