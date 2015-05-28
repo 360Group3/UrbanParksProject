@@ -7,11 +7,16 @@ import view.VolunteerUI;
 
 public class Login {
 	// functional methods here only!
+	private String[] myUserInfo;
+	
+	public Login() {
+		myUserInfo = new String[5];
+	}
 	
 	/**
      * Transfer control to the user, specified by their e-mail address.
      */
-    private void giveControl(String theEmail) {
+    public void giveControl(String theEmail) {
 
         User user = DataPollster.getInstance().getUser(theEmail);
 
@@ -36,7 +41,47 @@ public class Login {
         if (userUI != null)
             userUI.commandLoop();
     }
-	
+
+    public boolean directLogin(int theLoginCommand) {
+    	boolean isInvalidChoice = false;
+    	switch (theLoginCommand) {
+    	case 1:
+    		userInfo = loginUser();
+    		break;
+    	case 2:
+    		userInfo = registerUser();
+    		break;
+    	case 3:
+    		closeProgram();
+    		break; // Ends program.
+    	default:
+    		isInvalidChoice = true;
+    		break;
+    	return isInvalidChoice;
+    	}
+    }
+    
+    /**
+     * Return a String array that specifies the user as logging in, and the
+     * e-mail of the user.
+     */
+    private String[] loginUser() {
+        String userEmail = getReturnEmail();
+        String[] userInfo = null;
+
+        if (DataPollster.getInstance().checkEmail(userEmail)) {
+            userInfo = new String[2];
+            userInfo[0] = "login";
+            userInfo[1] = userEmail;
+
+        } else {
+            displayInvalidEmail();
+        }
+        return userInfo;
+    }
+    
+    public 
+    
     public boolean duplicateUserRegistrationCheck(String[] theUserInfo) {
         boolean isDuplRgstrn = false;
     	if (checkDuplicate(theUserInfo[1])) {
@@ -73,5 +118,9 @@ public class Login {
      */
     public void closeProgram() {
         System.exit(0);
+    }
+    
+    public String[] getUserInfo() {
+    	return myUserInfo;
     }
 }

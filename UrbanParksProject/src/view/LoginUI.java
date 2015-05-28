@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import model.DataPollster;
 import model.Login;
+import model.Schedule;
 
 /**
  * A user interface for the login/register sequence of the program.
@@ -23,72 +24,53 @@ public class LoginUI implements UI {
         myScanner = new Scanner(System.in);
     }
 
-    // Initialize UI.
-    public void initialize() {
-        greetUser();
-    }
-
     public void greetUser() {
         System.out.println("\n------------------------------------------\n"
                         + "Welcome to Urban Park's Volunteer Program!");
     }
-
-    // Get user login choice.
-    public int getLoginChoice() {
-        while (true) {
-            displayLoginChoices();
-
-            int userChoice = getUserInt();
-
-            if (userChoice > 0 && userChoice < 4)
-                return userChoice;
-            else
-                displayInvalidChoice();
-        }
-    }
     
     /**
-     * Return a String array that specifies the user as logging in, and the
-     * e-mail of the user.
+     * Outer loop of the UI that controls the options presented to the user. 
      */
-    private String[] loginUser() {
+    @Override
+	public void commandLoop() {
+		greetUser();
+		
+		String[] userInfo = startLogin();
 
-        String userEmail = getReturnEmail();
-        String[] userInfo = null;
-
-        if (DataPollster.getInstance().checkEmail(userEmail)) {
-            userInfo = new String[2];
-            userInfo[0] = "login";
-            userInfo[1] = userEmail;
-
-        } else {
-            displayInvalidEmail();
+        // If the command or information entered was invalid, we try again.
+        if (userInfo == null) {
+            userInfo = startLogin();
         }
-        return userInfo;
-    }
+
+        try {
+            if (userInfo[0].equals("login")) {
+                myLogin.giveControl(userInfo[1]);
+            }
+        }
+        catch (NullPointerException e) {
+            System.out
+                    .println("\nWe ran into a problem while logging you in. Please try again.");
+            userInfo = startLogin();
+        }
+
+        if (userInfo[0].equals("register")) {
+            Schedule.getInstance().addUser(userInfo[1], userInfo[2], userInfo[3],
+                    userInfo[4]);
+            myLogin.giveControl(userInfo[1]);
+        }
+	}
     
     /**
      * Prompt the user to either login, register, or exit.<br>
      * Then, ask the user for login or register details.
      */
-    public String[] directLogin() {
+    public void startLogin() {
         int loginCommand = getLoginChoice();
-        switch (loginCommand) {
-        case 1:
-            userInfo = loginUser();
-            break;
-        case 2:
-            userInfo = registerUser();
-            break;
-        case 3:
-            displayExit();
-            myLogin.closeProgram();
-            break; // Ends program.
-        default:
-            displayInvalidChoice();
-            break;
-    }
-    return userInfo;
+        boolean invalidChoice = myLogin.directLogin(loginCommand);
+        if (invalidChoice) {
+        	displayInvalidChoice();
+        }
     }
     
     /**
@@ -102,6 +84,20 @@ public class LoginUI implements UI {
             displayDuplicateError();
         }
         return myLogin.validUserRegistrationCheck(userInfo);
+    }
+    
+    // Get user login choice.
+    public int getLoginChoice() {
+        while (true) {
+            displayLoginChoices();
+
+            int userChoice = getUserInt();
+
+            if (userChoice > 0 && userChoice < 4)
+                return userChoice;
+            else
+                displayInvalidChoice();
+        }
     }
     
     private String[] getUserInfo() {
@@ -206,12 +202,4 @@ public class LoginUI implements UI {
 
         return userInput;
     }
-
-	
-    // TODO: replace login loop with this method!
-    @Override
-	public void commandLoop() {
-		// TODO Auto-generated method stub
-		
-	}
 }
