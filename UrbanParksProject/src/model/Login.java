@@ -13,6 +13,28 @@ public class Login {
 		myUserInfo = new String[5];
 	}
 	
+	public void processLoginAndReg(int theUserChoice) {
+    	if (theUserChoice == 1) { // login selected
+    		loginUser();
+    	} else { // register selected
+    		registerUser();
+    	}
+    }
+	
+    
+    /**
+     * Return a String array that specifies the user as registering, along with
+     * info on that user.
+     */
+    private String[] registerUser() {
+    	String[] userInfo = myLogin.getUserInfo();   	
+        if (myLogin.duplicateUserRegistrationCheck(userInfo)) {
+            userInfo = null;
+            displayDuplicateError();
+        }
+        return myLogin.validUserRegistrationCheck(userInfo);
+    }
+	
 	/**
      * Transfer control to the user, specified by their e-mail address.
      */
@@ -40,25 +62,6 @@ public class Login {
 
         if (userUI != null)
             userUI.commandLoop();
-    }
-
-    public boolean processUserChoice(int theUserChoice) {
-    	boolean isInvalidChoice = false;
-    	switch (theUserChoice) {
-    	case 1:
-    		userInfo = loginUser();
-    		break;
-    	case 2:
-    		userInfo = registerUser();
-    		break;
-    	case 3:
-    		closeProgram();
-    		break; // Ends program.
-    	default:
-    		isInvalidChoice = true;
-    		break;
-    	return isInvalidChoice;
-    	}
     }
     
     /**

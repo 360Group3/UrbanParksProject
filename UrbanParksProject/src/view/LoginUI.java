@@ -30,18 +30,20 @@ public class LoginUI implements UI {
      */
     @Override
 	public void commandLoop() {
-		displayIntro();
+		String[] userInfo = null;
 		
-		handleLogin();
+    	displayIntro();
+		handleLoginAndReg();
 		
-		String[] userInfo = myLogin.getUserInfo();
+		userInfo = myLogin.getUserInfo();
 
-        // If the command or information entered was invalid, we try again.
-        if (userInfo == null) {
-            userInfo = startLogin();
+        // If the command or information entered was invalid, we try and try again.
+        while (userInfo == null) {
+            handleLoginAndReg();
+            userInfo = myLogin.getUserInfo();
         }
 
-        try {
+        try { // try to 
             if (userInfo[0].equals("login")) {
                 myLogin.giveControl(userInfo[1]);
             }
@@ -49,7 +51,10 @@ public class LoginUI implements UI {
         catch (NullPointerException e) {
             System.out
                     .println("\nWe ran into a problem while logging you in. Please try again.");
-            userInfo = startLogin();
+            while (userInfo == null) {
+                handleLoginAndReg();
+                userInfo = myLogin.getUserInfo();
+            }
         }
 
         if (userInfo[0].equals("register")) {
@@ -62,39 +67,31 @@ public class LoginUI implements UI {
     /**
      * Prompt the user to either login, register, or exit.<br>
      * Then, ask the user for login or register details.
-     */
-    public void startLogin() {
-        int loginCommand = getLoginChoice();
-        boolean invalidChoice = myLogin.directLogin(loginCommand);
-        if (invalidChoice) {
-        	displayInvalidChoice();
-        }
-    }
-    
-    /**
-     * Return a String array that specifies the user as registering, along with
-     * info on that user.
-     */
-    private String[] registerUser() {
-    	String[] userInfo = myLogin.getUserInfo();   	
-        if (myLogin.duplicateUserRegistrationCheck(userInfo)) {
-            userInfo = null;
-            displayDuplicateError();
-        }
-        return myLogin.validUserRegistrationCheck(userInfo);
-    }
-    
-    private void handleLogin() {
-        while (true) {
-            displayLoginChoices();
+     */    
+    private void handleLoginAndReg() {
+    	displayLoginChoices();
 
-            int userChoice = getUserInt();
-
-            if (userChoice > 0 && userChoice < 4)
-            	myLogin.processUserChoice(userChoice);
-            else
-                displayInvalidChoice();
-        }
+    	int userChoice = getUserInt();
+    	boolean validUserChoice = userChoice > 0 && userChoice < 4;
+    	if (validUserChoice) { // userChoice must be 1, 2, or 3
+    		switch (userChoice) {
+    		case 1: // login
+    			loginUserInfo();
+    			myLogin.processLoginAndReg(userChoice);
+    			break;
+    		case 2: // register
+    			registerUserInfo();
+    			myLogin.processLoginAndReg(userChoice);
+    			break;
+    		case 3:
+    			displayExit();
+    			myLogin.closeProgram();
+    			break;
+    		}
+    	} else { // invalid choice selected
+    		displayInvalidChoice();
+    		handleLoginAndReg();
+    	}
     }
     
     private void registerUserInfo() {
