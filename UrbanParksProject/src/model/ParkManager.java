@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import model.businessRules.BusinessRule8;
+
 /**
  * ParkManager is a subclass of User.
  * 
@@ -52,6 +54,13 @@ public class ParkManager extends User implements Serializable {
      * @return true if the Job was successfully added; false otherwise
      */
     public boolean addJob(Job theJob) {
+        //  Check to find whether the manager manages the park that this job is at.
+        
+        if (!(new BusinessRule8().test(theJob, myManagedParks))) {
+            throw new IllegalArgumentException("The park for this job is not in your"
+                    + "list of managed parks.");
+        }
+        
         return Schedule.getInstance().receiveJob(theJob);
     }
 

@@ -15,7 +15,7 @@ public class BusinessRule6 {
 
 	
 	/**
-	 * This method is called to check whether or not the job is in the future.
+	 * Test if the job is in the future.
 	 * 
 	 * 
 	 * @param theJob the job.
@@ -25,7 +25,7 @@ public class BusinessRule6 {
 	
 		Calendar currentDate = new GregorianCalendar();
 		
-		if(currentDate.getTimeInMillis() + 2670040009l > theJob.getStartDate().getTimeInMillis()) {
+		if(currentDate.after(theJob.getStartDate())) {
 			return false;
 		}
 		

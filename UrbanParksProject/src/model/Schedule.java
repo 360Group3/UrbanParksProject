@@ -11,7 +11,6 @@ import model.businessRules.BusinessRule4;
 import model.businessRules.BusinessRule5;
 import model.businessRules.BusinessRule6;
 import model.businessRules.BusinessRule7;
-import model.businessRules.BusinessRule8;
 
 /**
  * Defines the Schedule object for an application.
@@ -51,21 +50,15 @@ public class Schedule implements Serializable {
      */
     public boolean receiveJob(Job theJob) {     
         
-        //Check to find whether the manager manages the park that this job is at.
-        
-        if (!(new BusinessRule8().test(theJob, myUserList))) {
-            throw new IllegalArgumentException("The park for this job is not in your"
-                    + "list of managed parks.");
-        }
-        
-        
-        
         // Checks the fields of the object to make sure they're valid.
         boolean okToAdd = true;
         
-        
+        if (theJob == null)
+        {
+            okToAdd = false;
+        }
         //BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30.       
-        if (!(new BusinessRule1().test(myJobList))) { 
+        else if (!(new BusinessRule1().test(myJobList))) { 
             okToAdd = false;
         }
         //BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
@@ -136,8 +129,9 @@ public class Schedule implements Serializable {
             // To get the master job list which is editable
             List<Job> editableJobList = myJobList.getJobList();
             editableJobList.add(theJob); // add valid job to list
-        } else {
-            System.out.println("Error: job data is invalid and therefore was not added.");
+        } 
+        else {
+            throw new IllegalArgumentException("Error: job data is invalid and therefore was not added.");
         }
 
         return okToAdd;
@@ -183,8 +177,6 @@ public class Schedule implements Serializable {
             throw new IllegalArgumentException("Sorry, but that grade in this job "
                     + "is already full.");
         }
-        
-        
 
         // If all the checks pass, we add the Volunteer to the Job's Volunteer List,
         // Increment the grade slot, and return.

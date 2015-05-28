@@ -78,7 +78,7 @@ public class ScheduleTest {
     }
 
     /**
-     * Testing with a Job having invalid dates.
+     * Testing with a Job having invalid dates, specifically an end date before the start date.
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobForInvalidDates() {
@@ -118,8 +118,8 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobForNullPark() {
-        Job nullPark = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015",
-                                "tjsg1992@gmail.com", null);
+        Job nullPark = new Job(55, null, 2, 2, 2, "06172015", "06172015",
+                                "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
         mySchedule.receiveJob(nullPark);
     }
 

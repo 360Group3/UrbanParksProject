@@ -11,22 +11,14 @@ import model.Job;
  *
  */
 public class BusinessRule5 {
-    
-    Calendar now;
-    Calendar then;
-    
-    public BusinessRule5()
-    {
-        Calendar now = new GregorianCalendar();
-        Calendar then = new GregorianCalendar();
-    }
 	
-	//FIXME: this method does not belong in br5.
 	/**
-	 * This method tests whether or not the job is in the future.
+	 * Test if the job is in the future.
+	 * @return true if job is in the future, false otherwise.
 	 */
-	public boolean pastTest(Job theJob){
-		if (!theJob.getStartDate().after(now)) {
+	public boolean pastTest(Job theJob) {
+	    Calendar now = new GregorianCalendar();
+		if (theJob.getStartDate().before(now)) {
 			return false;
 		}
 		
@@ -34,14 +26,15 @@ public class BusinessRule5 {
 	}
 	
 	/**
-	 * This method tests whether or not the job is within the next 90 days.
+	 * Test if the job is within the next 90 days.
 	 * 
 	 * @param theTestedObjects is theJob that the manager wants to create. 
 	 * @return true if the job starts within 90 days, false otherwise.
 	 */
 	public boolean futureTest(Job theJob) {
-		then.add(Calendar.DAY_OF_MONTH, 90);
-		
+        Calendar then = new GregorianCalendar();
+        then.add(Calendar.DAY_OF_MONTH, 90);
+        
 		if (theJob.getStartDate().after(then)) {
 			return false;
 		}
