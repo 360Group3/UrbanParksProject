@@ -21,12 +21,8 @@ public class LoginUI implements UI {
     private Scanner myScanner;
 
     public LoginUI() {
+    	myLogin = new Login();
         myScanner = new Scanner(System.in);
-    }
-
-    public void greetUser() {
-        System.out.println("\n------------------------------------------\n"
-                        + "Welcome to Urban Park's Volunteer Program!");
     }
     
     /**
@@ -34,9 +30,11 @@ public class LoginUI implements UI {
      */
     @Override
 	public void commandLoop() {
-		greetUser();
+		displayIntro();
 		
-		String[] userInfo = startLogin();
+		registerUserInfo();
+		
+		String[] userInfo = myLogin.getUserInfo();
 
         // If the command or information entered was invalid, we try again.
         if (userInfo == null) {
@@ -78,7 +76,7 @@ public class LoginUI implements UI {
      * info on that user.
      */
     private String[] registerUser() {
-    	String[] userInfo = getUserInfo();    	
+    	String[] userInfo = myLogin.getUserInfo();   	
         if (myLogin.duplicateUserRegistrationCheck(userInfo)) {
             userInfo = null;
             displayDuplicateError();
@@ -100,16 +98,14 @@ public class LoginUI implements UI {
         }
     }
     
-    private String[] getUserInfo() {
-    	String[] userInfo = new String[5];
-
-        userInfo[0] = "register";
-        userInfo[1] = getNewEmail();
-        userInfo[2] = getFirstName();
-        userInfo[3] = getLastName();
-        userInfo[4] = getUserType();
-        
-        return userInfo;
+    private void registerUserInfo() {
+        myLogin.setUserInfoRegister("register", getNewEmail(), getFirstName(), getLastName(),
+        							getUserType());
+    }
+    
+    public void displayIntro() {
+        System.out.println("\n------------------------------------------\n"
+                        + "Welcome to Urban Park's Volunteer Program!");
     }
     
     private void displayLoginChoices() {

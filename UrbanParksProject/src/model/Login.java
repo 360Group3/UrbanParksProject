@@ -6,11 +6,11 @@ import view.UI;
 import view.VolunteerUI;
 
 public class Login {
-	// functional methods here only!
+	
 	private String[] myUserInfo;
 	
 	public Login() {
-		myUserInfo = new String[5];
+		myUserInfo = new String[4];
 	}
 	
 	/**
@@ -65,19 +65,31 @@ public class Login {
      * Return a String array that specifies the user as logging in, and the
      * e-mail of the user.
      */
-    private String[] loginUser() {
+    private void loginUser() {
         String userEmail = getReturnEmail();
-        String[] userInfo = null;
 
         if (DataPollster.getInstance().checkEmail(userEmail)) {
-            userInfo = new String[2];
-            userInfo[0] = "login";
-            userInfo[1] = userEmail;
-
+            setUserInfoLogin("login", userEmail);
         } else {
             displayInvalidEmail();
         }
-        return userInfo;
+    }
+    
+    public void setUserInfoLogin(String theAction, String theEmail) {
+    	myUserInfo[0] = theAction;
+    	myUserInfo[1] = theEmail;
+    }
+    
+    public void setUserInfoRegister(String theAction, String theEmail, String theFirstName,
+    								String theLastName) {
+    	myUserInfo[0] = theAction;
+    	myUserInfo[1] = theEmail;
+    	myUserInfo[2] = theFirstName;
+    	myUserInfo[3] = theLastName;
+    }
+    
+    public String[] getUserInfo() {
+    	return myUserInfo;
     }
     
     public 
@@ -118,9 +130,5 @@ public class Login {
      */
     public void closeProgram() {
         System.exit(0);
-    }
-    
-    public String[] getUserInfo() {
-    	return myUserInfo;
     }
 }
