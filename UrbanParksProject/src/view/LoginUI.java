@@ -2,16 +2,14 @@ package view;
 
 import java.util.Scanner;
 
-import model.DataPollster;
 import model.Login;
-import model.Schedule;
 
 /**
  * A user interface for the login/register sequence of the program.
  * 
  * @author Taylor Gorman
  * @author Reid Thompson - changed dependency relationship between this and Login class.
- * @version 9 May 2015
+ * @version 26 May 2015
  *
  */
 public class LoginUI implements UI {
@@ -29,39 +27,9 @@ public class LoginUI implements UI {
      * Outer loop of the UI that controls the options presented to the user. 
      */
     @Override
-	public void commandLoop() {
-		String[] userInfo = null;
-		
+	public void commandLoop() {		
     	displayIntro();
 		handleLoginAndReg();
-		
-		userInfo = myLogin.getUserInfo();
-
-        // If the command or information entered was invalid, we try and try again.
-        while (userInfo == null) {
-            handleLoginAndReg();
-            userInfo = myLogin.getUserInfo();
-        }
-
-        try { // try to 
-            if (userInfo[0].equals("login")) {
-                myLogin.giveControl(userInfo[1]);
-            }
-        }
-        catch (NullPointerException e) {
-            System.out
-                    .println("\nWe ran into a problem while logging you in. Please try again.");
-            while (userInfo == null) {
-                handleLoginAndReg();
-                userInfo = myLogin.getUserInfo();
-            }
-        }
-
-        if (userInfo[0].equals("register")) {
-            Schedule.getInstance().addUser(userInfo[1], userInfo[2], userInfo[3],
-                    userInfo[4]);
-            myLogin.giveControl(userInfo[1]);
-        }
 	}
     
     /**
@@ -73,15 +41,21 @@ public class LoginUI implements UI {
 
     	int userChoice = getUserInt();
     	boolean validUserChoice = userChoice > 0 && userChoice < 4;
+    	boolean loginSuccess = true;
+    	boolean registerSuccess = true;
     	if (validUserChoice) { // userChoice must be 1, 2, or 3
     		switch (userChoice) {
     		case 1: // login
     			loginUserInfo();
-    			myLogin.processLoginAndReg(userChoice);
+    			if (myLogin.getUserInfo()[0].equals("login")) {
+    				loginSuccess = myLogin.loginUser();
+    			}
     			break;
     		case 2: // register
     			registerUserInfo();
-    			myLogin.processLoginAndReg(userChoice);
+    			if (myLogin.getUserInfo()[0].equals("register")) {
+    				registerSuccess = myLogin.registerUser();
+    			}
     			break;
     		case 3:
     			displayExit();
@@ -91,6 +65,13 @@ public class LoginUI implements UI {
     	} else { // invalid choice selected
     		displayInvalidChoice();
     		handleLoginAndReg();
+    	}
+    	// If the command or information entered was invalid, we try and try again.
+    	if (!loginSuccess || !registerSuccess) {
+    		displayDuplicateEmailError();
+    		handleLoginAndReg();
+    	} else if (myLogin.getUserInfo() == null) {
+            commandLoop();
     	}
     }
     
@@ -191,11 +172,7 @@ public class LoginUI implements UI {
         System.out.println("\nSorry, but your choice was invalid.");
     }
 
-    private void displayInvalidEmail() {
-        System.out.println("\nSorry, but your e-mail address was not recognized.");
-    }
-
-    private void displayDuplicateError() {
+    private void displayDuplicateEmailError() {
         System.out.println("\nSorry, but this email address is already in use.");
     }
 }

@@ -5,6 +5,12 @@ import view.ParkManagerUI;
 import view.UI;
 import view.VolunteerUI;
 
+/**
+ * A class to handle all of the login functionality for one specific user.
+ * 
+ * @author Reid Thompson - most recent implementation.
+ * @version 5.26.2015
+ */
 public class Login {
 	
 	private String[] myUserInfo;
@@ -12,73 +18,10 @@ public class Login {
 	public Login() {
 		myUserInfo = new String[5];
 	}
-	
-	public void processLoginAndReg(int theUserChoice) {
-    	if (theUserChoice == 1) { // login selected
-    		loginUser();
-    	} else { // register selected
-    		registerUser();
-    	}
-    }
-	
     
-    /**
-     * Return a String array that specifies the user as registering, along with
-     * info on that user.
-     */
-    private String[] registerUser() {
-    	String[] userInfo = myLogin.getUserInfo();   	
-        if (myLogin.duplicateUserRegistrationCheck(userInfo)) {
-            userInfo = null;
-            displayDuplicateError();
-        }
-        return myLogin.validUserRegistrationCheck(userInfo);
-    }
+	// setters and getters
 	
-	/**
-     * Transfer control to the user, specified by their e-mail address.
-     */
-    public void giveControl(String theEmail) {
-
-        User user = DataPollster.getInstance().getUser(theEmail);
-
-        UI userUI = null;
-
-        if (user instanceof ParkManager) {
-            ParkManager manager = DataPollster.getInstance().getParkManager(theEmail);
-            userUI = new ParkManagerUI(manager);
-        }
-
-        if (user instanceof Administrator) {
-            Administrator admin = DataPollster.getInstance().getAdministrator(theEmail);
-            userUI = new AdministratorUI(admin);
-
-        }
-
-        if (user instanceof Volunteer) {
-            Volunteer volunteer = DataPollster.getInstance().getVolunteer(theEmail);
-            userUI = new VolunteerUI(volunteer);
-        }
-
-        if (userUI != null)
-            userUI.commandLoop();
-    }
-    
-    /**
-     * Return a String array that specifies the user as logging in, and the
-     * e-mail of the user.
-     */
-    private void loginUser() {
-        String userEmail = getReturnEmail();
-
-        if (DataPollster.getInstance().checkEmail(userEmail)) {
-            setUserInfoLogin("login", userEmail);
-        } else {
-            displayInvalidEmail();
-        }
-    }
-    
-    public void setUserInfoLogin(String theAction, String theEmail) {
+	public void setUserInfoLogin(String theAction, String theEmail) {
     	myUserInfo[0] = theAction;
     	myUserInfo[1] = theEmail;
     }
@@ -95,36 +38,83 @@ public class Login {
     public String[] getUserInfo() {
     	return myUserInfo;
     }
+	
+    // functional methods
     
-    public boolean duplicateUserRegistrationCheck(String[] theUserInfo) {
-        boolean isDuplRgstrn = false;
-    	if (checkDuplicate(theUserInfo[1])) {
-            isDuplRgstrn = true;
-    	}
-    	return isDuplRgstrn;
+	/**
+     * Transfer control to the user, specified by their e-mail address.
+     */
+    public void giveControlToUser() {
+
+        User user = DataPollster.getInstance().getUser(myUserInfo[1]);
+
+        UI userUI = null;
+
+        if (user instanceof ParkManager) {
+            ParkManager manager = DataPollster.getInstance().getParkManager(myUserInfo[1]);
+            userUI = new ParkManagerUI(manager);
+        }
+
+        if (user instanceof Administrator) {
+            Administrator admin = DataPollster.getInstance().getAdministrator(myUserInfo[1]);
+            userUI = new AdministratorUI(admin);
+
+        }
+
+        if (user instanceof Volunteer) {
+            Volunteer volunteer = DataPollster.getInstance().getVolunteer(myUserInfo[1]);
+            userUI = new VolunteerUI(volunteer);
+        }
+
+        if (userUI != null)
+            userUI.commandLoop();
     }
-    
-    public String[] validUserRegistrationCheck(String[] theUserInfo) {
-        String[] userInfoToReturn = theUserInfo;
-    	if (theUserInfo == null || theUserInfo[4] == null)
-            userInfoToReturn = null;
-        return userInfoToReturn;
+	
+    /**
+     * Return a true if the registration was successful and false otherwise.
+     */
+    public boolean registerUser() {  
+    	boolean registerSuccess = false;
+        if (!duplicateUserRegistrationCheck() && validUserRegistrationCheck()) {
+        	Schedule.getInstance().addUser(myUserInfo[1], myUserInfo[2], myUserInfo[3],
+                    myUserInfo[4]);
+        	registerSuccess = true;
+        	if (myUserInfo[1] != null) {
+        		giveControlToUser();
+        	}
+        }
+        
+        return registerSuccess;
     }
     
     /**
-     * Check if the email is already being used. If so, return true. If not,
-     * return false.
+     * Return true if the login was successful and false otherwise.
      */
-    public boolean checkDuplicate(String theEmail) {
-        boolean status = false;
-
-        for (User user : DataPollster.getInstance().getAllUserList()) {
-            if (user.getEmail().equals(theEmail)) {
-                status = true;
-            }
+    public boolean loginUser() {
+    	boolean loginSuccess = false;
+        if (!duplicateUserRegistrationCheck()) {
+            loginSuccess = true;
+            if (myUserInfo[1] != null) {
+        		giveControlToUser();
+        	}
         }
-
-        return status;
+        return loginSuccess;
+    }
+    
+    /**
+     * Returns true if email is already used and false otherwise.
+     * @return true if email is already used and false otherwise.
+     */
+    public boolean duplicateUserRegistrationCheck() {
+        return DataPollster.getInstance().checkEmail(myUserInfo[1]);
+    }
+    
+    /**
+     * Returns true if the user info is valid and false otherwise.
+     * @return true if the user info is valid and false otherwise.
+     */
+    public boolean validUserRegistrationCheck() {
+        return myUserInfo != null && myUserInfo[4] != null;
     }
     
 	/**
