@@ -27,15 +27,10 @@ public class Volunteer extends User implements Serializable {
 	 * @param theVol is the volunteer's email and work grade.
 	 * @param theID is the jobs id number
 	 * @return true if the volunteer was signed up, false otherwise.
+	 * @throws IllegalArgumentException If something went wrong with adding the volunteer to job
 	 */
-	public boolean signUp(ArrayList<String> theVol, int theID) {
-		try {
+	public boolean signUp(ArrayList<String> theVol, int theID) throws IllegalArgumentException {
 			return Schedule.getInstance().addVolunteerToJob(theVol, theID);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-		}
-		return false;
 	}
 	
 	

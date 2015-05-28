@@ -4,6 +4,7 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,16 +113,16 @@ public class VolunteerTest {
 		
 	}
 	
-	/**Add a volunteer to a job's grade which has no positions.
-	 *
+	/**
+	 * Add a volunteer to a job's grade which has no positions.
 	 */
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void signUpTEST1() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Light");
 		
-		assertEquals(Naruto.signUp(theVol, 0), false);
+		Naruto.signUp(theVol, 0);
 	}
 	
 	
@@ -143,7 +144,7 @@ public class VolunteerTest {
 	 * the max for that portion is 1.
 	 * This should assert false b/c you cannot add to a full portion.
 	 */
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void signUpTEST3() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
@@ -153,7 +154,7 @@ public class VolunteerTest {
 		ArrayList<String> theVol2 = new ArrayList<String>();
 		theVol2.add("Ash@yahoo.com");
 		theVol2.add("Medium");	
-		assertEquals(Ash.signUp(theVol2, 0), false);
+		Ash.signUp(theVol2, 0);
 	}
 	
 	/**
@@ -200,12 +201,12 @@ public class VolunteerTest {
 	/**
 	 * Adding volunteer to a job that does not exist.
 	 */
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void signUpTEST6() {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
-		assertEquals(Goku.signUp(theVol3, 279), false);
+		Goku.signUp(theVol3, 279);
 	}
 	
 	
@@ -213,7 +214,7 @@ public class VolunteerTest {
 	/**
 	 * Adding volunteer to a job in the past
 	 */
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void signUpTEST7() {
 		JobList testJobList = new JobList();
 
@@ -225,14 +226,12 @@ public class VolunteerTest {
 		testJobList.setJobList(myList);
 		Schedule.getInstance().setJobList(testJobList);
 		DataPollster.getInstance().setJobList(testJobList) ;
-		//System.out.println(Schedule.getInstance().getJobList().getNumberOfJobs());
 		
 		
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Heavy");
-		assertEquals(Arsh.signUp(theVol5, 5), false);
-		
+		Arsh.signUp(theVol5, 5);
 	}
 	
 	
@@ -242,14 +241,14 @@ public class VolunteerTest {
 	/**
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void signUpTEST8() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
 		
 		Yugi.signUp(theVol4, 0);
-		assertEquals(Yugi.signUp(theVol4, 2), false);
+		Yugi.signUp(theVol4, 2);
 	}
 	
 	

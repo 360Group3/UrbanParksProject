@@ -83,7 +83,12 @@ public class VolunteerUI implements UI {
 		case "sign":
 		case "s":
 		case "2":
-			signUp();
+		    try {
+		        signUp();
+		    }
+		    catch (IllegalArgumentException e) {
+		        System.out.println(e.getMessage());
+		    }
 			break;
 
 		case "view my jobs":
