@@ -2,6 +2,12 @@ package model;
 
 import view.LoginUI;
 
+/**
+ * A "Runner" class for the main method of the Urban Parks project.
+ * 
+ * @author Reid Thompson - most recent implementation
+ * @version 5.27.2015
+ */
 public class Runner {
 
 	public static void main(String[] args) {
