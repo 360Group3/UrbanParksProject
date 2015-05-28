@@ -164,11 +164,13 @@ public class DataPollster implements Serializable {
 	 */
 
 	/**
-	 * Check the e-mail address of a user logging in to see if they exist in the
-	 * system.
+	 * Returns true if a user with the given email already exists in the system,
+	 * and false otherwise.
 	 * 
 	 * @author Reid Thompson - initial implementation and changed for User
 	 *         functionality.
+	 * @return true if a user with the given email already exists in the system,
+	 * and false otherwise.
 	 */
 	public boolean checkEmail(String theEmail) {
 		boolean result = false;
