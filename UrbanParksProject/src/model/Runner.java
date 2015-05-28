@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import view.LoginUI;
 
 public class Runner {
@@ -20,7 +22,7 @@ public class Runner {
 
             DataPollster.getInstance().setJobList(jobList);
             DataPollster.getInstance().setUserList(userList);
-
+            
             UI.commandLoop();
 
             saveManager.saveJobList(jobList);

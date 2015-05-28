@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 
+import model.DataPollster;
 import model.Login;
 
 /**
@@ -53,7 +54,8 @@ public class LoginUI implements UI {
     			break;
     		case 2: // register
     			registerUserInfo();
-    			if (myLogin.getUserInfo()[0].equals("register")) {
+    			if (myLogin.getUserInfo()[0] != null 
+    					&& myLogin.getUserInfo()[0].equals("register")) {
     				registerSuccess = myLogin.registerUser();
     			}
     			break;
@@ -79,8 +81,13 @@ public class LoginUI implements UI {
     }
     
     private void registerUserInfo() {
-        myLogin.setUserInfoRegister("register", getNewEmail(), getFirstName(), getLastName(),
+    	String email = getNewEmail();
+    	if (!DataPollster.getInstance().checkEmail(email)) {
+    		myLogin.setUserInfoRegister("register", email, getFirstName(), getLastName(),
         							getUserType());
+    	} else {
+    		displayDuplicateEmailError();
+    	}
     }
     
     private void loginUserInfo() {
