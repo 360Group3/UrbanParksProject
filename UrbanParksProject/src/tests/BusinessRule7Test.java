@@ -3,10 +3,12 @@ package tests;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.DataPollster;
 import model.Job;
 import model.JobList;
+import model.ParkManager;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
@@ -36,6 +38,13 @@ public class BusinessRule7Test {
 		DataPollster.getInstance().setUserList(myUserList);
 	
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
+		myUserList.addNewVolunteer(Yugi);
+		List<String> parkList = new ArrayList<String>();
+		parkList.add("Namek");
+		parkList.add("Egypt");
+		ParkManager Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
+		myUserList.addNewParkManager(Tenenberg);
+		
 		
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		Job tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());

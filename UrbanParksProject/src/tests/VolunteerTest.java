@@ -64,6 +64,7 @@ public class VolunteerTest {
 		parkList.add("Namek");
 		parkList.add("Konoha");
 		parkList.add("Kento");
+		parkList.add("Egypt");
 		Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
 		myUserList.addNewParkManager(Tenenberg);
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
@@ -122,6 +123,13 @@ public class VolunteerTest {
 		theVol.add("Light");
 		
 		assertEquals(Naruto.signUp(theVol, 0), false);
+		
+		//try (new Schedule(the time of the job)
+				//catch e
+				//string x = e.getMessage
+				
+				//assertEquals(x, "Sorry but that job is in the past);
+				
 	}
 	
 	

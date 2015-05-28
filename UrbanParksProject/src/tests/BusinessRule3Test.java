@@ -10,6 +10,8 @@ import model.JobList;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
+import model.businessRules.BusinessRule3;
+import model.businessRules.BusinessRule5;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +24,7 @@ import org.junit.Test;
 public class BusinessRule3Test {
 	
 	Volunteer Naruto;
+	Job defeatFrieza;
 	
 	JobList myJobList;
 	UserList myUserList;
@@ -39,10 +42,10 @@ public class BusinessRule3Test {
 		Naruto = new Volunteer("Naruto@yahoo.com", "Naruto", "Uzamaki");
 		myUserList.addNewVolunteer(Naruto);
 		
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5,
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5,
 				"06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
-		Schedule.getInstance().receiveJob(defeatFrieza);
+		
 	}
 	
 	
@@ -56,7 +59,7 @@ public class BusinessRule3Test {
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Light");
 		
-		assertEquals(Naruto.signUp(theVol, 0), false);
+		assertEquals(new BusinessRule3().test(defeatFrieza, "Light"), false);
 	}
 	
 	
@@ -69,6 +72,8 @@ public class BusinessRule3Test {
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
 		
-		assertEquals(Naruto.signUp(theVol, 0), true);
+		
+		assertEquals(new BusinessRule3().test(defeatFrieza, "Medium"), true);
+		
 	}
 }
