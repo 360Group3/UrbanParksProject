@@ -152,9 +152,9 @@ public class Schedule implements Serializable {
      * @param theJobID the ID number for the Job to which the Volunteer will be added.
      * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
      * @return true if the Volunteer was added to the Job and false otherwise.
-     * @throws Exception 
+     * @throws IllegalArgumentException if a parameter was not quite right.
      */ 
-    public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws Exception {
+    public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws IllegalArgumentException {
         //CHECK 1
         boolean validID = checkJobValidity(theJobID); //Schedule will check to make sure the Job ID is valid
         if (!validID){
@@ -164,7 +164,7 @@ public class Schedule implements Serializable {
         //CHECK 2
         Job thisJob = findJob(theJobID);
         if (thisJob == null) {
-            throw new Exception("Job does not exist");
+            throw new IllegalArgumentException("Job does not exist");
         }
 
         //CHECK 3

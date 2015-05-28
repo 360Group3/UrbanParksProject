@@ -53,11 +53,11 @@ public class VolunteerTest {
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
 		Naruto = new Volunteer("Naruto@yahoo.com", "Naruto", "Uzamaki");
 		Ash = new Volunteer("Ash@yahoo.com", "Ash", "Ketchum");
-		myUserList.addNewVolunteer(Arsh);
-		myUserList.addNewVolunteer(Goku);
-		myUserList.addNewVolunteer(Yugi);
-		myUserList.addNewVolunteer(Naruto);
-		myUserList.addNewVolunteer(Ash);		
+		myUserList.addNewUser(Arsh);
+		myUserList.addNewUser(Goku);
+		myUserList.addNewUser(Yugi);
+		myUserList.addNewUser(Naruto);
+		myUserList.addNewUser(Ash);		
 		
 		
 		List<String> parkList = new ArrayList<String>();
@@ -65,7 +65,7 @@ public class VolunteerTest {
 		parkList.add("Konoha");
 		parkList.add("Kento");
 		Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
-		myUserList.addNewParkManager(Tenenberg);
+		myUserList.addNewUser(Tenenberg);
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
