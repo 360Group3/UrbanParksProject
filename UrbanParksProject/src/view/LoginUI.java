@@ -32,7 +32,7 @@ public class LoginUI implements UI {
 	public void commandLoop() {
 		displayIntro();
 		
-		registerUserInfo();
+		handleLogin();
 		
 		String[] userInfo = myLogin.getUserInfo();
 
@@ -84,15 +84,14 @@ public class LoginUI implements UI {
         return myLogin.validUserRegistrationCheck(userInfo);
     }
     
-    // Get user login choice.
-    public int getLoginChoice() {
+    private void handleLogin() {
         while (true) {
             displayLoginChoices();
 
             int userChoice = getUserInt();
 
             if (userChoice > 0 && userChoice < 4)
-                return userChoice;
+            	myLogin.processUserChoice(userChoice);
             else
                 displayInvalidChoice();
         }
@@ -103,74 +102,30 @@ public class LoginUI implements UI {
         							getUserType());
     }
     
-    public void displayIntro() {
-        System.out.println("\n------------------------------------------\n"
-                        + "Welcome to Urban Park's Volunteer Program!");
-    }
-    
-    private void displayLoginChoices() {
-        System.out.println("\n1) Existing User");
-        System.out.println("2) New User");
-        System.out.println("3) Exit\n");
+    private void loginUserInfo() {
+    	myLogin.setUserInfoLogin("login", getReturnEmail());
     }
 
-    public String getReturnEmail() {
+    private String getReturnEmail() {
         System.out.println("------------------------------------------\n"
                        + "\nPlease enter your e-mail address to login:");
         return getUserString();
     }
 
-    public String getNewEmail() {
+    private String getNewEmail() {
         System.out.println("------------------------------------------\n"
                         + "\nWhat is your e-mail address?");
         return getUserString();
     }
 
-    public String getFirstName() {
+    private String getFirstName() {
         System.out.println("\nWhat is your first name?");
         return getUserString();
     }
 
-    public String getLastName() {
+    private String getLastName() {
         System.out.println("\nWhat is your last name?");
         return getUserString();
-    }
-
-    public String getUserType() {
-        System.out.println("\nWhat type of user are you?");
-        System.out.println("1) Volunteer");
-        System.out.println("2) Park Manager");
-        System.out.println("3) Administrator");
-
-        int userType = getUserInt();
-
-        switch (userType) {
-            case 1:
-                return "Volunteer";
-            case 2:
-                return "ParkManager";
-            case 3:
-                return "Administrator";
-            default:
-                displayInvalidChoice();
-                return getUserType();
-        }
-    }
-
-    public void displayExit() {
-        System.out.println("\n--End Program--");
-    }
-
-    public void displayInvalidChoice() {
-        System.out.println("\nSorry, but your choice was invalid.");
-    }
-
-    public void displayInvalidEmail() {
-        System.out.println("\nSorry, but your e-mail address was not recognized.");
-    }
-
-    public void displayDuplicateError() {
-        System.out.println("\nSorry, but this email address is already in use.");
     }
 
     private int getUserInt() {
@@ -197,5 +152,53 @@ public class LoginUI implements UI {
         }
 
         return userInput;
+    }
+    
+    private String getUserType() {
+        System.out.println("\nWhat type of user are you?");
+        System.out.println("1) Volunteer");
+        System.out.println("2) Park Manager");
+        System.out.println("3) Administrator");
+
+        int userType = getUserInt();
+
+        switch (userType) {
+            case 1:
+                return "Volunteer";
+            case 2:
+                return "ParkManager";
+            case 3:
+                return "Administrator";
+            default:
+                displayInvalidChoice();
+                return getUserType();
+        }
+    }
+
+    private void displayIntro() {
+        System.out.println("\n------------------------------------------\n"
+                        + "Welcome to Urban Park's Volunteer Program!");
+    }
+    
+    private void displayLoginChoices() {
+        System.out.println("\n1) Existing User");
+        System.out.println("2) New User");
+        System.out.println("3) Exit\n");
+    }
+    
+    private void displayExit() {
+        System.out.println("\n--End Program--");
+    }
+
+    private void displayInvalidChoice() {
+        System.out.println("\nSorry, but your choice was invalid.");
+    }
+
+    private void displayInvalidEmail() {
+        System.out.println("\nSorry, but your e-mail address was not recognized.");
+    }
+
+    private void displayDuplicateError() {
+        System.out.println("\nSorry, but this email address is already in use.");
     }
 }

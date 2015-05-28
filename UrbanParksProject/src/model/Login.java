@@ -10,7 +10,7 @@ public class Login {
 	private String[] myUserInfo;
 	
 	public Login() {
-		myUserInfo = new String[4];
+		myUserInfo = new String[5];
 	}
 	
 	/**
@@ -42,9 +42,9 @@ public class Login {
             userUI.commandLoop();
     }
 
-    public boolean directLogin(int theLoginCommand) {
+    public boolean processUserChoice(int theUserChoice) {
     	boolean isInvalidChoice = false;
-    	switch (theLoginCommand) {
+    	switch (theUserChoice) {
     	case 1:
     		userInfo = loginUser();
     		break;
@@ -81,18 +81,17 @@ public class Login {
     }
     
     public void setUserInfoRegister(String theAction, String theEmail, String theFirstName,
-    								String theLastName) {
+    								String theLastName, String theUserType) {
     	myUserInfo[0] = theAction;
     	myUserInfo[1] = theEmail;
     	myUserInfo[2] = theFirstName;
     	myUserInfo[3] = theLastName;
+    	myUserInfo[4] = theUserType;
     }
     
     public String[] getUserInfo() {
     	return myUserInfo;
     }
-    
-    public 
     
     public boolean duplicateUserRegistrationCheck(String[] theUserInfo) {
         boolean isDuplRgstrn = false;
