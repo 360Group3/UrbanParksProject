@@ -42,21 +42,3 @@ public class BusinessRule5 {
 		return true;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

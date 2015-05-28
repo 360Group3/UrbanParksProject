@@ -280,6 +280,9 @@ public class VolunteerTest {
 	}
 	
 	
+	/**
+	 * This gets the number of jobs that are available to sign up for.
+	 */
 	@Test
 	public void getTheJobsTest() {
 		
@@ -291,27 +294,6 @@ public class VolunteerTest {
 			}
 		}
 		
-		
-		//This is kind of an iffy test. I could just get rid of it because of the problems
-		//its having with the time of day (read line 301).	This would also mean getting 
-		//rid of the 'catchMew' job in the setup() method and then rewriting this test in
-		//a different way.
-		
-		assertEquals(count, 3); //TODO, there is a problem here
-								//This assertEquals fails (with input 4) before midnight but 
-								//works just after midnight. 
-								//At 12:10 am, this assert passed with input 4.
-								//At 5:42 am, this assert passed with input 3.
-								//At 10:34 am, this assert passed with input 3.
-								//This must have to do with the way we check to see
-								//if a job is in the past.
+		assertEquals(count, 3); 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
