@@ -44,9 +44,12 @@ public class UserList implements Serializable {
         boolean hasBeenAdded = false;
         boolean alreadyExists = false;
         if (theUser != null) {
-            for (int i = 0; i < myUserList.size(); i++) {
-                final User currUser = myUserList.get(i);
-                alreadyExists = currUser.getEmail().equals(theUser.getEmail());
+            for (User u : myUserList) {
+                if(u.getEmail().equals(theUser.getEmail()))
+                {
+                    alreadyExists = true;
+                    break;
+                }
             }
             
             if (!alreadyExists) {
