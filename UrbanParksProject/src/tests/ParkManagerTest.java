@@ -167,7 +167,7 @@ public class ParkManagerTest {
         managerJobList = testManager.getJobs();
         assertEquals(managerJobList.size(), 4);
         assertEquals(managerJobList.get(3).getJobID(), 3);
-        assertEquals(managerJobList.get(0).getHeavyMax(), 10);
+        assertEquals(managerJobList.get(3).getHeavyMax(), 10);
         assertEquals(managerJobList.get(3).getPark(), "Test Park 1");
         
         
@@ -196,11 +196,11 @@ public class ParkManagerTest {
     @Test
     public void testAddJob() {
         volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(3, "Test Park 4", 5, 5, 5, "06052015", "06052015",
+        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
 
-        assertEquals(DataPollster.getInstance().getJobCopy(3).getPark(), "Test Park 4");
+        assertEquals(DataPollster.getInstance().getJobCopy(3).getPark(), "Test Park 1");
         assertEquals(DataPollster.getInstance().getJobCopy(3).getManager(),
                      "testmanager@gmail.com");
     }
@@ -214,7 +214,7 @@ public class ParkManagerTest {
         assertEquals(testManager.getNewJobID(), 3);
 
         volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(3, "Test Park 4", 5, 5, 5, "06052015", "06052015",
+        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
 
@@ -229,13 +229,16 @@ public class ParkManagerTest {
     public void testIsManagerOfJob() {
         assertTrue(testManager.isManagerOfJob(0));
         assertTrue(testManager.isManagerOfJob(1));
+        
+        List<String> parkArray = new ArrayList<String>();
+        parkArray.add("Foreign Park");
 
         volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(3, "Test Park 4", 5, 5, 5, "06052015", "06052015",
+        Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "06252015", "06252015",
                                 "nottestmanager@gmail.com", volunteerList);
-        testManager.addJob(testJob);
+        Schedule.getInstance().receiveJob(testJob);
 
-        assertFalse(testManager.isManagerOfJob(3));
+        assertFalse(testManager.isManagerOfJob(4));
     }
 
     
