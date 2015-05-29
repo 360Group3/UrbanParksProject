@@ -119,7 +119,9 @@ public class ParkManager extends User implements Serializable {
 
         if(isManagerOfJob(theJobID)) {
         	volunteerList = new ArrayList<Volunteer>();
+        	
             volunteerList.addAll(DataPollster.getInstance().getJobVolunteerList(theJobID));
+            
         } else {
         	//The ParkManager does not manage this job.
         	volunteerList = null;

@@ -75,19 +75,19 @@ public class ParkManagerTest {
 
         //Create Volunteer Arrays to be added to Jobs
         ArrayList<String> volunteer1Array = new ArrayList<String>();
-        volunteer1Array.add("testVolunteer1@gmail.com");
+        volunteer1Array.add("testvolunteer1@gmail.com");
         volunteer1Array.add("Light");
 
         ArrayList<String> volunteer2Array = new ArrayList<String>();
-        volunteer2Array.add("testVolunteer2@gmail.com");
+        volunteer2Array.add("testvolunteer2@gmail.com");
         volunteer2Array.add("Medium");
 
         ArrayList<String> volunteer3Array = new ArrayList<String>();
-        volunteer3Array.add("testVolunteer3@gmail.com");
+        volunteer3Array.add("testvolunteer3@gmail.com");
         volunteer3Array.add("Heavy");
 
         ArrayList<String> volunteer4Array = new ArrayList<String>();
-        volunteer4Array.add("testVolunteer4@gmail.com");
+        volunteer4Array.add("testvolunteer4@gmail.com");
         volunteer4Array.add("Heavy");
 
         //Create Test Jobs
@@ -150,7 +150,7 @@ public class ParkManagerTest {
         assertEquals(managerJobList.size(), 3);
         assertEquals(managerJobList.get(0).getJobID(), 0);
         assertEquals(managerJobList.get(0).getVolunteerList().get(0).get(0),
-                    "testVolunteer4@gmail.com");
+                    "testvolunteer4@gmail.com");
         
         
         //Show that we can create a new Job, and then get the details on that Job.
@@ -159,7 +159,7 @@ public class ParkManagerTest {
         Schedule.getInstance().receiveJob(newJob);
         
         ArrayList<String> volunteer4Array = new ArrayList<String>();
-        volunteer4Array.add("testVolunteer4@gmail.com");
+        volunteer4Array.add("testvolunteer4@gmail.com");
         volunteer4Array.add("Heavy");
         
         Schedule.getInstance().addVolunteerToJob(volunteer4Array, 3);
@@ -299,12 +299,25 @@ public class ParkManagerTest {
      */
     @Test
     public void testGetJobVolunteerList() {
+    	//Show that the ParkManager can access various details of the Volunteers
+    	//assigned to Jobs in Parks that they manage.
         assertEquals(testManager.getJobVolunteerList(0).size(), 2);
-        assertEquals(testManager.getJobVolunteerList(0).get(0), "testVolunteer4@gmail.com");
-        assertEquals(testManager.getJobVolunteerList(0).get(1), "Heavy");
-        
+        assertEquals(testManager.getJobVolunteerList(0).get(0).getEmail(), "testvolunteer4@gmail.com");
+        assertEquals(testManager.getJobVolunteerList(0).get(1).getFirstName(), "Test2");        
         assertEquals(testManager.getJobVolunteerList(2).size(), 1);
-        assertEquals(testManager.getJobVolunteerList(3).size(), 0);
+        
+        //Show that the ParkManager cannot access any details about Volunteers assigned to
+        //Jobs in Parks that they do not manage.
+        Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "06202015", "06212015",
+        		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
+        Schedule.getInstance().receiveJob(foreignJob);
+        
+        ArrayList<String> volunteer4Array = new ArrayList<String>();
+        volunteer4Array.add("testvolunteer4@gmail.com");
+        volunteer4Array.add("Heavy");        
+        Schedule.getInstance().addVolunteerToJob(volunteer4Array, 3);
+        
+        assertTrue(testManager.getJobVolunteerList(3) == null); //Can't even see the list!
     }
 
 }
