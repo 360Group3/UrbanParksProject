@@ -17,7 +17,7 @@ public class UserList implements Serializable {
 
     private static final long serialVersionUID = 7L;
 
-    private static final int MAX_NUM_USERS = 10000;
+    private static final int MAX_NUM_USERS = Integer.MAX_VALUE;
 
     // User Lists
     private List<User> myUserList;
@@ -68,6 +68,11 @@ public class UserList implements Serializable {
         return hasBeenAdded;
     }
 
+    /**
+     * 
+     * @param userType <TheUserClass>.class for which type of user you want to look for.
+     * @return a list of all the members of a user type from the list of users.
+     */
     private List<User> getUserTypeListCopy(Class<? extends User> userType) {
         List<User> users = new ArrayList<>();
         
