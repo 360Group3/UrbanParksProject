@@ -137,6 +137,9 @@ public class ParkManagerTest {
         assertEquals(constructorManager.getManagedParks().get(1), "Constructor Test 2");
     }
 
+    /**
+     * Test to ensure that a ParkManager can get all Jobs for Parks that they manage.
+     */
     @Test
     public void testGetJobs() {
         List<Job> managerJobList = testManager.getJobs();
@@ -147,6 +150,11 @@ public class ParkManagerTest {
                     "testVolunteer4@gmail.com");
     }
 
+    
+    /**
+     * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
+     * Jobs are rejected.
+     */
     @Test
     public void testAddJob() {
         volunteerList = new ArrayList<ArrayList<String>>();
@@ -159,6 +167,10 @@ public class ParkManagerTest {
                      "testmanager@gmail.com");
     }
 
+    
+    /**
+     * Tests to ensure that a ParkManager can acquire the correct JobID for a new job.
+     */
     @Test
     public void testGetNewJobID() {
         assertEquals(testManager.getNewJobID(), 3);
@@ -171,6 +183,10 @@ public class ParkManagerTest {
         assertEquals(testManager.getNewJobID(), 4);
     }
 
+    
+    /**
+     * Test to ensure that a ParkManager can tell if it is the ParkManager of a Job.
+     */
     @Test
     public void testIsManagerOfJob() {
         assertTrue(testManager.isManagerOfJob(0));
@@ -184,6 +200,11 @@ public class ParkManagerTest {
         assertFalse(testManager.isManagerOfJob(3));
     }
 
+    
+    /**
+     * Test to ensure that the ParkManager can return a list of the Parks that it is attached
+     * to.
+     */
     @Test
     public void testGetManagedParks() {
         assertEquals(testManager.getManagedParks().get(0), "Test Park 1");
@@ -201,6 +222,10 @@ public class ParkManagerTest {
         assertFalse(testManager.getManagedParks().contains("Not Our Park"));
     }
 
+    
+    /**
+     * Test to ensure that the ParkManager can update the Parks that it is attached to.
+     */
     @Test
     public void testSetManagedParks() {
         assertEquals(testManager.getManagedParks().size(), 3);
@@ -226,6 +251,11 @@ public class ParkManagerTest {
                         .getManagedParks().contains("Not Our Park"));
     }
 
+    
+    /**
+     * Test to ensure that the ParkManager can get the List of Volunteers attached to a Job
+     * with a Park that they manage.
+     */
     @Test
     public void testGetJobVolunteerList() {
         assertEquals(testManager.getJobVolunteerList(0).size(), 2);
