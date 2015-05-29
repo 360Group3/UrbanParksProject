@@ -81,11 +81,10 @@ public class AdministratorUI implements UI {
      */
     public void listCommands() {
         System.out.println("\n------------------------------------------\n"
-                + "Administrator Menu\n" + "\nWhat would you like to do?\n"
-                + "Please enter the option number, ie. 2 for Logout.");
-        System.out.println("1) List all Volunteers\n");
-        System.out.println("2) Search Volunteers by Last Name\n");
-        System.out.println("3) Logout\n");
+                + "Administrator Menu\n" + "\nWhat would you like to do?");
+        System.out.println("1) List All Volunteers");
+        System.out.println("2) Search Volunteers by Last Name");
+        System.out.println("3) Logout");
     }
 
     private List<User> searchByLastName() {
