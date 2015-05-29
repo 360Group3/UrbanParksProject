@@ -91,11 +91,11 @@ public class ParkManagerTest {
         volunteer4Array.add("Heavy");
 
         //Create Test Jobs
-        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "06012015", "06012015",
+        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "06102015", "06102015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "06032015", "06032015",
+        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "06112015", "06112015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "06052015", "06052015",
+        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "06122015", "06122015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
 
         //Add the Test Jobs to the JobList, and then add the Volunteer arrays to those jobs.
@@ -123,6 +123,8 @@ public class ParkManagerTest {
      */
     @Test
     public void testParkManager() {
+    	
+    	//Create an entirely new ParkManager from scratch.
         List<String> parkList = new ArrayList<String>();
         parkList.add("Constructor Test 1");
         parkList.add("Constructor Test 2");
@@ -130,6 +132,7 @@ public class ParkManagerTest {
                                                          "Construct", "Manager",
                                                          parkList);
 
+        //Show that we can get back all of the fields that we just set.
         assertEquals(constructorManager.getEmail(), "construct@gmail.com");
         assertEquals(constructorManager.getFirstName(), "Construct");
         assertEquals(constructorManager.getLastName(), "Manager");
@@ -142,12 +145,47 @@ public class ParkManagerTest {
      */
     @Test
     public void testGetJobs() {
+    	//Show that we can recover the data from a Job we created in setup.
         List<Job> managerJobList = testManager.getJobs();
-
         assertEquals(managerJobList.size(), 3);
         assertEquals(managerJobList.get(0).getJobID(), 0);
         assertEquals(managerJobList.get(0).getVolunteerList().get(0).get(0),
                     "testVolunteer4@gmail.com");
+        
+        
+        //Show that we can create a new Job, and then get the details on that Job.
+        Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "06152015", "06152015",
+                "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
+        Schedule.getInstance().receiveJob(newJob);
+        
+        ArrayList<String> volunteer4Array = new ArrayList<String>();
+        volunteer4Array.add("testVolunteer4@gmail.com");
+        volunteer4Array.add("Heavy");
+        
+        Schedule.getInstance().addVolunteerToJob(volunteer4Array, 3);
+        
+        managerJobList = testManager.getJobs();
+        assertEquals(managerJobList.size(), 4);
+        assertEquals(managerJobList.get(3).getJobID(), 3);
+        assertEquals(managerJobList.get(0).getHeavyMax(), 10);
+        assertEquals(managerJobList.get(3).getPark(), "Test Park 1");
+        
+        
+        //Show that we can't get the details on a Job created in a Park that the ParkManager
+        //doesn't manage.
+        Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "06202015", "06212015",
+        		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
+        Schedule.getInstance().receiveJob(foreignJob);        
+        Schedule.getInstance().addVolunteerToJob(volunteer4Array, 4);
+        
+        managerJobList = testManager.getJobs();
+        assertFalse(managerJobList.size() == 5);
+        
+        boolean jobFound = false;
+        for(Job job : managerJobList) {
+        	if(job.getJobID() == 4) jobFound = true;
+        }
+        assertFalse(jobFound);
     }
 
     
@@ -259,6 +297,9 @@ public class ParkManagerTest {
     @Test
     public void testGetJobVolunteerList() {
         assertEquals(testManager.getJobVolunteerList(0).size(), 2);
+        assertEquals(testManager.getJobVolunteerList(0).get(0), "testVolunteer4@gmail.com");
+        assertEquals(testManager.getJobVolunteerList(0).get(1), "Heavy");
+        
         assertEquals(testManager.getJobVolunteerList(2).size(), 1);
         assertEquals(testManager.getJobVolunteerList(3).size(), 0);
     }
