@@ -241,9 +241,11 @@ public class ParkManagerTest {
 
         volunteerList = new ArrayList<ArrayList<String>>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
-                "testmanager@gmail.com", volunteerList);
-        testManager.addJob(testJob);
+                "testmanager@gmail.com", volunteerList);        
 
+        //Show that the Job ID increments only after the new job is added.
+        assertEquals(testManager.getNewJobID(), 3);
+        testManager.addJob(testJob);
         assertEquals(testManager.getNewJobID(), 4);
     }
 
@@ -253,9 +255,11 @@ public class ParkManagerTest {
      */
     @Test
     public void testIsManagerOfJob() {
+    	//Show that testManager is the ParkManager of previously added jobs.
         assertTrue(testManager.isManagerOfJob(0));
         assertTrue(testManager.isManagerOfJob(1));
         
+        //Show that isManagerOfJob() returns false when testManager isn't the ParkManager.
         List<String> parkArray = new ArrayList<String>();
         parkArray.add("Foreign Park");
 
@@ -265,6 +269,9 @@ public class ParkManagerTest {
         Schedule.getInstance().receiveJob(testJob);
 
         assertFalse(testManager.isManagerOfJob(4));
+        
+        //Show that isManagerOfJob() still returns false for Jobs that do not exist.
+        assertFalse(testManager.isManagerOfJob(5));
     }
 
     
@@ -274,10 +281,14 @@ public class ParkManagerTest {
      */
     @Test
     public void testGetManagedParks() {
+    	//Shows that getManagedParks() works for all Parks that we have previously added
+    	//for this ParkManager.
         assertEquals(testManager.getManagedParks().get(0), "Test Park 1");
         assertEquals(testManager.getManagedParks().get(1), "Test Park 2");
         assertTrue(testManager.getManagedParks().contains("Test Park 3"));
 
+        //Shows that getManagedParks() will not retrieve a Park that exists, but another
+        //ParkManager manages.
         List<String> parkList = new ArrayList<String>();
         parkList.add("Not Our Park");
         Schedule.getInstance().addUser("nottestmanager@gmail.com", "Not", "Manager",
@@ -295,15 +306,20 @@ public class ParkManagerTest {
      */
     @Test
     public void testSetManagedParks() {
+    	//Shows that we still have a Park List size of 3.
         assertEquals(testManager.getManagedParks().size(), 3);
 
+        //Add a new Park, call setManagedParks(), and shows that the Park List has been updated.
         List<String> parkList1 = new ArrayList<String>();
         parkList1.addAll(testManager.getManagedParks());
         parkList1.add("Our Park");
         testManager.setManagedParks(parkList1);
-
+   
         assertEquals(testManager.getManagedParks().size(), 4);
+        assertEquals(testManager.getManagedParks().get(3), "Our Park");
 
+        //Show that if we call setManagedParks() on a ParkManager, it adds it to the Park
+        //List of that ParkManager only.
         Schedule.getInstance().addUser("nottestmanager@gmail.com", "Not", "Manager",
                                         "ParkManager");
 
