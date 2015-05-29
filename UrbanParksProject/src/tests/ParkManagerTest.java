@@ -13,40 +13,43 @@ import model.JobList;
 import model.ParkManager;
 import model.Schedule;
 import model.UserList;
-import model.Volunteer;
 
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * A series of tests for ParkManager, with comprehensive coverage
+ * over every implemented method.
+ * @author Taylor Gorman
+ * @version 29 May 2015
+ *
+ */
 public class ParkManagerTest {
 
+	//Class Variables that will be reused throughout several tests.
     static JobList myJobList;
     static UserList myUserList;
-
     static ParkManager testManager;
-
-    static Volunteer volunteer1;
-    static Volunteer volunteer2;
-    static Volunteer volunteer3;
-    static Volunteer volunteer4;
-    static Volunteer volunteer5;
-
     static ArrayList<ArrayList<String>> volunteerList;
 
-    static Job job1;
-    static Job job2;
-    static Job job3;
-
+    /**
+     * Called before every test. Here, we setup the JobList and User List, and then create test
+     * parks, Jobs, Volunteers, and a test ParkManager. These are all added to the Job List
+     * and User List to be used later.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
+    	
+    	//Create Lists and add them to Schedule and Pollster
         myJobList = new JobList();
         myUserList = new UserList();
-
         Schedule.getInstance().setJobList(myJobList);
         Schedule.getInstance().setUserList(myUserList);
         DataPollster.getInstance().setJobList(myJobList);
         DataPollster.getInstance().setUserList(myUserList);
 
+        //Create Test Parks, along with a ParkManager assigned to those parks.
         List<String> parkList = new ArrayList<String>();
         parkList.add("Test Park 1");
         parkList.add("Test Park 2");
@@ -57,6 +60,8 @@ public class ParkManagerTest {
 
         testManager = DataPollster.getInstance().getParkManager("testmanager@gmail.com");
 
+        
+        //Add Test Volunteers to the UserList
         Schedule.getInstance().addUser("testvolunteer1@gmail.com", "Test1", "Volunteer1",
                                         "Volunteer");
         Schedule.getInstance().addUser("testvolunteer2@gmail.com", "Test2", "Volunteer2",
@@ -68,6 +73,7 @@ public class ParkManagerTest {
         Schedule.getInstance().addUser("testvolunteer5@gmail.com", "Test5", "Volunteer5",
                                         "Volunteer");
 
+        //Create Volunteer Arrays to be added to Jobs
         ArrayList<String> volunteer1Array = new ArrayList<String>();
         volunteer1Array.add("testVolunteer1@gmail.com");
         volunteer1Array.add("Light");
@@ -84,13 +90,15 @@ public class ParkManagerTest {
         volunteer4Array.add("testVolunteer4@gmail.com");
         volunteer4Array.add("Heavy");
 
-        job1 = new Job(0, "Test Park 1", 5, 5, 5, "06012015", "06012015",
+        //Create Test Jobs
+        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "06012015", "06012015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        job2 = new Job(1, "Test Park 2", 5, 5, 5, "06032015", "06032015",
+        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "06032015", "06032015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        job3 = new Job(2, "Test Park 3", 5, 5, 5, "06052015", "06052015",
+        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "06052015", "06052015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
 
+        //Add the Test Jobs to the JobList, and then add the Volunteer arrays to those jobs.
         Schedule.getInstance().receiveJob(job1);
         Schedule.getInstance().receiveJob(job2);
         Schedule.getInstance().receiveJob(job3);
@@ -100,7 +108,19 @@ public class ParkManagerTest {
         Schedule.getInstance().addVolunteerToJob(volunteer2Array, 1);
         Schedule.getInstance().addVolunteerToJob(volunteer3Array, 2);
     }
+    
+    
+    
+    /*
+     * After setup(), we now have a UserList with a ParkManager (with 3 Parks) and 5 Volunteers.
+     * We also have a JobList with 3 Jobs, all assigned to that ParkManager, with different
+     * Volunteers signed up for them.
+     */
 
+    
+    /**
+     * Test to ensure that the construction of a new ParkManager is working as intended.
+     */
     @Test
     public void testParkManager() {
         List<String> parkList = new ArrayList<String>();
