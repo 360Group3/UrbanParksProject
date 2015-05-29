@@ -14,7 +14,7 @@ public class Job implements Serializable {
 
     private static final long serialVersionUID = 2L;
 
-    public static final int MAX_NUM_JOBS = Integer.MAX_VALUE;
+    public static final int MAX_NUM_JOBS = 10000;
     
     /**
      * This value is the identification number of a job.
