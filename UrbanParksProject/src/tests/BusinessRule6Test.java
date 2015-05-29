@@ -43,7 +43,7 @@ public class BusinessRule6Test {
 	/**
 	 * Adding volunteer to a job in the past
 	 */
-	@Test
+	@Test (expected = IllegalArgumentException.class)
 	public void signUpTEST() {
 		JobList testJobList = new JobList();
 
@@ -61,7 +61,7 @@ public class BusinessRule6Test {
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Heavy");
-		assertEquals(Arsh.signUp(theVol5, 5), false);
+		Arsh.signUp(theVol5, 5);
 		
 	}
 

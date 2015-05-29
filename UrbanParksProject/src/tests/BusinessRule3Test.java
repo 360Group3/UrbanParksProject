@@ -51,13 +51,13 @@ public class BusinessRule3Test {
 	/**
 	 * Add a volunteer to a job's grade which has no positions.
 	 */
-	@Test
+	@Test (expected = IllegalArgumentException.class)
 	public void signUpTEST1() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Light");
 		
-		assertEquals(Naruto.signUp(theVol, 0), false);
+		Naruto.signUp(theVol, 0);
 	}
 	
 	

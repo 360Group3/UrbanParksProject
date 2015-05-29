@@ -48,13 +48,13 @@ public class BusinessRule7Test {
 	/**
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
-	@Test
-	public void signUpTEST8() {
+	@Test (expected = IllegalArgumentException.class)
+	public void signUpTEST() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
 		
 		Yugi.signUp(theVol4, 0);
-		assertEquals(Yugi.signUp(theVol4, 1), false);
+		Yugi.signUp(theVol4, 1);
 	}
 }

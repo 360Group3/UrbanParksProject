@@ -236,8 +236,9 @@ public class DataPollster implements Serializable {
 		List<User> userList = myUserList.getUserListCopy();
 
 		for (User user : userList) {
-			if (user.getEmail().equals(theEmail))
+			if (user.getEmail().equals(theEmail)) {
 				return user;
+			}
 		}
 		return null;
 	}
@@ -252,11 +253,9 @@ public class DataPollster implements Serializable {
 	 * @return The Volunteer that matches the email, or null if such a Volunteer
 	 *         does not exist.
 	 */
-	public Volunteer getVolunteer(String theEmail) { // Reid: Removed "default"
-														// volunteer from being
-														// returned.
+	public Volunteer getVolunteer(String theEmail) {
 		User volunteer = getUser(theEmail);
-
+		
 		if (volunteer != null && volunteer instanceof Volunteer) {
 			return (Volunteer) volunteer;
 		}
