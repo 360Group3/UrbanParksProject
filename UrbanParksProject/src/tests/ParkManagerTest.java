@@ -15,7 +15,9 @@ import model.Schedule;
 import model.UserList;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * A series of tests for ParkManager, with comprehensive coverage
@@ -188,6 +190,8 @@ public class ParkManagerTest {
         assertFalse(jobFound);
     }
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
     
     /**
      * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
@@ -200,9 +204,31 @@ public class ParkManagerTest {
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
 
+        //Show that we can recover various details from this newly added Job.
         assertEquals(DataPollster.getInstance().getJobCopy(3).getPark(), "Test Park 1");
         assertEquals(DataPollster.getInstance().getJobCopy(3).getManager(),
                      "testmanager@gmail.com");
+        
+        //Show that we cannot add a Job for a Park we do not manage.
+        Job testJob2 = new Job(4, "Not My Park", 10, 10, 10, "06202015", "06202015",
+        		"nottestmanager@gmail.com", volunteerList);
+        
+        exception.expect(IllegalArgumentException.class);
+        testManager.addJob(testJob2);
+        
+        //Show that we cannot add a Job that lasts longer than two days.
+        Job testJob3 = new Job(4, "Test Park 1", 10, 10, 10, "06202015", "06222015",
+        		"testmanager@gmail.com", volunteerList);
+        
+        exception.expect(IllegalArgumentException.class);
+        testManager.addJob(testJob3);
+        
+        //Show that we cannot add a Job that is in the past.
+        Job testJob4 = new Job(4, "Test Park 1", 10, 10, 10, "06202014", "06202014",
+        		"testmanager@gmail.com", volunteerList);
+        
+        exception.expect(IllegalArgumentException.class);
+        testManager.addJob(testJob4);
     }
 
     
