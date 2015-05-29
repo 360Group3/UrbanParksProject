@@ -70,20 +70,30 @@ public class UserList implements Serializable {
 
     /**
      * 
+     * @param userType <TheUserClass>.class for which type of user you want to look for.
+     * @return a list of all the members of a user type from the list of users.
+     */
+    private List<User> getUserTypeListCopy(Class<? extends User> userType) {
+        List<User> users = new ArrayList<>();
+        
+        for (int i = 0; i < myUserList.size(); i++) {
+            final User currUser = myUserList.get(i);
+            
+            if (currUser.getClass().getCanonicalName().equals(userType.getCanonicalName())) {
+                users.add(currUser);
+            }
+        }
+
+        return users;
+    }
+    
+    /**
+     * 
      * @author Reid Thompson
      * @return
      */
     public List<User> getVolunteerListCopy() {
-        List<User> vols = new ArrayList<>();
-
-        for (int i = 0; i < myUserList.size(); i++) {
-            final User currUser = myUserList.get(i);
-            if (currUser instanceof Volunteer) {
-                vols.add(currUser);
-            }
-        }
-
-        return vols;
+        return getUserTypeListCopy(Volunteer.class);
     }
 
     /**
@@ -91,16 +101,7 @@ public class UserList implements Serializable {
      * @return
      */
     public List<User> getAdministratorListCopy() {
-        List<User> admins = new ArrayList<>();
-
-        for (int i = 0; i < myUserList.size(); i++) {
-            final User currUser = myUserList.get(i);
-            if (currUser instanceof Administrator) {
-                admins.add(currUser);
-            }
-        }
-
-        return admins;
+        return getUserTypeListCopy(Administrator.class);
     }
 
     /**
@@ -108,16 +109,7 @@ public class UserList implements Serializable {
      * @return
      */
     public List<User> getParkManagerListCopy() {
-        List<User> parkMngrs = new ArrayList<>();
-
-        for (int i = 0; i < myUserList.size(); i++) {
-            final User currUser = myUserList.get(i);
-            if (currUser instanceof ParkManager) {
-                parkMngrs.add(currUser);
-            }
-        }
-
-        return parkMngrs;
+        return getUserTypeListCopy(ParkManager.class); 
     }
 
 }

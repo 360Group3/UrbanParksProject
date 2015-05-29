@@ -24,8 +24,7 @@ public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 5L;
     
-    private static Schedule schedule = new Schedule();  
-    private static final int MAX_TOTAL_NUM_JOBS = Integer.MAX_VALUE;    
+    private static Schedule schedule = new Schedule();     
     private JobList myJobList;  
     private UserList myUserList;
     
@@ -93,7 +92,7 @@ public class Schedule implements Serializable {
         
         
         // checks that the job id is valid
-        else if (theJob.getJobID() < Integer.MIN_VALUE || theJob.getJobID() > Integer.MAX_VALUE) {
+        else if (theJob.getJobID() < 0 || theJob.getJobID() > Job.MAX_NUM_JOBS) {
             okToAdd = false;
         }
         
@@ -193,7 +192,7 @@ public class Schedule implements Serializable {
      * @return false if invalid
      */
     private boolean checkJobValidity(int theJobID) {
-        if (theJobID < 0 || theJobID > MAX_TOTAL_NUM_JOBS) {
+        if (theJobID < 0 || theJobID > Job.MAX_NUM_JOBS) {
             return false;
         }
         return true;
