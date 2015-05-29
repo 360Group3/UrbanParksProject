@@ -47,7 +47,7 @@ public class Schedule implements Serializable {
      * @param theJob is the Job to potentially add to Schedule's list of Jobs.
      * @return true if theJob was added, and false otherwise.
      */
-    public boolean receiveJob(Job theJob) {     
+    public boolean receiveJob(Job theJob) throws IllegalArgumentException {     
         
         // Checks the fields of the object to make sure they're valid.
         boolean okToAdd = true;

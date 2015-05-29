@@ -278,35 +278,7 @@ public class ParkManagerUI implements UI{
 		} else {
 			System.out.println("Sorry, but the job could not be added.");
 		}
-	}	
-	
-	
-
-	/*================*
-	 * Display Errors *
-	 *================*/
-	
-	/**
-	 * Display an error in the console that the user made an invalid command choice.
-	 */
-	public void displayInvalidChoiceError() {
-		System.out.println("\nSorry, but your choice was invalid.");
-	}
-	
-	/**
-	 * Display an error in the console that the Job ID was not recognized.
-	 */
-	public void showJobIDError() {
-		System.out.println("\nSorry, but this Job ID belongs to a park that you do not manage.");
-	}
-	
-	/**
-	 * Display an error in the console signifying that the entered job lasts more than two days.
-	 */
-	public void displayTwoDayError() {
-		System.out.println("\nSorry, but your job lasts more than two days, and could not be scheduled.");
-	}
-	
+	}		
 
 	
 	

@@ -61,7 +61,15 @@ public class ParkManager extends User implements Serializable {
                     + "list of managed parks.");
         }
         
-        return Schedule.getInstance().receiveJob(theJob);
+        try {
+        	return Schedule.getInstance().receiveJob(theJob);
+        } catch (IllegalArgumentException e) {
+        	
+        }
+        
+        return false;
+        
+        
     }
 
     /**
