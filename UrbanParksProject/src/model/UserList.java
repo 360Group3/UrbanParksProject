@@ -26,17 +26,6 @@ public class UserList implements Serializable {
         myUserList = new ArrayList<User>(MAX_NUM_USERS);
     }
 
-    /*
-     * List Getters.
-     * Returns copies of lists so that they cannot be changed without passing them to a
-     * setter.
-     */
-
-    public List<User> getUserListCopy() {
-        return new ArrayList<User>(myUserList);
-    }
-
-
     // Reid: we shouldn't be allowing other classes to willingly change data in UserList.
     // The following methods should only specific "user" objects and then we should be
     // checking to see if they already
@@ -59,32 +48,23 @@ public class UserList implements Serializable {
                 final User currUser = myUserList.get(i);
                 alreadyExists = currUser.getEmail().equals(theUser.getEmail());
             }
-        }
-
-        if (!alreadyExists) {
-            myUserList.add(theUser);
-            hasBeenAdded = true;
+            
+            if (!alreadyExists) {
+                myUserList.add(theUser);
+                hasBeenAdded = true;
+            }
         }
         return hasBeenAdded;
     }
 
-    /**
-     * 
-     * @param userType <TheUserClass>.class for which type of user you want to look for.
-     * @return a list of all the members of a user type from the list of users.
+    /*
+     * List Getters.
+     * Returns copies of lists so that they cannot be changed without passing them to a
+     * setter.
      */
-    private List<User> getUserTypeListCopy(Class<? extends User> userType) {
-        List<User> users = new ArrayList<>();
-        
-        for (int i = 0; i < myUserList.size(); i++) {
-            final User currUser = myUserList.get(i);
-            
-            if (currUser.getClass().getCanonicalName().equals(userType.getCanonicalName())) {
-                users.add(currUser);
-            }
-        }
 
-        return users;
+    public List<User> getUserListCopy() {
+        return new ArrayList<User>(myUserList);
     }
     
     /**
@@ -111,5 +91,24 @@ public class UserList implements Serializable {
     public List<User> getParkManagerListCopy() {
         return getUserTypeListCopy(ParkManager.class); 
     }
+    
+    
+    /**
+     * 
+     * @param userType <TheUserClass>.class for which type of user you want to look for.
+     * @return a list of all the members of a user type from the list of users.
+     */
+    public List<User> getUserTypeListCopy(Class<? extends User> userType) {
+        List<User> users = new ArrayList<>();
+        
+        for (int i = 0; i < myUserList.size(); i++) {
+            final User currUser = myUserList.get(i);
+            
+            if (currUser.getClass().getCanonicalName().equals(userType.getCanonicalName())) {
+                users.add(currUser);
+            }
+        }
 
-}
+        return users;
+    }
+ }
