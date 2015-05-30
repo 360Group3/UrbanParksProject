@@ -84,19 +84,35 @@ public class UserListTest {
         assertFalse(myUL.getUserListCopy().contains(v));
     }
 
-    /**
-     * Test method for {@link model.UserList#getUserTypeListCopy(java.lang.Class)}.
-     */
     @Test
-    public void testGetUserTypeListCopyForEmpty() {
-        assertEquals(new ArrayList<>(), myUL.getUserListCopy());
+    public void testGetAdministratorListCopyForEmpty() {
+        assertEquals(new ArrayList<>(), myUL.getAdministratorListCopy());
     }
     
-    /**
-     * Test method for {@link model.UserList#getUserTypeListCopy(java.lang.Class)}.
-     */
     @Test
-    public void testGetUserTypeListCopyForMultipleEntries() {
+    public void testGetAdministratorListCopyForFilled() {
+        List<User> testList = new ArrayList<>();
+        
+        Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(v);
+        
+        Administrator a = new Administrator("email2@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(a);
+        testList.add(a);
+        
+        ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
+        myUL.addNewUser(p);
+        
+        assertEquals(testList, myUL.getAdministratorListCopy());
+    }
+
+    @Test
+    public void testGetVolunteerListCopyForEmpty() {
+        assertEquals(new ArrayList<>(), myUL.getVolunteerListCopy());
+    }
+    
+    @Test
+    public void testGetVolunteerListCopyForFilled() {
         List<User> testList = new ArrayList<>();
         
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
@@ -105,14 +121,32 @@ public class UserListTest {
         
         Administrator a = new Administrator("email2@yahoo.com", "Lazy", "Naming");
         myUL.addNewUser(a);
-        testList.add(a);
+        
+        ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
+        myUL.addNewUser(p);
+        
+        assertEquals(testList, myUL.getVolunteerListCopy());
+    }
+    
+    @Test
+    public void testGetParkManagerListCopyForEmpty() {
+        assertEquals(new ArrayList<>(), myUL.getParkManagerListCopy());
+    }
+    
+    @Test
+    public void testGetParkManagerListCopyForFilled() {
+        List<User> testList = new ArrayList<>();
+        
+        Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(v);
+        
+        Administrator a = new Administrator("email2@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(a);
         
         ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
         myUL.addNewUser(p);
         testList.add(p);
         
-        assertEquals(testList, myUL.getUserListCopy());
+        assertEquals(testList, myUL.getParkManagerListCopy());
     }
-
-    
 }
