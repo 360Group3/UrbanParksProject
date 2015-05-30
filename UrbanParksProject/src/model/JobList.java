@@ -52,6 +52,8 @@ public class JobList implements Serializable {
 
     /**
      * Return a copy of a job given its Job ID.
+     * @param theJobID the ID of the desired Job
+     * @return a copy if the job or null if the job was not found.
      */
     public Job getJobCopy(int theJobID) {
         Job returnJob = null;
