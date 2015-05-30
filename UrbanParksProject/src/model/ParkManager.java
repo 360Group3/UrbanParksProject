@@ -64,7 +64,7 @@ public class ParkManager extends User implements Serializable {
         try {
         	return Schedule.getInstance().receiveJob(theJob);
         } catch (IllegalArgumentException e) {
-        	
+        	System.out.println(e.getMessage());
         }
         
         return false;
