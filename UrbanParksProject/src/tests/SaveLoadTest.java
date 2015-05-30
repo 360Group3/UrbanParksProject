@@ -59,7 +59,7 @@ public class SaveLoadTest {
 		User manager1 = new ParkManager("testmanager@gmail.com", "Test3", "Manager3", new ArrayList<String>());
 		User manager2 = new ParkManager("testmanager2@gmail.com", "Test4", "Manager4", new ArrayList<String>());
 		
-		User admin1 = new Administrator("Test5", "Administrator5", "testadministrator@gmail.com");
+		User admin1 = new Administrator("testadministrator@gmail.com", "Test5", "Administrator5");
 		
 		myUserList.addNewUser(volunteer1);
 		myUserList.addNewUser(volunteer2);
@@ -83,10 +83,10 @@ public class SaveLoadTest {
 		
 		//Test to see if loadJobList's contents are the same as myJobList
 		assertEquals(loadJobList.getNumberOfJobs(), 4);
-		assertEquals(loadJobList.getJobList().get(0).getJobID(), 0);
-		assertEquals(loadJobList.getJobList().get(1).getLightMax(), 15);
-		assertEquals(loadJobList.getJobList().get(2).getPark(), "Test Park 2");
-		assertEquals(loadJobList.getJobList().get(3).getManager(), "testmanager3@gmail.com");
+		assertEquals(loadJobList.getCopyList().get(0).getJobID(), 0);
+		assertEquals(loadJobList.getCopyList().get(1).getLightMax(), 15);
+		assertEquals(loadJobList.getCopyList().get(2).getPark(), "Test Park 2");
+		assertEquals(loadJobList.getCopyList().get(3).getManager(), "testmanager3@gmail.com");
 	}
 
 	/**

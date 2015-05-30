@@ -11,7 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		BusinessRule6Test.class, BusinessRule7Test.class,
 		BusinessRule8Test.class, /*DataPollsterTest.class, */JobTest.class,
 		ParkManagerTest.class, SaveLoadTest.class, ScheduleTest.class,
-		VolunteerTest.class })
+		UserListTest.class, VolunteerTest.class })
 public class AllTests {
 
 }
