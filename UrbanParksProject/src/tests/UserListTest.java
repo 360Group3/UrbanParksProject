@@ -3,12 +3,13 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Administrator;
 import model.ParkManager;
+import model.User;
 import model.UserList;
 import model.Volunteer;
 
@@ -69,7 +70,6 @@ public class UserListTest {
         
         Administrator a = new Administrator("email@yahoo.com", "Lazy", "Naming");
         assertFalse(myUL.addNewUser(a));
-//        assertFalse(myUL.getUserListCopy().contains(a));
         
         assertEquals(1, myUL.getUserListCopy().size());
     }
@@ -84,13 +84,35 @@ public class UserListTest {
         assertFalse(myUL.getUserListCopy().contains(v));
     }
 
+    /**
+     * Test method for {@link model.UserList#getUserTypeListCopy(java.lang.Class)}.
+     */
+    @Test
+    public void testGetUserTypeListCopyForEmpty() {
+        assertEquals(new ArrayList<>(), myUL.getUserListCopy());
+    }
     
     /**
      * Test method for {@link model.UserList#getUserTypeListCopy(java.lang.Class)}.
      */
     @Test
-    public void testGetUserTypeListCopy() {
-        fail("Not yet implemented");
+    public void testGetUserTypeListCopyForMultipleEntries() {
+        List<User> testList = new ArrayList<>();
+        
+        Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(v);
+        testList.add(v);
+        
+        Administrator a = new Administrator("email2@yahoo.com", "Lazy", "Naming");
+        myUL.addNewUser(a);
+        testList.add(a);
+        
+        ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
+        myUL.addNewUser(p);
+        testList.add(p);
+        
+        assertEquals(testList, myUL.getUserListCopy());
     }
 
+    
 }
