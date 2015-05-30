@@ -14,7 +14,6 @@ import model.User;
 import model.UserList;
 import model.Volunteer;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

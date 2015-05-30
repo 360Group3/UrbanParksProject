@@ -6,9 +6,6 @@ package tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.MalformedParametersException;
-import java.util.GregorianCalendar;
-
 import model.Job;
 import model.businessRules.BusinessRule4;
 

@@ -2,17 +2,14 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Administrator;
 import model.Job;
 import model.JobList;
 import model.ParkManager;
 import model.Schedule;
-import model.User;
 import model.UserList;
 import model.Volunteer;
 
