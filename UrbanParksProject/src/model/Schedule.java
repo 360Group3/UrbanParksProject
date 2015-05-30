@@ -58,17 +58,18 @@ public class Schedule implements Serializable {
         }
         //BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30.       
         else if (!(new BusinessRule1().test(myJobList))) { 
-            okToAdd = false;
+            throw new IllegalArgumentException("Sorry, but the limit of 30 pending jobs has already been reached.");
         }
         //BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
             //(3 days on either side of the job days) is currently 5.
         else if (!(new BusinessRule2().test(theJob, myJobList))) {
-            okToAdd = false; //this is entered if checkThisWeek() returns false;
+            throw new IllegalArgumentException("Sorry, but the limit of 5 jobs has already been reached for the week that "
+            		+ "this job was scheduled.");
         } 
         
         //BIZ rule 4. A job may not be scheduled that lasts more than two days.
         else if (!(new BusinessRule4().test(theJob))) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Sorry, but a job cannot last any longer than two days.");
         }
         
         //BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
@@ -80,48 +81,47 @@ public class Schedule implements Serializable {
         }
         
         else if (!(new BusinessRule5().futureTest(theJob))) {
-            throw new IllegalArgumentException("Sorry but the date you entered is too far"
-                    + "into the future. \n We only accept jobs that are within three months"
-                    + "from now. ");
+            throw new IllegalArgumentException("Sorry but the date you entered is too far "
+                    + "into the future. \nAll jobs must be scheduled within the next 3 months.");
         }
         
         // checks if date range is valid
         else if (theJob.getStartDate().after(theJob.getEndDate())) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Sorry, but the Start Date must come before or on the same date as the End Date.");
         }
         
         
         // checks that the job id is valid
         else if (theJob.getJobID() < 0 || theJob.getJobID() > Job.MAX_NUM_JOBS) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Error: Invalid Job ID. Please logout and try again.");
         }
         
         // checks if volunteer list is null
         else if (theJob.getVolunteerList() == null) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Error: Null Volunteer List. Please logout and try again.");
         }
         
         // checks if volunteer list is empty
         else if (!theJob.getVolunteerList().isEmpty()) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Error: Non-empty Volunteer List. Please logout and try again.");
         }
         
         
         else if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Sorry, but a slot in at least one Volunteer Grade must be available.");
         }
         
         else if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
                 || theJob.getHeavyCurrent() > theJob.getHeavyMax()) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Sorry, but the number of slots for a Volunteer Grade cannot be negative.");
         }
         
         else if (theJob.getPark() == null) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Error: Null Park. Please logout and try again.");
         }
         
         else if (theJob.getManager() == null) {
-            okToAdd = false;
+            throw new IllegalArgumentException("Error: Null ParkManager. Please logout and try again.");
         }
         
         if (okToAdd) {
@@ -130,7 +130,7 @@ public class Schedule implements Serializable {
             editableJobList.add(theJob); // add valid job to list
         } 
         else {
-            throw new IllegalArgumentException("Error: job data is invalid and therefore was not added.");
+            throw new IllegalArgumentException("Error: job data is invalid and can not be added.");
         }
 
         return okToAdd;

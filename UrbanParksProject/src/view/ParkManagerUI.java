@@ -266,6 +266,7 @@ public class ParkManagerUI implements UI{
 		System.out.println("Please enter the end date of the job in the following format:"
 				+ " mmddyyyy");
 		String myEndDate = getUserString();
+		System.out.println("\n");
 		return myEndDate;
 	}	
 	
@@ -274,9 +275,9 @@ public class ParkManagerUI implements UI{
 	 */
 	public void displayJobStatus(boolean addSuccess) {
 		if(addSuccess){
-			System.out.println("Job successfully added!");
+			System.out.println("Your job was successfully added!");
 		} else {
-			System.out.println("Sorry, but the job could not be added.");
+			System.out.println("Job not added...\nReturning to Park Manager Menu...");
 		}
 	}		
 
