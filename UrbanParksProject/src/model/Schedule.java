@@ -231,7 +231,7 @@ public class Schedule implements Serializable {
                 break;
                 
             case "Administrator":
-                u = new Administrator(theFirstName, theLastName, theEmail);
+                u = new Administrator(theEmail, theFirstName, theLastName);
                 break;
 
             case "ParkManager":

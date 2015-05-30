@@ -42,20 +42,9 @@ public class UserList implements Serializable {
      */
     public boolean addNewUser(User theUser) {
         boolean hasBeenAdded = false;
-        boolean alreadyExists = false;
-        if (theUser != null) {
-            for (User u : myUserList) {
-                if(u.getEmail().equals(theUser.getEmail()))
-                {
-                    alreadyExists = true;
-                    break;
-                }
-            }
-            
-            if (!alreadyExists) {
-                myUserList.add(theUser);
-                hasBeenAdded = true;
-            }
+        if (theUser != null && !myUserList.contains(theUser)) {
+            myUserList.add(theUser);
+            hasBeenAdded = true;
         }
         return hasBeenAdded;
     }
@@ -95,10 +84,9 @@ public class UserList implements Serializable {
         return getUserTypeListCopy(ParkManager.class); 
     }
     
-    
     /**
      * 
-     * @param userType <TheUserClass>.class for which type of user you want to look for.
+     * @param userType TheUserClass.class for which type of user you want to look for.
      * @return a list of all the members of a user type from the list of users.
      */
     public List<User> getUserTypeListCopy(Class<? extends User> userType) {

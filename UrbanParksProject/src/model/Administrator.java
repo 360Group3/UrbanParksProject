@@ -29,7 +29,7 @@ public class Administrator extends User implements Serializable {
      * @param theEmail
      *            The email of the Administrator.
      */
-    public Administrator(String theFirstName, String theLastName, String theEmail) {
+    public Administrator(String theEmail, String theFirstName, String theLastName) {
         super(theFirstName, theLastName, theEmail);
     }
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This is a general class for all Users of our Urban Parks program.
@@ -34,5 +35,22 @@ public abstract class User implements Serializable {
 
     public String getEmail() {
         return myEmail;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if (o == null)
+            return false;
+        if (o instanceof User) {
+            User other = (User) o;
+            return myEmail.equals(other.getEmail());
+        }
+        
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(myFirstName, myLastName, myEmail);
     }
 }

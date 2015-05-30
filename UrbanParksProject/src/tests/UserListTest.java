@@ -68,8 +68,8 @@ public class UserListTest {
         assertTrue(myUL.getUserListCopy().contains(v));
         
         Administrator a = new Administrator("email@yahoo.com", "Lazy", "Naming");
-        myUL.addNewUser(a);
-        assertFalse(myUL.getUserListCopy().contains(a));
+        assertFalse(myUL.addNewUser(a));
+//        assertFalse(myUL.getUserListCopy().contains(a));
         
         assertEquals(1, myUL.getUserListCopy().size());
     }

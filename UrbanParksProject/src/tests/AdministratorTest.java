@@ -21,7 +21,7 @@ public class AdministratorTest {
 
     @Before
     public void setUp() throws Exception {
-        myAdmin = new Administrator("Tom", "Petty", "americangirl@heartbreakers.net");
+        myAdmin = new Administrator("americangirl@heartbreakers.net", "Tom", "Petty");
 
         myUserList = new UserList();
         myUserList.addNewUser(new Volunteer("thenews@ifthisis.it", "Huey", "Lewis"));
