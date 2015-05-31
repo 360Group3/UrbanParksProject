@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import model.DataPollster;
@@ -8,6 +10,7 @@ import model.JobList;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
+import model.businessRules.BusinessRule7;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +21,20 @@ import org.junit.Test;
  *
  */
 public class BusinessRule7Test {
-	
+    BusinessRule7 br7;
 	Volunteer Yugi;
 	
 	UserList myUserList;
 	JobList myJobList;
 	
+	Job defeatFrieza;
+	Job tradeForBlueEyesWhiteDragon;
+	Job beatJadenYuki;
+	
 	@Before
 	public void setUp() throws Exception {
+	    br7 = new BusinessRule7();
+	    
 		myUserList = new UserList();
 		myJobList = new JobList();
 		Schedule.getInstance().setJobList(myJobList);
@@ -35,9 +44,9 @@ public class BusinessRule7Test {
 	
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
 		
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		Job tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		Job beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
         
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);
@@ -55,19 +64,22 @@ public class BusinessRule7Test {
         theVol4.add("Medium");
         
         Yugi.signUp(theVol4, 0);
-        Yugi.signUp(theVol4, 2);
+        
+        assertFalse(br7.test("Yugi@yahoo.com", beatJadenYuki, myJobList));
     }
 
 	/**
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
-	@Test (expected = IllegalArgumentException.class)
+	@Test
 	public void testSignUpForAlreadyWorking() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
 		
 		Yugi.signUp(theVol4, 0);
-		Yugi.signUp(theVol4, 1);
+		
+
+        assertTrue(br7.test("Yugi@yahoo.com", tradeForBlueEyesWhiteDragon, myJobList));
 	}
 }
