@@ -97,6 +97,7 @@ public class LoginTest {
         assertTrue(myLogin.checkEmailFormat("_somename@example.com"));
         assertTrue(myLogin.checkEmailFormat("this|that@boolean.engineering"));
         assertTrue(myLogin.checkEmailFormat("!areRights@email.domains"));
+        assertTrue(myLogin.checkEmailFormat("!#$%&'*+-/=?^_`{|}~@d"));
         assertTrue(myLogin.checkEmailFormat("ThisIsATerriblyBigEmailAddressAndYou'reMakingLifeReallyDifficult"
                 + "@YourWork.WhyAreYouSuckingTheLifeOutOfEveryoneYouWorkWith."
                 + "ICannotBelieveHowInconsiderateYouAreWithYourExcessiveExtravagance."
