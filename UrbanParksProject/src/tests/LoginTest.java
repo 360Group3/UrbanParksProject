@@ -97,6 +97,11 @@ public class LoginTest {
         assertTrue(myLogin.checkEmailFormat("_somename@example.com"));
         assertTrue(myLogin.checkEmailFormat("this|that@boolean.engineering"));
         assertTrue(myLogin.checkEmailFormat("!areRights@email.domains"));
+        assertTrue(myLogin.checkEmailFormat("ThisIsATerriblyBigEmailAddressAndYou'reMakingLifeReallyDifficult"
+                + "@YourWork.WhyAreYouSuckingTheLifeOutOfEveryoneYouWorkWith."
+                + "ICannotBelieveHowInconsiderateYouAreWithYourExcessiveExtravagance."
+                + "PleaseReportToHumanResourcesForSomeReeducationInTheArtOfNotBeingACompleteJerkToEveryone."
+                + "ITakeThisVeryPersonallyAndIWantYouToFeelPain"));
     }
     
     /**
@@ -120,10 +125,23 @@ public class LoginTest {
     @Test
     public void testCheckEmailFormatForInvalid()
     {
+        assertFalse(myLogin.checkEmailFormat("NoAtSign"));
         assertFalse(myLogin.checkEmailFormat("moverby@gmail..com"));
         assertFalse(myLogin.checkEmailFormat("pattern@.overstock.co.uk"));
         assertFalse(myLogin.checkEmailFormat("m.overby@-overstock.co.uk"));
         assertFalse(myLogin.checkEmailFormat(".dmonucco@buccaneer.technology"));
+        //Too long local
+        assertFalse(myLogin.checkEmailFormat("TooLongLocal.ThisIsATerriblyBigEmailAddressAndYou'reMakingLifeReallyDifficult"
+                + "@YourWork.WhyAreYouSuckingTheLifeOutOfEveryoneYouWorkWith."
+                + "ICannotBelieveHowInconsiderateYouAreWithYourExcessiveExtravagance."
+                + "PleaseReportToHumanResourcesForSomeReeducationInTheArtOfNotBeingACompleteJerkToEveryone."
+                + "ITakeThisVeryPersonallyAndIWantYouToFeelPain"));
+        //Too long domain
+        assertFalse(myLogin.checkEmailFormat("ThisIsATerriblyBigEmailAddressAndYou'reMakingLifeReallyDifficult"
+                + "@YourWork.WhyAreYouSuckingTheLifeOutOfEveryoneYouWorkWith."
+                + "ICannotBelieveHowInconsiderateYouAreWithYourExcessiveExtravagance."
+                + "PleaseReportToHumanResourcesForSomeReeducationInTheArtOfNotBeingACompleteJerkToEveryone."
+                + "ITakeThisVeryPersonallyAndIWantYouToFeelPain.TooLongDomain"));
     }
     
     @Test
