@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,8 @@ public class BusinessRule5Test {
 	public void JobTimeTest() {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
-		assertEquals( Tenenberg.addJob(defeatFrieza),true);
+		assertTrue(new BusinessRule5().pastTest(defeatFrieza));
+        assertTrue(new BusinessRule5().futureTest(defeatFrieza));
 	}
 	
 	/**
@@ -63,7 +64,7 @@ public class BusinessRule5Test {
 	public void JobTimeTest2() {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "03122015", "03122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 
-		assertEquals(new BusinessRule5().pastTest(defeatFrieza), false);
+		assertFalse(new BusinessRule5().pastTest(defeatFrieza));
 		
 	}
 	
@@ -74,7 +75,7 @@ public class BusinessRule5Test {
 	public void JobTimeTest3() {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "10122015", "10122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 
-		assertEquals(new BusinessRule5().futureTest(defeatFrieza), false);
+		assertFalse(new BusinessRule5().futureTest(defeatFrieza));
 	}
 	
 }
