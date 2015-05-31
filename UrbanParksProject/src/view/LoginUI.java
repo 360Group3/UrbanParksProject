@@ -1,9 +1,5 @@
 package view;
 
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import model.Administrator;
 import model.DataPollster;
 import model.Login;
@@ -22,12 +18,9 @@ import model.Volunteer;
 public class LoginUI extends UI {
 
 	private Login myLogin;
-	
-    private Scanner myScanner;
 
     public LoginUI() {
     	myLogin = new Login();
-        myScanner = new Scanner(System.in);
     }
     
     /**

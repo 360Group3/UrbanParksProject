@@ -1,7 +1,6 @@
 package view;
 
 import java.util.List;
-import java.util.Scanner;
 
 import model.Administrator;
 import model.DataPollster;
@@ -16,11 +15,6 @@ import model.User;
  */
 public class AdministratorUI extends UI {
 
-    /**
-     * A Scanner object to read input for the Administrator's UI.
-     */
-    private Scanner myIn;
-
     private Administrator myAdmin;
 
     /**
@@ -30,7 +24,6 @@ public class AdministratorUI extends UI {
      *            the administrator
      */
     public AdministratorUI(Administrator theAdmin) {
-        myIn = new Scanner(System.in);
         myAdmin = theAdmin;
     }
 

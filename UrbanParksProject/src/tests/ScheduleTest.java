@@ -8,10 +8,8 @@ import java.util.List;
 
 import model.Job;
 import model.JobList;
-import model.ParkManager;
 import model.Schedule;
 import model.UserList;
-import model.Volunteer;
 
 import org.junit.Before;
 import org.junit.Test;

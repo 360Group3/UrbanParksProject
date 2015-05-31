@@ -1,10 +1,7 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Scanner;
 
 import model.Job;
 import model.Volunteer;
@@ -18,7 +15,6 @@ import model.Volunteer;
  */
 public class VolunteerUI extends UI {
 
-	private Scanner myScanner;
 	private Volunteer myVol;
 	
 	/**
@@ -26,7 +22,6 @@ public class VolunteerUI extends UI {
 	 * @param theVol is a volunteer.
 	 */
 	public VolunteerUI(Volunteer theVol) {
-		myScanner = new Scanner(System.in);
 		myVol = theVol;
 	}
 	

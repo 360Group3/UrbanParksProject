@@ -4,10 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import model.DataPollster;
 import model.Job;
 import model.JobList;
-import model.Schedule;
 import model.UserList;
 import model.Volunteer;
 import model.businessRules.BusinessRule3;

@@ -4,11 +4,6 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import view.AdministratorUI;
-import view.ParkManagerUI;
-import view.UI;
-import view.VolunteerUI;
-
 /**
  * A class to handle all of the login functionality for one specific user.
  * 

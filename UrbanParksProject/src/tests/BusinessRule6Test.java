@@ -3,14 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import model.DataPollster;
 import model.Job;
-import model.JobList;
-import model.Schedule;
-import model.UserList;
-import model.Volunteer;
 import model.businessRules.BusinessRule6;
 
 import org.junit.Before;
