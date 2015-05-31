@@ -1,6 +1,8 @@
 package view;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.Administrator;
 import model.DataPollster;
@@ -135,13 +137,31 @@ public class LoginUI extends UI {
     private String getReturnEmail() {
         System.out.println("------------------------------------------\n"
                        + "\nPlease enter your e-mail address to login:");
-        return getUserString();
+        String email = getUserString();
+        boolean validEmail = myLogin.checkEmailFormat(email);
+        while (!validEmail) {
+        	System.out.println("------------------------------------------\n"
+        			+ "\nInvalid email format. Please try again."
+                    + "\nWhat is your e-mail address to login?");
+        	email = getUserString();
+            validEmail = myLogin.checkEmailFormat(email);
+        }
+        return email;
     }
 
     private String getNewEmail() {
         System.out.println("------------------------------------------\n"
                         + "\nWhat is your e-mail address?");
-        return getUserString();
+        String email = getUserString();
+        boolean validEmail = myLogin.checkEmailFormat(email);
+        while (!validEmail) {
+        	System.out.println("------------------------------------------\n"
+        			+ "\nInvalid email format. Please try again."
+                    + "\nWhat is your e-mail address?");
+        	email = getUserString();
+            validEmail = myLogin.checkEmailFormat(email);
+        }
+        return email;
     }
 
     private String getFirstName() {

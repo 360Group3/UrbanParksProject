@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import view.AdministratorUI;
 import view.ParkManagerUI;
@@ -77,6 +79,18 @@ public class Login {
             loginSuccess = true;
         }
         return loginSuccess;
+    }
+    
+    public boolean checkEmailFormat(String theEmail) {
+    	String pat = "\\w{3,}@\\w{1,}.\\w*\\.\\w{2,3}";
+    	Pattern pattern = Pattern.compile(pat);
+    	Matcher matcher = 
+				pattern.matcher(theEmail);
+    	boolean validEmail = false;
+    	if (matcher.find()) {
+    		validEmail = true;
+    	}
+    	return validEmail;
     }
     
     /**
