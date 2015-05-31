@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,7 @@ import model.JobList;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
+import model.businessRules.BusinessRule3;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,43 +22,31 @@ import org.junit.Test;
  *
  */
 public class BusinessRule3Test {
+	BusinessRule3 br3;
 	
 	Volunteer Naruto;
 	
 	JobList myJobList;
 	UserList myUserList;
 	
+	Job defeatFrieza;
+	
 	@Before
 	public void setUp() throws Exception {
-		myUserList = new UserList();
-		myJobList = new JobList();
-		
-		Schedule.getInstance().setJobList(myJobList);
-		Schedule.getInstance().setUserList(myUserList);
-		DataPollster.getInstance().setJobList(myJobList);
-		DataPollster.getInstance().setUserList(myUserList);
-		
-		Naruto = new Volunteer("Naruto@yahoo.com", "Naruto", "Uzamaki");
-		myUserList.addNewUser(Naruto);
-		
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5,
+	    br3 = new BusinessRule3();
+
+	    
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5,
 				"06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		
-		Schedule.getInstance().receiveJob(defeatFrieza);
-	}
-	
+	}	
 	
 	
 	/**
 	 * Add a volunteer to a job's grade which has no positions.
 	 */
-	@Test (expected = IllegalArgumentException.class)
+	@Test
 	public void signUpTEST1() {
-		ArrayList<String> theVol = new ArrayList<String>();
-		theVol.add("Naruto@yahoo.com");
-		theVol.add("Light");
-		
-		Naruto.signUp(theVol, 0);
+		assertFalse(br3.test(defeatFrieza, "Light"));
 	}
 	
 	
@@ -66,10 +55,6 @@ public class BusinessRule3Test {
 	 */
 	@Test
 	public void signUpTEST2() {
-		ArrayList<String> theVol = new ArrayList<String>();
-		theVol.add("Naruto@yahoo.com");
-		theVol.add("Medium");
-		
-		assertEquals(Naruto.signUp(theVol, 0), true);
+		assertTrue(br3.test(defeatFrieza, "Medium"));
 	}
 }
