@@ -76,6 +76,19 @@ public class Login {
         return loginSuccess;
     }
     
+    /**
+     * Validates an email based on the following criteria, derived from a partial implementation of RFC 3696.
+     * <ul>
+     *  <li>The local part must be between 1 and 64 characters.</li>
+     *  <li>The local part can consist of ASCII word characters, as well as the special characters  !#$%&'*+-/=?^_`.{|}~. The local part cannot begin with a period (.).</li>
+     *  <li>The domain part must be between 1 and 255 characters.</li>
+     *  <li>The domain part can consist of ASCII word characters, as well as periods (.) and hyphens (-), though they cannot start with periods or hyphens. 
+     *  A period or hyphen cannot be followed by a period or hyphen.</li>
+     *  <li>The local part and the domain part must be separated by a @ character.</li>
+     * </ul>
+     * @param theEmail the email to be tested
+     * @return true if it is a valid email, false otherwise
+     */
     public boolean checkEmailFormat(String theEmail) {
         if (theEmail == null)
             return false;
