@@ -15,29 +15,23 @@ import java.util.List;
  */
 public class UserList implements Serializable {
 
+	//Class Constants
     private static final long serialVersionUID = 7L;
-
     private static final int MAX_NUM_USERS = 10000;
 
     // User Lists
     private List<User> myUserList;
-
     public UserList() {
         myUserList = new ArrayList<User>(MAX_NUM_USERS);
     }
+    
+    
+    /*==============*
+     * Add New User *
+     *==============*/
 
-    // Reid: we shouldn't be allowing other classes to willingly change data in UserList.
-    // The following methods should only specific "user" objects and then we should be
-    // checking to see if they already
-    // exist in the system or if we need to add them to the list of Users (returing a
-    // boolean in the process)
     /**
-     * List Setter
-     * Because we only give out copies of lists, any modified version must be passed
-     * through here for changes
-     * to be made permanent. Thus, Schedule can still check for any business rule
-     * violations.
-     * @param theUser the user
+     * Add a new User to the User List.
      * @return true if the user was added, false otherwise
      */
     public boolean addNewUser(User theUser) {
@@ -48,19 +42,19 @@ public class UserList implements Serializable {
         }
         return hasBeenAdded;
     }
+    
+    
 
-    /*
-     * List Getters.
-     * Returns copies of lists so that they cannot be changed without passing them to a
-     * setter.
-     */
+    /*==============*
+     * List Getters *
+     *==============*/
 
     public List<User> getUserListCopy() {
         return new ArrayList<User>(myUserList);
     }
     
     /**
-     * 
+     * Return a copy of the Volunteer List.
      * @author Reid Thompson
      * @return
      */
@@ -69,6 +63,7 @@ public class UserList implements Serializable {
     }
 
     /**
+     * Return a copy of the Administrator List.
      * @author Reid Thompson
      * @return
      */
@@ -77,6 +72,7 @@ public class UserList implements Serializable {
     }
 
     /**
+     * Return a copy of the Park Manager List.
      * @author Reid Thompson
      * @return
      */
@@ -84,12 +80,17 @@ public class UserList implements Serializable {
         return getUserTypeListCopy(ParkManager.class); 
     }
     
+    
+    
+    /*==============*
+     * Helper Class *
+     *==============*/
+    
     /**
-     * 
-     * @param userType TheUserClass.class for which type of user you want to look for.
-     * @return a list of all the members of a user type from the list of users.
+     * Return a list of all Users that match the specified type.
+     * @author Reid Thompson
      */
-    public List<User> getUserTypeListCopy(Class<? extends User> userType) {
+    private List<User> getUserTypeListCopy(Class<? extends User> userType) {
         List<User> users = new ArrayList<>();
         
         for (int i = 0; i < myUserList.size(); i++) {
