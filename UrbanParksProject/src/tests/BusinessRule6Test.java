@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import model.JobList;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
+import model.businessRules.BusinessRule6;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,48 +22,31 @@ import org.junit.Test;
  *
  */
 public class BusinessRule6Test {
-	Volunteer Arsh;
-	
-	UserList myUserList;
-	JobList myJobList;
+	BusinessRule6 br6;
 	
 	@Before
 	public void setUp() throws Exception {
-		myUserList = new UserList();
-		myJobList = new JobList();
-		Schedule.getInstance().setJobList(myJobList);
-		Schedule.getInstance().setUserList(myUserList);
-		DataPollster.getInstance().setJobList(myJobList);
-		DataPollster.getInstance().setUserList(myUserList);
-		
-		
-		Arsh = new Volunteer("Arsh@yahoo.com", "Arsh", "Singh");
+	    br6 = new BusinessRule6();
 	}
 
+    /**
+     * Adding volunteer to a job in the future.
+     */
+    @Test
+    public void testSignUpForFutureJob() {
+        Job job1 = new Job(5, "dud", 0, 0, 1, "04123015", "04123015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+        
+        assertTrue(br6.test(job1));
+    }	
 	
 	/**
-	 * Adding volunteer to a job in the past
+	 * Adding volunteer to a job in the past.
 	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void signUpTEST() {
-		JobList testJobList = new JobList();
-
+	@Test
+	public void testSignUpForPastJob() {
 		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 
-		List<Job> myList = new ArrayList<Job>();
-		myList.add(job1);
-
-		testJobList.setJobList(myList);
-		Schedule.getInstance().setJobList(testJobList);
-		DataPollster.getInstance().setJobList(testJobList) ;
-		//System.out.println(Schedule.getInstance().getJobList().getNumberOfJobs());
-		
-		
-		ArrayList<String> theVol5 = new ArrayList<String>();
-		theVol5.add("Arsh@yahoo.com");
-		theVol5.add("Heavy");
-		Arsh.signUp(theVol5, 5);
-		
+		assertFalse(br6.test(job1));
 	}
 
 }
