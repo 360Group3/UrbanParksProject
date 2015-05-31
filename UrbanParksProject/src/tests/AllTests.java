@@ -9,9 +9,9 @@ import org.junit.runners.Suite.SuiteClasses;
 		BusinessRule2Test.class, BusinessRule3Test.class,
 		BusinessRule4Test.class, BusinessRule5Test.class,
 		BusinessRule6Test.class, BusinessRule7Test.class,
-		BusinessRule8Test.class, /*DataPollsterTest.class, */JobTest.class,
-		ParkManagerTest.class, SaveLoadTest.class, ScheduleTest.class,
-		VolunteerTest.class })
+		BusinessRule8Test.class, DataPollsterTest.class, JobTest.class,
+		JobListTest.class, ParkManagerTest.class, SaveLoadTest.class, 
+		ScheduleTest.class, VolunteerTest.class })
 public class AllTests {
 
 }
