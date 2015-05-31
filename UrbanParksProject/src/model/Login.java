@@ -77,15 +77,10 @@ public class Login {
     }
     
     public boolean checkEmailFormat(String theEmail) {
-    	String pat = "\\w{3,}@\\w{1,}.\\w*\\.\\w{2,3}";
+    	String pat = "[\\w!#$%&'*+\\-/=?^_`{|}~]+(\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*@\\w+((\\.|-)\\w+)*";
     	Pattern pattern = Pattern.compile(pat);
-    	Matcher matcher = 
-				pattern.matcher(theEmail);
-    	boolean validEmail = false;
-    	if (matcher.find()) {
-    		validEmail = true;
-    	}
-    	return validEmail;
+    	Matcher matcher = pattern.matcher(theEmail);
+    	return matcher.find();
     }
     
     /**
