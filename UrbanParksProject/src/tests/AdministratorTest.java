@@ -20,7 +20,7 @@ public class AdministratorTest {
     UserList myUserList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myAdmin = new Administrator("americangirl@heartbreakers.net", "Tom", "Petty");
 
         myUserList = new UserList();
@@ -36,7 +36,7 @@ public class AdministratorTest {
     }
 
     @Test
-    public void testGetMatchingVolunteersForSingleResult() {
+    public void testGetMatchingVolunteersOnSingleResult() {
         List<User> u = new ArrayList<>();
         u.add(myUserList.getVolunteerListCopy().get(2));
 
@@ -49,16 +49,23 @@ public class AdministratorTest {
     }
 
     @Test
-    public void testGetMatchingVolunteersForMultipleResults() {
+    public void testGetMatchingVolunteersOnMultipleResults() {
         List<User> u = new ArrayList<>();
         u.add(myUserList.getVolunteerListCopy().get(0));
         u.add(myUserList.getVolunteerListCopy().get(1));
 
         assertEquals(u, myAdmin.getMatchingVolunteers("Lewis"));
     }
+    
+    @Test
+    public void testGetMatchingVolunteersOnEmptyMatchingVols() {
+    	assertEquals("Given last name for which there are no Volunteers, the list of "
+    			+ "matching Volunteers should be empty!", new ArrayList<>(),
+    			myAdmin.getMatchingVolunteers("Smith"));
+    }
 
     @Test
-    public void testGetAllVolunteersByLNFN() {
+    public void testGetAllVolunteersByLNFNOnAlphabetizedUsers() {
         List<User> alphabetizedUsers = new ArrayList<>();
         alphabetizedUsers.add(myUserList.getVolunteerListCopy().get(4));
         alphabetizedUsers.add(myUserList.getVolunteerListCopy().get(3));
