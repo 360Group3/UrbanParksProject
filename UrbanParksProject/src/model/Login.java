@@ -92,6 +92,19 @@ public class Login {
      * @return true if the user info is valid and false otherwise.
      */
     private boolean validUserRegistrationCheck() {
-        return myUserInfo != null && myUserInfo[4] != null;
+        if (myUserInfo == null)
+            return false;
+        
+        boolean isValid = true;
+        for (String str : myUserInfo)
+        {
+            if (str == null)
+            {
+                isValid = false;
+                break;
+            }
+        }
+        
+        return isValid;
     }
 }
