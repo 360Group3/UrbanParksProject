@@ -37,13 +37,6 @@ public class ScheduleTest {
     private String myVolEmail;
 
     /**
-     * Volunteer object for testing.
-     */
-    private Volunteer myVolunteer;
-
-    private ParkManager myParkManager;
-
-    /**
      * Instantiates necessary data for testing methods.
      */
     @Before
@@ -56,11 +49,11 @@ public class ScheduleTest {
         
         List<String> pList = new ArrayList<>();
         pList.add("Foo Park");
-        myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList);
+
         myJob = new Job(55, "Foo Park", 10, 10, 10, "06172015", "06172015",
                         "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
 
-        myVolunteer = new Volunteer("generic@gmail.com", "Bob", "Smith");
+
     }
 
     /**
