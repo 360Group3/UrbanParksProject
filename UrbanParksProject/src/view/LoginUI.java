@@ -2,8 +2,12 @@ package view;
 
 import java.util.Scanner;
 
+import model.Administrator;
 import model.DataPollster;
 import model.Login;
+import model.ParkManager;
+import model.User;
+import model.Volunteer;
 
 /**
  * A user interface for the login/register sequence of the program.
@@ -50,6 +54,8 @@ public class LoginUI implements UI {
     			loginUserInfo();
     			if (myLogin.getUserInfo()[0].equals("login")) {
     				loginSuccess = myLogin.loginUser();
+                    if (loginSuccess)
+                        giveControlToUser();
     			}
     			break;
     		case 2: // register
@@ -57,6 +63,8 @@ public class LoginUI implements UI {
     			if (myLogin.getUserInfo()[0] != null 
     					&& myLogin.getUserInfo()[0].equals("register")) {
     				registerSuccess = myLogin.registerUser();
+    				if (registerSuccess)
+    				    giveControlToUser();
     			}
     			break;
     		case 3:
@@ -88,6 +96,36 @@ public class LoginUI implements UI {
     	} else {
     		displayDuplicateEmailError();
     	}
+    }
+    
+    /**
+     * Transfer control to the user, specified by their e-mail address.
+     */
+    private void giveControlToUser() {
+
+        String[] userInfo = myLogin.getUserInfo();
+        User user = DataPollster.getInstance().getUser(userInfo[1]); //get email
+        
+        UI userUI = null;
+
+        if (user instanceof ParkManager) {
+            ParkManager manager = DataPollster.getInstance().getParkManager(userInfo[1]);
+            userUI = new ParkManagerUI(manager);
+        }
+
+        else if (user instanceof Administrator) {
+            Administrator admin = DataPollster.getInstance().getAdministrator(userInfo[1]);
+            userUI = new AdministratorUI(admin);
+
+        }
+
+        else if (user instanceof Volunteer) {
+            Volunteer volunteer = DataPollster.getInstance().getVolunteer(userInfo[1]);
+            userUI = new VolunteerUI(volunteer);
+        }
+
+        if (userUI != null)
+            userUI.commandLoop();
     }
     
     private void loginUserInfo() {

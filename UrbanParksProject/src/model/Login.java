@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 import view.AdministratorUI;
 import view.ParkManagerUI;
 import view.UI;
@@ -35,40 +37,22 @@ public class Login {
     	myUserInfo[4] = theUserType;
     }
     
+    /**
+     * The User Info is an array of strings with the following meanings:
+     * <ol>
+     *  <li>the Action of the user</li>
+     *  <li>the user's email</li>
+     *  <li>the user's first name</li>
+     *  <li>the user's last name</li>
+     *  <li>the user's type</li>
+     * </ol>
+     * @return the User Info
+     */
     public String[] getUserInfo() {
-    	return myUserInfo;
+    	return Arrays.copyOf(myUserInfo, myUserInfo.length);
     }
 	
     // functional methods
-    
-	/**
-     * Transfer control to the user, specified by their e-mail address.
-     */
-    public void giveControlToUser() {
-
-        User user = DataPollster.getInstance().getUser(myUserInfo[1]);
-
-        UI userUI = null;
-
-        if (user instanceof ParkManager) {
-            ParkManager manager = DataPollster.getInstance().getParkManager(myUserInfo[1]);
-            userUI = new ParkManagerUI(manager);
-        }
-
-        if (user instanceof Administrator) {
-            Administrator admin = DataPollster.getInstance().getAdministrator(myUserInfo[1]);
-            userUI = new AdministratorUI(admin);
-
-        }
-
-        if (user instanceof Volunteer) {
-            Volunteer volunteer = DataPollster.getInstance().getVolunteer(myUserInfo[1]);
-            userUI = new VolunteerUI(volunteer);
-        }
-
-        if (userUI != null)
-            userUI.commandLoop();
-    }
 	
     /**
      * Return a true if the registration was successful and false otherwise.
@@ -79,9 +63,6 @@ public class Login {
         	Schedule.getInstance().addUser(myUserInfo[1], myUserInfo[2], myUserInfo[3],
                     myUserInfo[4]);
         	registerSuccess = true;
-        	if (myUserInfo[1] != null) {
-        		giveControlToUser();
-        	}
         }
         
         return registerSuccess;
@@ -94,9 +75,6 @@ public class Login {
     	boolean loginSuccess = false;
         if (duplicateUserRegistrationCheck()) {
             loginSuccess = true;
-            if (myUserInfo[1] != null) {
-        		giveControlToUser();
-        	}
         }
         return loginSuccess;
     }
@@ -105,7 +83,7 @@ public class Login {
      * Returns true if email is already used and false otherwise.
      * @return true if email is already used and false otherwise.
      */
-    public boolean duplicateUserRegistrationCheck() {
+    private boolean duplicateUserRegistrationCheck() {
         return DataPollster.getInstance().checkEmail(myUserInfo[1]);
     }
     
@@ -113,7 +91,7 @@ public class Login {
      * Returns true if the user info is valid and false otherwise.
      * @return true if the user info is valid and false otherwise.
      */
-    public boolean validUserRegistrationCheck() {
+    private boolean validUserRegistrationCheck() {
         return myUserInfo != null && myUserInfo[4] != null;
     }
 }
