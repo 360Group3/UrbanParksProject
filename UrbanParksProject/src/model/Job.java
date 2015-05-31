@@ -71,7 +71,7 @@ public class Job implements Serializable {
      * is in the past (compared to the current time).
      * Note: this is true if the job is in the past.
      */
-    private boolean myPast = false;
+    private boolean myPast;
 
     /**
      * Constructor for job, taking several arguments of integers, Calendar
@@ -95,6 +95,8 @@ public class Job implements Serializable {
 
         this.myStartDate = stringToCalendar(theStartDate);
         this.myEndDate = stringToCalendar(theEndDate);
+        
+        this.myPast = false;
     }
 
     /**

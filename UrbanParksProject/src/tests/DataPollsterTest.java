@@ -8,148 +8,183 @@ import java.util.List;
 import model.DataPollster;
 import model.Job;
 import model.JobList;
-import model.Park;
 import model.ParkManager;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Mike
- *
+ * @author Mike Overby
+ * @author Reid Thompson - most recent implementation
  */
 public class DataPollsterTest {
 
-	private Park p;
 	private JobList jl;
 	private UserList ul;
 	private DataPollster dp;
 	private Schedule s;
-	private ArrayList<ArrayList<String>> vBank;
+	private ArrayList<ArrayList<String>> volALofALs;
+	private Volunteer vol1;
+	private Volunteer vol2;
+	private Volunteer vol3;
+	private Volunteer vol4;
+	private Volunteer vol5;
+	private Volunteer vol6;
+	private ArrayList<String> vol2AL;
+	private Job job1;
+	private Job job2;
+	private Job job3;
+	private Job job4;
+	
+	// FORMAT: assertEquals(str, expected, actual)
+	
 	/**
-	 * @throws java.lang.Exception
+	 * Initialize all necessary fields for the following unit tests.
 	 */
 	@Before
-	public void setUp() throws Exception {
-		p = new Park("Pioneer Park", "Tacoma", 98444);
-		List<Park> pList = new ArrayList<>();
-		pList.add(p);
+	public void setUp() {		
+		ul = new UserList();
 		
-		vBank = new ArrayList<>();
+		vol1 = new Volunteer("moverby@gmail.com", "Mike", "Overby");
+		vol2 = new Volunteer("senorreido@gmail.com", "Senor", "Reido");	
+		vol3 = new Volunteer("classmate1@gmail.com", "Class", "Mate1");
+		vol4 = new Volunteer("refactoreverything@gmail.com", "Refactor", "Everything");
+		vol5 = new Volunteer("classmate2@gmail.com", "Class", "Mate2");
+		vol6 = new Volunteer("internetfail@gmail.com", "Internet", "Fail");
+		
+		vol2AL = new ArrayList<>();
+		vol2AL.add(vol2.getEmail());
+		vol2AL.add(vol2.getFirstName());
+		vol2AL.add(vol2.getLastName());
+		
+		ul.addNewUser(vol1);
+		ul.addNewUser(vol2);
+		ul.addNewUser(vol3);
+		ul.addNewUser(vol4);
+		ul.addNewUser(vol5);
+		ul.addNewUser(vol6);
+		
+		volALofALs = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
 		
-		temp.add("moverby@gmail.com");
+		temp.add(vol1.getEmail());
 		temp.add("Light");
-		vBank.add(temp);
+		volALofALs.add(temp);
 		
 		temp = new ArrayList<>();
-		temp.add("senorreido@gmail.com");
+		temp.add(vol2.getEmail());
 		temp.add("Medium");
-		vBank.add(temp);
+		volALofALs.add(temp);
 
 		temp = new ArrayList<>();
-		temp.add("classmate1@gmail.com");
+		temp.add(vol3.getEmail());
 		temp.add("Heavy");
-		vBank.add(temp);
+		volALofALs.add(temp);
 
 		temp = new ArrayList<>();
-		temp.add("refactoreverything@gmail.com");
+		temp.add(vol4.getEmail());
 		temp.add("Light");
-		vBank.add(temp);
+		volALofALs.add(temp);
 
 		temp = new ArrayList<>();
-		temp.add("classmate2@gmail.com");
+		temp.add(vol5.getEmail());
 		temp.add("Medium");
-		vBank.add(temp);
+		volALofALs.add(temp);
 
 		temp = new ArrayList<>();
-		temp.add("internetfail@gmail.com");
+		temp.add(vol6.getEmail());
 		temp.add("Heavy");
-		vBank.add(temp);
+		volALofALs.add(temp);
+		
+		String park = "Wright Park";
 		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
-		jBank.add(new Job(p, 5, 5, 5,
-						  "06152015", 
-						  "06152015", 
-						  "foo@gmail.com", new ArrayList<>()));
-
-		jBank.add(new Job(p, 5, 5, 5,
-				  		  "06162015", 
-				  		  "06162015", 
-				  		  "bar@gmail.com", vBank));
-
-		jBank.add(new Job(p, 5, 5, 5,
-				  		  "06172015", 
-				  		  "06172015", 
-				  		  "buzz@gmail.com", vBank));
-		jBank.add(new Job(p, 5, 5, 5,
-						  "06182015", 
-						  "06182015", 
-						  "bazz@gmail.com", vBank));
-		jBank.add(new Job(p, 5, 5, 5,
-				  		  "06192015", 
-				  		  "06192015", 
-				  		  "cadandscoundrel@gmail.com", vBank));
-		jBank.add(new Job(p, 5, 5, 5,
-				  		  "06202015", 
-				  		  "06202015", 
-				  		  "zahnthrawn@gmail.com", vBank));
+		job1 = new Job(0, park, 5, 5, 5, "06152015", "06152015", "foo@gmail.com", 
+				new ArrayList<>());
+		job2 = new Job(1, park, 5, 5, 5,
+		  		  "06162015", 
+		  		  "06162015", 
+		  		  "bar@gmail.com", new ArrayList<>());
+		job3 = new Job(2, park, 5, 5, 5,
+		  		  "06172015", 
+		  		  "06172015", 
+		  		  "buzz@gmail.com", new ArrayList<>());
+		job4 = new Job(3, park, 5, 5, 5,
+				  "06182015", 
+				  "06182015", 
+				  "bazz@gmail.com", new ArrayList<>());
 		
-		dp = new DataPollster(jl, ul);
-		s = new Schedule(jl, ul);
+		jBank.add(job1);
+		jBank.add(job2);
+		jBank.add(job3);
+		jBank.add(job4);
+		
+		jl.setJobList(jBank);
+		dp = DataPollster.getInstance();
+		dp.setJobList(jl);
+		dp.setUserList(ul);
+		s = Schedule.getInstance();
+		s.setJobList(jl);
+		s.setUserList(ul);
 }
 
 	/**
 	 * Test method for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
-	 * @throws Exception 
 	 */
 	@Test
-	public void testGetPendingJobs() throws Exception {
-		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", jobs, dp.getPendingJobs(new Volunteer(vBank.get(0).get(0))));
+	public void testGetPendingJobs() {
+		List<Job> localJL = jl.getJobList();
 		
+		assertEquals("Invalid email shouldn't see any jobs.", new ArrayList<Job>(),
+				dp.getPendingJobs("invalidemail@gmail.com"));
 		
-		//TODO: So why don't we just pass the Job in here instead of the ID?
-		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID());//NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID());//NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID());//NOTE: I added @throws exception
-		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID());//NOTE: I added @throws exception
+		// Mike should see all jobs
+		assertEquals("Volunteer should see all jobs.", localJL, 
+				dp.getPendingJobs(vol1.getEmail()));
 		
-		List<Job> pendJob = new ArrayList<Job>();
-		pendJob.add(jobs.get(4));
-		pendJob.add(jobs.get(5));
-		
-		assertEquals("The List filled incorrectly.", pendJob, dp.getPendingJobs(new Volunteer(vBank.get(0).get(0))));
+		// Reid should see less jobs than Mike when adding him to more and more jobs
+		for (int i = 0; i < jl.getNumberOfJobs(); i++) {
+			localJL.get(i).addVolunteer(vol2AL);
+			assertEquals("Reid should see size - 1 - i less jobs when added to i more jobs",
+					localJL.size() - 1 - i, dp.getPendingJobs(vol2.getEmail()).size());
+		}
 	}
 
 	/**
 	 * Test method for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
-	 * @throws Exception 
 	 */
 	@Test
-	public void testGetVolunteerJobs() throws Exception {
-		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerJobs(new Volunteer("nobody@yahoo.com")));
+	public void testGetVolunteerJobs() {
+		List<Job> localJL = new ArrayList<Job>();
 		
+		assertEquals("Invalid email shouldn't get any jobs.", new ArrayList<Job>(),
+				dp.getVolunteerJobs("invalidemail@gmail.com"));
 		
-		//TODO: So why don't we just pass the Job in here instead of the ID?
-//		s.addVolunteerToJob(vBank.get(0), jobs.get(0).getJobID());//NOTE: I added @throws exception
-//		s.addVolunteerToJob(vBank.get(0), jobs.get(1).getJobID());//NOTE: I added @throws exception
-//		s.addVolunteerToJob(vBank.get(0), jobs.get(2).getJobID());//NOTE: I added @throws exception
-//		s.addVolunteerToJob(vBank.get(0), jobs.get(3).getJobID());//NOTE: I added @throws exception
+		assertEquals("Mike's not signed up for any jobs.", new ArrayList<Job>(), 
+				dp.getVolunteerJobs(vol1.getEmail()));
 		
-		List<Job> vsJob = new ArrayList<Job>(); //Volunteer's Jobs
-		vsJob.add(jobs.get(0));
-		vsJob.add(jobs.get(1));
-		vsJob.add(jobs.get(2));
-		vsJob.add(jobs.get(3));
+		assertEquals("Mike's not signed up for any jobs.", 0, 
+				dp.getVolunteerJobs(vol1.getEmail()).size());
 		
-		assertEquals("The List filled incorrectly.", vsJob, dp.getVolunteerJobs(new Volunteer(vBank.get(0).get(0))));
+		job1.addVolunteer(vol2AL);
+		localJL.add(job1);
+		assertEquals("Reid's signed up for 1 job.", 1, dp.getVolunteerJobs(vol2.getEmail()).size());
+		
+		job2.addVolunteer(vol2AL);
+		localJL.add(job2);
+		assertEquals("Reid's signed up for 2 jobs.", 2, dp.getVolunteerJobs(vol2.getEmail()).size());
+		
+		job3.addVolunteer(vol2AL);
+		localJL.add(job3);
+		assertEquals("Reid's signed up for 3 jobs.", 3, dp.getVolunteerJobs(vol2.getEmail()).size());
+		
+		job4.addVolunteer(vol2AL);
+		localJL.add(job4);
+		assertEquals("Reid's signed up for 4 jobs.", 4, dp.getVolunteerJobs(vol2.getEmail()).size());
 	}
 
 	/**
@@ -157,52 +192,69 @@ public class DataPollsterTest {
 	 */
 	@Test
 	public void testGetManagerJobs() {
-		List<Park> listOfP = new ArrayList<Park>();
-		listOfP.add(p);
-		ParkManager pm = new ParkManager(s, dp, listOfP, "randomemail@gmail.com");
-
-		List<Job> pmJobs = jl.getCopyList();
-		assertEquals("Not all jobs in pm's park were accounted for.", pmJobs, dp.getManagerJobs(pm));
+		List<String> parks = new ArrayList<String>();
+		parks.add("Tacoma Park");
+		parks.add("Point Defiance Park");
+		parks.add("New Park");
+		parks.add("Wright Park");
 		
-		Park p2 = new Park("Foolly Park", "Portland", 98232);
-		List<Job> jobs = jl.getJobList();
-		jobs.add(new Job(p2, 5, 5, 5,
-				  		 "06192015", 
-				  		 "06192015", 
-				  		 "senorreido@gmail.com", vBank));
+		ParkManager pm = new ParkManager("validpmemail@gmail.com", "Young", "Money", parks);
+		ul.addNewUser(pm);
 		
+		dp.setUserList(ul);
+		s.setUserList(ul);
 		
-		assertEquals("A job at another park affected the return value.", pmJobs, dp.getManagerJobs(pm));
+		assertEquals("Not all jobs in pm's park were accounted for.", jl.getJobList(), 
+				dp.getManagerJobs(pm.getEmail()));
 	}
 
 	/**
 	 * Test method for {@link model.DataPollster#getVolunteerList(int)}.
-	 * @throws Exception 
 	 */
 	@Test
-	public void testGetVolunteerList() throws Exception {
-		List<Job> jobs = jl.getJobList();
-		assertEquals("Empty list problem.", new ArrayList<Job>(), dp.getVolunteerList(jobs.get(0).getJobID()));
+	public void testGetJobVolunteerList() {
+		assertEquals("Problem given job with no Volunteers.", 0, 
+				dp.getJobVolunteerList(job4.getJobID()).size());
 		
-		ArrayList<List<String>> vList = new ArrayList<>();
-		
-		for (int i = 0; i < 5; i++)
-		{
-			s.addVolunteerToJob(vBank.get(i), jobs.get(0).getJobID()); //NOTE: I added @throws exception
-			ArrayList<String> temp = new ArrayList<>();
-			temp.add(vBank.get(i).get(0));
-			temp.add(vBank.get(i).get(1));
-			vList.add(temp);
-		}
-		
-		assertEquals("The List filled incorrectly.", vList, dp.getVolunteerList(jobs.get(0).getJobID()));
-	}
-	
-	// Reid: removed this method call b/c I didn't know if it was necessary.
-	@After
-	public void teardown()
-	{
-//		Job.setNextJobID(0);
+		assertEquals("Invalid job ID has >0 sized Volunteer list.", 0, 
+				dp.getJobVolunteerList(50).size());
+				
+		for (int i = 0; i < volALofALs.size(); i++) {
+			job4.addVolunteer(volALofALs.get(i));
+			assertEquals("Volunteer not correctly recognized as added to a Job.",
+					i + 1, dp.getJobVolunteerList(job4.getJobID()).size());
+		}		
 	}
 
+	/**
+	 * Test method for {@link model.DataPollster#getNextJobID()}.
+	 */
+	@Test
+	public void testGetNextJobID() {
+		String park = "Woohoo Park";
+		Job j4 = new Job(4, park, 5, 5, 5, "06012015", "06012015", "emailJ4@gmail.com",
+				new ArrayList<>());
+		Job j5 = new Job(5, park, 5, 5, 5, "06022015", "06022015", "emailJ5@gmail.com",
+				new ArrayList<>());
+		Job j6 = new Job(6, park, 5, 5, 5, "06032015", "06032015", "emailJ6@gmail.com",
+				new ArrayList<>());
+		Job j7 = new Job(7, park, 5, 5, 5, "06042015", "06042015", "emailJ7@gmail.com",
+				new ArrayList<>());
+		Job j8 = new Job(8, park, 5, 5, 5, "06052015", "06052015", "emailJ8@gmail.com",
+				new ArrayList<>());
+		Job j9 = new Job(9, park, 5, 5, 5, "06062015", "06062015", "emailJ9@gmail.com",
+				new ArrayList<>());
+		Job[] jobs = {j4, j5, j6, j7, j8, j9};
+		List<Job> localJL = jl.getJobList();
+		for (int i = 0; i < 6; i++) {
+			localJL.add(jobs[i]);
+			jl.setJobList(localJL);
+			dp.setJobList(jl);
+			assertEquals("Next job ID didn't increment properly.", i + 4, dp.getNextJobID() - 1);
+		}
+	}
+
+	/**
+	 * Test method for {}.
+	 */
 }

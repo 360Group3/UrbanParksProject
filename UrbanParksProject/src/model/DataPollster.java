@@ -42,18 +42,22 @@ public class DataPollster implements Serializable {
 	 * 2. Jobs that occur on the same date as a job the Volunteer is already
 	 * signed up for.
 	 * 
+	 * @param theEmail is the Volunteer's email for whom to display pending jobs.
 	 * @author Mike Overby - initial implementation.
 	 * @author Taylor Gorman - refactor
 	 */
 	public List<Job> getPendingJobs(String theEmail) {
 		List<Job> visibleJobs = new ArrayList<>();
 		List<Job> allJobs = myJobList.getCopyList();
-
+		
 		// Check through myJobList and select all Jobs that the Volunteer can
 		// sign up ("visible").
-		for (Job job : allJobs) {
-			if (visibleToVolunteer(theEmail, job)) {
-				visibleJobs.add(job);
+		boolean volExists = checkEmail(theEmail);
+		if (volExists) {
+			for (Job job : allJobs) {
+				if (visibleToVolunteer(theEmail, job)) {
+					visibleJobs.add(job);
+				}
 			}
 		}
 
@@ -94,7 +98,6 @@ public class DataPollster implements Serializable {
 			// Select all Jobs in JobList with the same name as a Park that
 			// ParkManager manages.
 			for (Job job : getJobListCopy()) {
-
 				String jobParkName = job.getPark();
 				if (manager.getManagedParks().contains(jobParkName)) {
 					managerJobs.add(job);
@@ -109,7 +112,7 @@ public class DataPollster implements Serializable {
 	 */
 
 	/**
-	 * Return a copy of the Job matching theJobID
+	 * Return a copy of the Job matching theJobID.
 	 * 
 	 * @author Reid Thompson
 	 */
@@ -286,8 +289,7 @@ public class DataPollster implements Serializable {
 	 * Administrator.
 	 * 
 	 * @author Taylor Gorman
-	 * @param theEmail
-	 *            The email address of the Administrator.
+	 * @param theEmail the email address of the Administrator.
 	 * @return The Administrator that matches the email, or null if such a
 	 *         Administrator does not exist.
 	 */
@@ -324,6 +326,10 @@ public class DataPollster implements Serializable {
 		return myUserList.getAdministratorListCopy();
 	}
 
+	/*
+	 * ==============* List Setters *==============
+	 */
+	
 	public void setJobList(JobList theJobList) {
 		this.myJobList = theJobList;
 	}
