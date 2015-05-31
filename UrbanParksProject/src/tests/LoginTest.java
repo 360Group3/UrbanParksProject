@@ -1,10 +1,13 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import model.DataPollster;
 import model.Login;
 import model.Schedule;
 import model.UserList;
+import model.Volunteer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,9 +52,21 @@ public class LoginTest {
         assertTrue(myLogin.registerUser());
     }
 
-    @Test
-    public void testLoginUser() {
-        fail("Not yet implemented");
-    }
 
+    @Test
+    public void testLoginUserForNotInUserList() {
+        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        assertFalse(myLogin.loginUser());
+    }
+    
+    @Test
+    public void testLoginUserForOriginalUser() {
+        myUL.addNewUser(new Volunteer("email@yo.com", "Mimiru", "Tsukasa"));
+
+        DataPollster.getInstance().setUserList(myUL);
+        Schedule.getInstance().setUserList(myUL);
+        
+        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        assertTrue(myLogin.loginUser());
+    }
 }
