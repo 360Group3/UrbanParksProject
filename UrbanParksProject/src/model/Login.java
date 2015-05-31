@@ -77,7 +77,7 @@ public class Login {
     }
     
     /**
-     * Validates an email based on the following criteria, derived from a partial implementation of RFC 3696.
+     * Validates an email based on the following criteria, a partial implementation of RFC 3696.
      * <ul>
      *  <li>The local part must be between 1 and 64 characters.</li>
      *  <li>The local part can consist of ASCII word characters, as well as the special characters  !#$%&'*+-/=?^_`.{|}~. The local part cannot begin with a period (.).</li>
