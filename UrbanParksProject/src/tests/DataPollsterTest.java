@@ -40,8 +40,9 @@ public class DataPollsterTest {
 	private Job job2;
 	private Job job3;
 	private Job job4;
-	private ParkManager pm;
-	private List<String> parks;
+	private ParkManager pm1;
+	private ParkManager pm2;
+	private List<String> parks1;
 		
 	/**
 	 * Initialize all necessary fields for the following unit tests.
@@ -107,32 +108,32 @@ public class DataPollsterTest {
 		List<Job> jBank = jl.getJobList();
 		job1 = new Job(0, park, 5, 5, 5, "06152015", "06152015", "foo@gmail.com", 
 				new ArrayList<>());
-		job2 = new Job(1, park, 5, 5, 5,
-		  		  "06162015", 
-		  		  "06162015", 
-		  		  "bar@gmail.com", new ArrayList<>());
-		job3 = new Job(2, park, 5, 5, 5,
-		  		  "06172015", 
-		  		  "06172015", 
-		  		  "buzz@gmail.com", new ArrayList<>());
-		job4 = new Job(3, park, 5, 5, 5,
-				  "06182015", 
-				  "06182015", 
-				  "bazz@gmail.com", new ArrayList<>());
+		job2 = new Job(1, park, 5, 5, 5, "06162015", "06162015", "bar@gmail.com", 
+				new ArrayList<>());
+		job3 = new Job(2, park, 5, 5, 5, "06172015", "06172015", "buzz@gmail.com", 
+				new ArrayList<>());
+		job4 = new Job(3, "A Different Park", 5, 5, 5, "06182015", "06182015", "bazz@gmail.com", 
+				new ArrayList<>());
 		
 		jBank.add(job1);
 		jBank.add(job2);
 		jBank.add(job3);
 		jBank.add(job4);
 		
-		parks = new ArrayList<String>();
-		parks.add("Tacoma Park");
-		parks.add("Point Defiance Park");
-		parks.add("New Park");
-		parks.add("Wright Park");
+		parks1 = new ArrayList<String>();
+		parks1.add("Tacoma Park");
+		parks1.add("Point Defiance Park");
+		parks1.add("New Park");
+		parks1.add("Wright Park");
 		
-		pm = new ParkManager("validpmemail@gmail.com", "Young", "Money", parks);
-		ul.addNewUser(pm);
+		pm1 = new ParkManager("validpmemail@gmail.com", "Young", "Money", parks1);
+		ul.addNewUser(pm1);
+		
+		List<String> parks2 = new ArrayList<>();
+		parks2.add("Another Park");
+		
+		pm2 = new ParkManager("validpmemail2@gmail.com", "Fresh", "Threads", parks2);
+		ul.addNewUser(pm2);
 		
 		jl.setJobList(jBank);
 		dp = DataPollster.getInstance();
@@ -144,18 +145,30 @@ public class DataPollsterTest {
 }
 
 	/**
-	 * Test method for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
+	 * Test method 1 for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
 	 */
 	@Test
-	public void testGetPendingJobs() {
-		List<Job> localJL = jl.getJobList();
-		
+	public void testGetPendingJobsOnInvalidEmail() {
 		assertEquals("Invalid email shouldn't see any jobs.", new ArrayList<Job>(),
 				dp.getPendingJobs("invalidemail@gmail.com"));
-		
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
+	 */
+	@Test
+	public void testGetPendingJobsOnVolNotSignedUp() {
 		// Mike should see all jobs
-		assertEquals("Volunteer should see all jobs.", localJL, 
+		assertEquals("Volunteer should see all jobs.", jl.getJobList(), 
 				dp.getPendingJobs(vol1.getEmail()));
+	}
+	
+	/**
+	 * Test method 3 for {@link model.DataPollster#getPendingJobs(model.Volunteer)}.
+	 */
+	@Test
+	public void testGetPendingJobsOnVolAddedToMoreJobs() {
+		List<Job> localJL = jl.getJobList();
 		
 		// Reid should see less jobs than Mike when adding him to more and more jobs
 		for (int i = 0; i < jl.getNumberOfJobs(); i++) {
@@ -166,75 +179,94 @@ public class DataPollsterTest {
 	}
 
 	/**
-	 * Test method for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
+	 * Test method 1 for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
 	 */
 	@Test
-	public void testGetVolunteerJobs() {
-		List<Job> localJL = new ArrayList<Job>();
-		
+	public void testGetVolunteerJobsOnInvalidEmail() {
 		assertEquals("Invalid email shouldn't get any jobs.", new ArrayList<Job>(),
 				dp.getVolunteerJobs("invalidemail@gmail.com"));
-		
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
+	 */
+	@Test
+	public void testGetVolunteerJobsOnVolNotSignedUp() {
 		assertEquals("Mike's not signed up for any jobs.", new ArrayList<Job>(), 
 				dp.getVolunteerJobs(vol1.getEmail()));
 		
 		assertEquals("Mike's not signed up for any jobs.", 0, 
 				dp.getVolunteerJobs(vol1.getEmail()).size());
-		
+	}
+
+	/**
+	 * Test method 3 for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
+	 */
+	@Test
+	public void testGetVolunteerJobsOnAddingVolToMoreJobs() {
 		job1.addVolunteer(vol2AL);
-		localJL.add(job1);
 		assertEquals("Reid's signed up for 1 job.", 1, dp.getVolunteerJobs(vol2.getEmail()).size());
 		
 		job2.addVolunteer(vol2AL);
-		localJL.add(job2);
 		assertEquals("Reid's signed up for 2 jobs.", 2, dp.getVolunteerJobs(vol2.getEmail()).size());
 		
 		job3.addVolunteer(vol2AL);
-		localJL.add(job3);
 		assertEquals("Reid's signed up for 3 jobs.", 3, dp.getVolunteerJobs(vol2.getEmail()).size());
+	}
+	
+	/**
+	 * Test method 4 for {@link model.DataPollster#getVolunteerJobs(model.Volunteer)}.
+	 */
+	@Test
+	public void testGetVolunteerJobsOnAddingMoreThanOneVolToAJob() {
+		ArrayList<String> vol3AL = new ArrayList<>();
+		vol3AL.add(vol3.getEmail());
+		vol3AL.add(vol3.getFirstName());
+		vol3AL.add(vol3.getLastName());
 		
 		job4.addVolunteer(vol2AL);
-		localJL.add(job4);
-		assertEquals("Reid's signed up for 4 jobs.", 4, dp.getVolunteerJobs(vol2.getEmail()).size());
+		job4.addVolunteer(vol3AL);
+		assertEquals("More than one Volunteer for a Job is ok.", 1, 
+				dp.getVolunteerJobs(vol3.getEmail()).size());
 	}
 
 	/**
-	 * Test method for {@link model.DataPollster#getManagerJobs(model.ParkManager)}.
+	 * Test method 1 for {@link model.DataPollster#getManagerJobs(model.ParkManager)}.
 	 */
 	@Test
-	public void testGetManagerJobs() {
-		ul.addNewUser(pm);
+	public void testGetManagerJobsOnInvalidEmail() {
+		assertEquals("Invalid PM email should return empty list.", new ArrayList<>(),
+				dp.getManagerJobs("iamaninvalidemail@gmail.com"));
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getManagerJobs(model.ParkManager)}.
+	 */
+	@Test
+	public void testGetManagerJobsOnValidEmailWithJobs() {		
+		List<Job> jobsOfPM1 = new ArrayList<>();
+		jobsOfPM1.add(job1);
+		jobsOfPM1.add(job2);
+		jobsOfPM1.add(job3);
 		
-		dp.setUserList(ul);
-		s.setUserList(ul);
-		
-		assertEquals("Not all jobs in pm's park were accounted for.", jl.getJobList(), 
-				dp.getManagerJobs(pm.getEmail()));
+		assertEquals("Not all jobs in pm's jobs were accounted for.", jobsOfPM1, 
+				dp.getManagerJobs(pm1.getEmail()));
+	}
+	
+	/**
+	 * Test method 3 for {@link model.DataPollster#getManagerJobs(model.ParkManager)}.
+	 */
+	@Test
+	public void testGetManagerJobsOnValidEmailWithNoJobs() {
+		assertEquals("This park manager shouldn't have any jobs.", new ArrayList<>(),
+				dp.getManagerJobs(pm2.getEmail()));
 	}
 
 	/**
-	 * Test method for {@link model.DataPollster#getJobVolunteerList(int)}.
+	 * Test method 1 for {@link model.DataPollster#getNextJobID()}.
 	 */
 	@Test
-	public void testGetJobVolunteerList() {
-		assertEquals("Problem given job with no Volunteers.", 0, 
-				dp.getJobVolunteerList(job4.getJobID()).size());
-		
-		assertEquals("Invalid job ID has >0 sized Volunteer list.", 0, 
-				dp.getJobVolunteerList(50).size());
-				
-		for (int i = 0; i < volALofALs.size(); i++) {
-			job4.addVolunteer(volALofALs.get(i));
-			assertEquals("Volunteer not correctly recognized as added to a Job.",
-					i + 1, dp.getJobVolunteerList(job4.getJobID()).size());
-		}		
-	}
-
-	/**
-	 * Test method for {@link model.DataPollster#getNextJobID()}.
-	 */
-	@Test
-	public void testGetNextJobID() {
+	public void testGetNextJobIDOnAddingMoreJobs() {
 		String park = "Woohoo Park";
 		Job j4 = new Job(4, park, 5, 5, 5, "06012015", "06012015", "emailJ4@gmail.com",
 				new ArrayList<>());
@@ -257,21 +289,127 @@ public class DataPollsterTest {
 			assertEquals("Next job ID didn't increment properly.", i + 4, dp.getNextJobID() - 1);
 		}
 	}
-
+	
 	/**
-	 * Test method for {@link model.DataPollster#checkEmail(String)}.
+	 * Test method 2 for {@link model.DataPollster#getNextJobID()}.
 	 */
 	@Test
-	public void testCheckEmail() {
+	public void testGetNextJobIDOnAddingJobsWithDecreasingJobIDs() {
+		String park = "Seattle Sounders Park";
+		List<Job> localJL = jl.getJobList();
+		
+		Job j11 = new Job(11, park, 5, 5, 5, "08152015", "08152015", "emailJ11@gmail.com",
+				new ArrayList<>());
+		Job j10 = new Job(10, park, 5, 5, 5, "08162015", "08162015", "emailJ10@gmail.com",
+				new ArrayList<>());
+		Job j9 = new Job(9, park, 5, 5, 5, "08172015", "08172015", "emailJ9@gmail.com",
+				new ArrayList<>());
+		Job j8 = new Job(8, park, 5, 5, 5, "08182015", "08182015", "emailJ8@gmail.com",
+				new ArrayList<>());
+		Job j7 = new Job(7, park, 5, 5, 5, "08192015", "08192015", "emailJ7@gmail.com",
+				new ArrayList<>());
+		Job j6 = new Job(6, park, 5, 5, 5, "08252015", "08252015", "emailJ6@gmail.com",
+				new ArrayList<>());
+		Job j5 = new Job(5, park, 5, 5, 5, "08262015", "08262015", "emailJ5@gmail.com",
+				new ArrayList<>());
+		Job j4 = new Job(4, park, 5, 5, 5, "08272015", "08272015", "emailJ4@gmail.com",
+				new ArrayList<>());
+		
+		int expectedNextJobID = 12; // should be true for all jobs added w/ decreasing ids
+		Job[] jobs = {j11, j10, j9, j8, j7, j6, j5, j4};
+		for (int i = 0; i < jobs.length; i++) {
+			localJL.add(jobs[i]);
+			jl.setJobList(localJL);
+			dp.setJobList(jl);
+			assertEquals("Next job ID didn't return correct value.", expectedNextJobID, 
+					dp.getNextJobID());
+		}
+	}
+	
+	
+	/**
+	 * Test method 1 for {@link model.DataPollster#getJobVolunteerList(int)}.
+	 */
+	@Test
+	public void testGetJobVolunteerListOnJobWithNoVolunteers() {
+		assertEquals("Problem given job with no Volunteers.", 0, 
+				dp.getJobVolunteerList(job4.getJobID()).size());
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getJobVolunteerList(int)}.
+	 */
+	@Test
+	public void testGetJobVolunteerListOnInvalidJobID() {
+		assertEquals("Invalid job ID has >0 sized Volunteer list.", 0, 
+				dp.getJobVolunteerList(50).size());
+	}
+	
+	/**
+	 * Test method 3 for {@link model.DataPollster#getJobVolunteerList(int)}.
+	 */
+	@Test
+	public void testGetJobVolunteerListOnAddingManyVolsToOneJob() {
+		for (int i = 0; i < volALofALs.size(); i++) {
+			job4.addVolunteer(volALofALs.get(i));
+			assertEquals("Volunteer not correctly recognized as added to a Job.",
+					i + 1, dp.getJobVolunteerList(job4.getJobID()).size());
+		}		
+	}
+
+	
+	/**
+	 * Test method 1 for {@link model.DataPollster#checkEmail(String)}.
+	 */
+	@Test
+	public void testCheckEmailOnValidEmail() {
 		assertTrue(dp.checkEmail(vol1.getEmail()));
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#checkEmail(String)}.
+	 */
+	@Test
+	public void testCheckEmailOnInvalidEmail() {
 		assertFalse(dp.checkEmail("randomvoidemail@gmail.com"));
 	}
 
+	
 	/**
-	 * Test method for {@link model.DataPollster#getVolunteerGrade(int, String)}.
+	 * Test method 1 for {@link model.DataPollster#getVolunteerGrade(int, String)}.
 	 */
 	@Test
-	public void testGetVolunteerGrade() {
+	public void testGetVolunteerGradeOnInvalidJobIDValidEmail() {
+		// test that null is returned too
+		assertEquals("Null wasn't returned.", null, dp.getVolunteerGrade(20, 
+				"refactoreverything@gmail.com"));
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getVolunteerGrade(int, String)}.
+	 */
+	@Test
+	public void testGetVolunteerGradeOnValidJobIDInvalidEmail() {
+		// test that null is returned too
+		assertEquals("Null wasn't returned.", null, dp.getVolunteerGrade(2, 
+				"thisisaninvalidemail@gmail.com"));
+	}
+	
+	/**
+	 * Test method 3 for {@link model.DataPollster#getVolunteerGrade(int, String)}.
+	 */
+	@Test
+	public void testGetVolunteerGradeOnInvalidJobIDAndInvalidEmail() {
+		// test that null is returned too
+		assertEquals("Null wasn't returned.", null, dp.getVolunteerGrade(42, 
+				"hownowbrowncow@gmail.com"));
+	}
+	
+	/**
+	 * Test method 4 for {@link model.DataPollster#getVolunteerGrade(int, String)}.
+	 */
+	@Test
+	public void testGetVolunteerGradeOnValidJobIDAndValidEmailMultipleVols() {
 		Job j = new Job(15, "Starbucks Park", 10, 10, 10, "07152015", "07152015", 
 				"cookiemonster@sesame.com", volALofALs);
 		
@@ -292,23 +430,40 @@ public class DataPollsterTest {
 				vol5.getEmail()));
 		assertEquals("Vol6 grade incorrect.", "Heavy", dp.getVolunteerGrade(j.getJobID(), 
 				vol6.getEmail()));
-		
-		// test that null is returned too
-		assertEquals("Null wasn't returned.", null, dp.getVolunteerGrade(20, "browncow@farm.com"));
 	}
 
+	
 	/**
-	 * Test method for {@link model.DataPollster#getParkList(String)}.
+	 * Test method 1 for {@link model.DataPollster#getParkList(String)}.
 	 */
 	@Test
-	public void testGetParkList() {
+	public void testGetParkListOnInvalidPMEmail() {
+		assertEquals("Invalid email shouldn't be associated with any parks.", new ArrayList<>(), 
+				dp.getParkList("yetanotherinvalidpmemail@gmail.com"));
+	}
+	
+	/**
+	 * Test method 2 for {@link model.DataPollster#getParkList(String)}.
+	 */
+	@Test
+	public void testGetParkListOnValidPMWithNoParks() {
 		ParkManager noParkPM = new ParkManager("jeffbezos@amazon.com", "Jeff", "Bezos",
 				new ArrayList<>());
-		assertEquals("PM shouldn't be associated with any parks.", 0, 
-				dp.getManagerJobs(noParkPM.getEmail()).size());
+		ul.addNewUser(noParkPM);
+		dp.setUserList(ul);
+		
+		assertEquals("PM shouldn't be associated with any parks.", 0,
+				dp.getParkList(noParkPM.getEmail()).size());
 		assertEquals("PM shouldn't be associated with any parks.", new ArrayList<>(), 
-				dp.getManagerJobs(noParkPM.getEmail()));
+				dp.getParkList(noParkPM.getEmail()));
+	}
+	
+	/**
+	 * Test method 3 for {@link model.DataPollster#getParkList(String)}.
+	 */
+	@Test
+	public void testGetParkListOnValidPMWithParks() {
 		assertEquals("This PM should have 4 parks associated with him.", 4, 
-				dp.getManagerJobs(pm.getEmail()).size());
+				dp.getParkList(pm1.getEmail()).size());
 	}
 }
