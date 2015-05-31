@@ -80,7 +80,7 @@ public class Login {
         if (theEmail == null)
             return false;
         
-    	String pat = "[\\w!#$%&'*+\\-/=?^_`{|}~]+(\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*@\\w+((\\.|-)\\w+)*";
+    	String pat = "(?=^[^@]{1,64})([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)@(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)";
     	Pattern pattern = Pattern.compile(pat);
     	Matcher matcher = pattern.matcher(theEmail);
     	return matcher.matches();
