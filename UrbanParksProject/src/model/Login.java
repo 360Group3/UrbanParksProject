@@ -55,7 +55,7 @@ public class Login {
     // functional methods
 	
     /**
-     * Return a true if the registration was successful and false otherwise.
+     * @return true if the registration was successful and false otherwise.
      */
     public boolean registerUser() {  
     	boolean registerSuccess = false;
@@ -69,7 +69,7 @@ public class Login {
     }
     
     /**
-     * Return true if the login was successful and false otherwise.
+     * @return true if the login was successful and false otherwise.
      */
     public boolean loginUser() {
     	boolean loginSuccess = false;
