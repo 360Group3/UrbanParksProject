@@ -14,7 +14,7 @@ import model.User;
  * @author Reid Thompson
  * @version 5.10.2015
  */
-public class AdministratorUI implements UI {
+public class AdministratorUI extends UI {
 
     /**
      * A Scanner object to read input for the Administrator's UI.
@@ -132,44 +132,6 @@ public class AdministratorUI implements UI {
                 System.out.println("This volunteer has not signed up for any jobs.\n");
             }
         }
-    }
-
-    /**
-     * 
-     * @return the int entered by a user.
-     */
-    public int getUserInt() {
-        int userInput = 0;
-
-        // Reid: shouldn't this be in a loop?
-        // you'd want to iterate over the whole line to see if any #s were entered
-        if (myIn.hasNextInt()) {
-            userInput = myIn.nextInt();
-        }
-        else {
-            myIn.next();
-        }
-
-        System.out.println(); // Skip a line afterward
-        return userInput;
-    }
-
-    /**
-     * 
-     * @return the String entered by a user.
-     */
-    public String getUserString() {
-        String userInput = myIn.nextLine();
-
-        if (userInput.equals("")) { // TODO, maybe make this a while so that it will
-                                    // continuously
-                                    // prompt the user, instead of just once?
-                                    // - Reid agrees.
-            userInput = myIn.nextLine();
-        }
-
-        System.out.println(); // Skip a line afterward
-        return userInput;
     }
 
     /**

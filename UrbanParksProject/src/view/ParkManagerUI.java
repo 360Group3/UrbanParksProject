@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Scanner;
 
 import model.Job;
 import model.ParkManager;
@@ -16,10 +15,9 @@ import model.Volunteer;
  * @author Reid Thompson
  * @version 6 May 2015
  */
-public class ParkManagerUI implements UI{
+public class ParkManagerUI extends UI {
 	
 	//Class Variables
-	private Scanner myScanner;
 	private ParkManager myManager;
 	
 	/**
@@ -27,7 +25,7 @@ public class ParkManagerUI implements UI{
 	 * @param theManager the manager
 	 */
 	public ParkManagerUI(ParkManager theManager) {
-		myScanner = new Scanner(System.in);
+		super();
 		this.myManager = theManager;
 	}
 	
@@ -280,47 +278,4 @@ public class ParkManagerUI implements UI{
 			System.out.println("Job not added...\nReturning to Park Manager Menu...");
 		}
 	}		
-
-	
-	
-	/*================*
-	 * Helper Classes *
-	 *================*/
-	
-	/**
-	 * Convert a GregorianCalendar object to string of format mmddyyyy
-	 */
-	private String calendarToString(GregorianCalendar theCalendar) {
-		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
-				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
-				theCalendar.get(Calendar.YEAR);
-		return returnString;
-	}
-	
-	/**
-	 * Return an integer that the user has typed.
-	 */
-	public int getUserInt() {
-		int userInput = 0;
-
-		if(myScanner.hasNextInt()) {
-			userInput = myScanner.nextInt();
-		} else {
-			myScanner.next();
-		}
-
-		return userInput;
-	}
-	
-	/**
-	 * Return a String that the user has typed.
-	 */
-	public String getUserString() {		
-		String userInput = myScanner.nextLine();
-		
-		if(userInput.equals("")) {
-			userInput = myScanner.nextLine();
-		}
-		return userInput;
-	}
 }

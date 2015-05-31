@@ -16,7 +16,7 @@ import model.Volunteer;
  * 
  * @version 2 (May 22, 2015)
  */
-public class VolunteerUI implements UI {
+public class VolunteerUI extends UI {
 
 	private Scanner myScanner;
 	private Volunteer myVol;
@@ -254,35 +254,6 @@ public class VolunteerUI implements UI {
 		return levelString;
 	}
 
-	
-	/**
-	 * Return an integer that the user has typed.
-	 */
-	private int getUserInt() {
-		int userInput = 0;
-
-		if(myScanner.hasNextInt()) {
-			userInput = myScanner.nextInt();
-		} else {
-			myScanner.next();
-		}
-
-		return userInput;
-	}
-	
-	/**
-	 * Prompt the user to enter something.
-	 * @return a string of what the user entered.
-	 */
-	private String getUserString() {		
-		String userInput = myScanner.nextLine();
-		
-		if(userInput.equals("")) { 
-			userInput = myScanner.nextLine();
-		}
-		return userInput;
-	}
-	
 	/**
 	 * Display a success method to let the volunteer know that he/she has been added
 	 * to a job.
@@ -292,18 +263,4 @@ public class VolunteerUI implements UI {
 				+ " one park at a time!");
 		
 	}
-	
-	
-
-	/**
-	 * Convert a GregorianCalendar object to string of format mmddyyyy
-	 */
-	private String calendarToString(GregorianCalendar theCalendar) {
-		String returnString = theCalendar.get(Calendar.MONTH) + "/" +
-				theCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
-				theCalendar.get(Calendar.YEAR);
-		return returnString;
-	}
-
-	
 }

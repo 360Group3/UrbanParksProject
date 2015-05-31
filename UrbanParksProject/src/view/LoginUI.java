@@ -17,7 +17,7 @@ import model.Volunteer;
  * @version 26 May 2015
  *
  */
-public class LoginUI implements UI {
+public class LoginUI extends UI {
 
 	private Login myLogin;
 	
@@ -152,32 +152,6 @@ public class LoginUI implements UI {
     private String getLastName() {
         System.out.println("\nWhat is your last name?");
         return getUserString();
-    }
-
-    private int getUserInt() {
-        int userInput = 0;
-
-        if (myScanner.hasNextInt()) {
-            userInput = myScanner.nextInt();
-        }
-        else {
-            myScanner.next();
-        }
-
-        return userInput;
-    }
-
-    private String getUserString() {
-
-        String userInput = myScanner.nextLine();
-
-        if (userInput.equals("")) { // TODO, maybe make this a while so that it will
-                                    // continuously
-                                    // prompt the user, instead of just once?
-            userInput = myScanner.nextLine();
-        }
-
-        return userInput;
     }
     
     private String getUserType() {
