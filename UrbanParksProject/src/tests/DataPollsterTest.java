@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * A unit testing class for the DataPollster model class.
+ * 
  * @author Mike Overby
  * @author Reid Thompson - most recent implementation
  */
@@ -38,9 +40,9 @@ public class DataPollsterTest {
 	private Job job2;
 	private Job job3;
 	private Job job4;
-	
-	// FORMAT: assertEquals(str, expected, actual)
-	
+	private ParkManager pm;
+	private List<String> parks;
+		
 	/**
 	 * Initialize all necessary fields for the following unit tests.
 	 */
@@ -123,6 +125,15 @@ public class DataPollsterTest {
 		jBank.add(job3);
 		jBank.add(job4);
 		
+		parks = new ArrayList<String>();
+		parks.add("Tacoma Park");
+		parks.add("Point Defiance Park");
+		parks.add("New Park");
+		parks.add("Wright Park");
+		
+		pm = new ParkManager("validpmemail@gmail.com", "Young", "Money", parks);
+		ul.addNewUser(pm);
+		
 		jl.setJobList(jBank);
 		dp = DataPollster.getInstance();
 		dp.setJobList(jl);
@@ -192,13 +203,6 @@ public class DataPollsterTest {
 	 */
 	@Test
 	public void testGetManagerJobs() {
-		List<String> parks = new ArrayList<String>();
-		parks.add("Tacoma Park");
-		parks.add("Point Defiance Park");
-		parks.add("New Park");
-		parks.add("Wright Park");
-		
-		ParkManager pm = new ParkManager("validpmemail@gmail.com", "Young", "Money", parks);
 		ul.addNewUser(pm);
 		
 		dp.setUserList(ul);
@@ -209,7 +213,7 @@ public class DataPollsterTest {
 	}
 
 	/**
-	 * Test method for {@link model.DataPollster#getVolunteerList(int)}.
+	 * Test method for {@link model.DataPollster#getJobVolunteerList(int)}.
 	 */
 	@Test
 	public void testGetJobVolunteerList() {
@@ -255,6 +259,56 @@ public class DataPollsterTest {
 	}
 
 	/**
-	 * Test method for {}.
+	 * Test method for {@link model.DataPollster#checkEmail(String)}.
 	 */
+	@Test
+	public void testCheckEmail() {
+		assertTrue(dp.checkEmail(vol1.getEmail()));
+		assertFalse(dp.checkEmail("randomvoidemail@gmail.com"));
+	}
+
+	/**
+	 * Test method for {@link model.DataPollster#getVolunteerGrade(int, String)}.
+	 */
+	@Test
+	public void testGetVolunteerGrade() {
+		Job j = new Job(15, "Starbucks Park", 10, 10, 10, "07152015", "07152015", 
+				"cookiemonster@sesame.com", volALofALs);
+		
+		List<Job> jobs = jl.getJobList();
+		jobs.add(j);
+		jl.setJobList(jobs);
+		dp.setJobList(jl);
+		
+		assertEquals("Vol1 grade incorrect.", "Light", dp.getVolunteerGrade(j.getJobID(), 
+				vol1.getEmail()));
+		assertEquals("Vol2 grade incorrect.", "Medium", dp.getVolunteerGrade(j.getJobID(), 
+				vol2.getEmail()));
+		assertEquals("Vol3 grade incorrect.", "Heavy", dp.getVolunteerGrade(j.getJobID(), 
+				vol3.getEmail()));
+		assertEquals("Vol4 grade incorrect.", "Light", dp.getVolunteerGrade(j.getJobID(), 
+				vol4.getEmail()));
+		assertEquals("Vol5 grade incorrect.", "Medium", dp.getVolunteerGrade(j.getJobID(), 
+				vol5.getEmail()));
+		assertEquals("Vol6 grade incorrect.", "Heavy", dp.getVolunteerGrade(j.getJobID(), 
+				vol6.getEmail()));
+		
+		// test that null is returned too
+		assertEquals("Null wasn't returned.", null, dp.getVolunteerGrade(20, "browncow@farm.com"));
+	}
+
+	/**
+	 * Test method for {@link model.DataPollster#getParkList(String)}.
+	 */
+	@Test
+	public void testGetParkList() {
+		ParkManager noParkPM = new ParkManager("jeffbezos@amazon.com", "Jeff", "Bezos",
+				new ArrayList<>());
+		assertEquals("PM shouldn't be associated with any parks.", 0, 
+				dp.getManagerJobs(noParkPM.getEmail()).size());
+		assertEquals("PM shouldn't be associated with any parks.", new ArrayList<>(), 
+				dp.getManagerJobs(noParkPM.getEmail()));
+		assertEquals("This PM should have 4 parks associated with him.", 4, 
+				dp.getManagerJobs(pm.getEmail()).size());
+	}
 }

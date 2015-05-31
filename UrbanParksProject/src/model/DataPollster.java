@@ -199,10 +199,12 @@ public class DataPollster implements Serializable {
 	public String getVolunteerGrade(int theJobID, String theVolunteerEmail) {
 		String gradeToReturn = null;
 
-		for (ArrayList<String> volunteer : myJobList.getJobCopy(theJobID)
-				.getVolunteerList()) {
-			if (volunteer.get(0).equals(theVolunteerEmail)) {
-				gradeToReturn = volunteer.get(1);
+		Job job = myJobList.getJobCopy(theJobID);
+		if (job != null) {
+			for (ArrayList<String> volunteer : job.getVolunteerList()) {
+				if (volunteer.get(0).equals(theVolunteerEmail)) {
+					gradeToReturn = volunteer.get(1);
+				}
 			}
 		}
 
@@ -216,9 +218,7 @@ public class DataPollster implements Serializable {
 	 * @author Reid Thompson - added User functionality.
 	 */
 	public List<String> getParkList(String theEmail) {
-
 		List<User> managerList = myUserList.getParkManagerListCopy();
-
 		for (User manager : managerList) {
 			if (manager.getEmail().equals(theEmail)) {
 				return ((ParkManager) manager).getManagedParks();
