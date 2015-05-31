@@ -59,7 +59,7 @@ public class SaveLoadTest {
 		User manager1 = new ParkManager("testmanager@gmail.com", "Test3", "Manager3", new ArrayList<String>());
 		User manager2 = new ParkManager("testmanager2@gmail.com", "Test4", "Manager4", new ArrayList<String>());
 		
-		User admin1 = new Administrator("Test5", "Administrator5", "testadministrator@gmail.com");
+		User admin1 = new Administrator("testadministrator@gmail.com", "Test5", "Administrator5");
 		
 		myUserList.addNewUser(volunteer1);
 		myUserList.addNewUser(volunteer2);
