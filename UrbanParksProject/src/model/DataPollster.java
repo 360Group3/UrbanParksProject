@@ -31,9 +31,9 @@ public class DataPollster implements Serializable {
 		return dataPollster;
 	}
 
-	/*
-	 * =================* JobList Subsets *=================
-	 */
+	/*=================*
+	 * JobList Subsets *
+	 *=================*/
 
 	/**
 	 * Return a list of all Jobs that are visible to the Volunteer. This
@@ -107,9 +107,9 @@ public class DataPollster implements Serializable {
 		return managerJobs;
 	}
 
-	/*
-	 * ==============* Job Handling *==============
-	 */
+	/*==============*
+	 * Job Handling *
+	 *==============*/
 
 	/**
 	 * Return a copy of the Job matching theJobID.
@@ -162,9 +162,9 @@ public class DataPollster implements Serializable {
 		return volunteerList;
 	}
 
-	/*
-	 * ===============* User Handling *===============
-	 */
+	/*===============*
+	 * User Handling *
+	 *===============*/
 
 	/**
 	 * Returns true if a user with the given email already exists in the system,
@@ -227,9 +227,9 @@ public class DataPollster implements Serializable {
 		return new ArrayList<String>();
 	}
 
-	/*
-	 * ==============* User Getters *==============
-	 */
+	/*==============*
+	 * User Getters *
+	 *==============*/
 
 	/**
 	 * Return the User that matches the given email address, and null if one
@@ -302,9 +302,9 @@ public class DataPollster implements Serializable {
 		return null;
 	}
 
-	/*
-	 * ==============* List Getters *==============
-	 */
+	/*==============*
+	 * List Getters *
+	 *==============*/
 
 	public List<Job> getJobListCopy() {
 		return myJobList.getCopyList();
@@ -326,9 +326,9 @@ public class DataPollster implements Serializable {
 		return myUserList.getAdministratorListCopy();
 	}
 
-	/*
-	 * ==============* List Setters *==============
-	 */
+	/*==============*
+	 * List Setters *
+	 *==============*/
 	
 	public void setJobList(JobList theJobList) {
 		this.myJobList = theJobList;
@@ -338,9 +338,9 @@ public class DataPollster implements Serializable {
 		this.myUserList = theUserList;
 	}
 
-	/*
-	 * ================* Helper Methods *================
-	 */
+	/*================*
+	 * Helper Methods *
+	 *================*/
 
 	/*
 	 * Return true if the job is visible to the volunteer; false otherwise.
