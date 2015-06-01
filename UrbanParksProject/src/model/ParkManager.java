@@ -26,7 +26,9 @@ public class ParkManager extends User implements Serializable {
     private List<String> myManagedParks;
     private String myEmail = super.getEmail();
 
-    // Constructor
+    /**
+     * ParkManager Constructor
+     */
     public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {    	
         super(theFirstName, theLastName, theEmail);
 
@@ -53,7 +55,7 @@ public class ParkManager extends User implements Serializable {
      * Add a Job to the JobList, with this ParkManager set as the manager for the job.
      * @return true if the Job was successfully added; false otherwise
      */
-    public boolean addJob(Job theJob) throws IllegalArgumentException {
+    public boolean addJob(Job theJob) {
         //  Check to find whether the manager manages the park that this job is at.
         
         if (!(new BusinessRule8().test(theJob, myManagedParks))) {
@@ -61,9 +63,7 @@ public class ParkManager extends User implements Serializable {
                     + "list of managed parks.");
         }
         
-        return false;
-        
-        
+        return Schedule.getInstance().receiveJob(theJob);   
     }
 
     /**
@@ -131,5 +131,4 @@ public class ParkManager extends User implements Serializable {
         
         return volunteerList;
     }
-
 }
