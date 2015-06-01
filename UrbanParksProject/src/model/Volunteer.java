@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -26,6 +25,12 @@ public class Volunteer extends User implements Serializable {
     public Volunteer(String theEmail, String theFirstName, String theLastName) {
         super(theFirstName, theLastName, theEmail);
     }
+    
+    
+    
+    /*============*
+     * Job Signup *
+     *============*/
 	
 	/**
 	 * Sign the Volunteer up for a Job.
@@ -34,31 +39,24 @@ public class Volunteer extends User implements Serializable {
 	 * @return true if the volunteer successfully signed up for the Job; false otherwise.
 	 * @throws IllegalArgumentException if the Volunteer was not able to be added to the Job.
 	 */
-	public boolean signUp(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
+	public boolean signUpForJob(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
 			return Schedule.getInstance().addVolunteerToJob(theVolunteerInfo, theJobID);
 	}
 	
 	
+	
+	/*==============*
+	 * Display Jobs *
+	 *==============*/
+	
 	/**
-	 * Return all pending Jobs from DataPollster that are visible to the Volunteer.<br>
-	 * Also goes through to find any Jobs that are now considered to be in the past, and updates them accordingly.
+	 * Return all pending Jobs from DataPollster that are visible to the Volunteer.
 	 */
-	public List<Job> getTheJobs() {		
-		/*
-		 * We update Jobs at this moment, to handle cases where the Volunteer is, for example,
-		 * signing up for a Job near midnight.
-		 */		
+	public List<Job> getPendingJobs() {		
+		//We first check to see if any Jobs have been completed since the time that the Volunteer logged in.
+		Schedule.getInstance().updatePastJobs();
+		
 		List<Job> visibleJobs = Schedule.getInstance().getJobList();
-		
-		GregorianCalendar currentDate = new GregorianCalendar();
-		long currentTime = currentDate.getTimeInMillis() + 2670040009l;
-		
-		for (Job job: visibleJobs) { 
-			if(currentTime > job.getStartDate().getTimeInMillis()) {
-				job.setInPast(true);
-			}
-		}
-
 		return visibleJobs;
 	}
 	

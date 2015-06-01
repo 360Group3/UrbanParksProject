@@ -121,7 +121,7 @@ public class VolunteerTest {
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Light");
 		
-		Naruto.signUp(theVol, 0);
+		Naruto.signUpForJob(theVol, 0);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ public class VolunteerTest {
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
 		
-		assertEquals(Naruto.signUp(theVol, 0), true);
+		assertEquals(Naruto.signUpForJob(theVol, 0), true);
 	}
 	
 	/**
@@ -147,12 +147,12 @@ public class VolunteerTest {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
-		Naruto.signUp(theVol, 0);
+		Naruto.signUpForJob(theVol, 0);
 		
 		ArrayList<String> theVol2 = new ArrayList<String>();
 		theVol2.add("Ash@yahoo.com");
 		theVol2.add("Medium");	
-		Ash.signUp(theVol2, 0);
+		Ash.signUpForJob(theVol2, 0);
 	}
 	
 	/**
@@ -164,12 +164,12 @@ public class VolunteerTest {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
-		Naruto.signUp(theVol, 0);
+		Naruto.signUpForJob(theVol, 0);
 		
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Heavy");
-		assertEquals(Goku.signUp(theVol3, 0), true);
+		assertEquals(Goku.signUpForJob(theVol3, 0), true);
 	}
 	
 	/**
@@ -181,18 +181,18 @@ public class VolunteerTest {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
-		Naruto.signUp(theVol, 1);
+		Naruto.signUpForJob(theVol, 1);
 		
 		ArrayList<String> theVol2 = new ArrayList<String>();
 		theVol2.add("Ash@yahoo.com");
 		theVol2.add("Medium");
-		Ash.signUp(theVol2, 1);
+		Ash.signUpForJob(theVol2, 1);
 		
 		
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
-		assertEquals(Goku.signUp(theVol3, 1), true);
+		assertEquals(Goku.signUpForJob(theVol3, 1), true);
 	}
 		
 	/**
@@ -203,7 +203,7 @@ public class VolunteerTest {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
-		Goku.signUp(theVol3, 279);
+		Goku.signUpForJob(theVol3, 279);
 	}
 	
 	/**
@@ -226,7 +226,7 @@ public class VolunteerTest {
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Heavy");
-		Arsh.signUp(theVol5, 5);
+		Arsh.signUpForJob(theVol5, 5);
 	}
 	
 	/**
@@ -238,8 +238,8 @@ public class VolunteerTest {
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
 		
-		Yugi.signUp(theVol4, 0);
-		Yugi.signUp(theVol4, 2);
+		Yugi.signUpForJob(theVol4, 0);
+		Yugi.signUpForJob(theVol4, 2);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class VolunteerTest {
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Medium");
-		Arsh.signUp(theVol5, 1);
+		Arsh.signUpForJob(theVol5, 1);
 		assertEquals(Arsh.getMyJobs().size(), 1);
 	}
 	
@@ -277,8 +277,8 @@ public class VolunteerTest {
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Medium");
 		
-		Arsh.signUp(theVol5, 0);
-		Arsh.signUp(theVol5, 1);
+		Arsh.signUpForJob(theVol5, 0);
+		Arsh.signUpForJob(theVol5, 1);
 		assertEquals(Arsh.getMyJobs().size(), 2);
 	}
 }

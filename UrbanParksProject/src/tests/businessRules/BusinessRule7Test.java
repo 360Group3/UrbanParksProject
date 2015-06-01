@@ -63,7 +63,7 @@ public class BusinessRule7Test {
         theVol4.add("Yugi@yahoo.com");
         theVol4.add("Medium");
         
-        Yugi.signUp(theVol4, 0);
+        Yugi.signUpForJob(theVol4, 0);
         
         assertFalse(br7.test("Yugi@yahoo.com", beatJadenYuki, myJobList));
     }
@@ -77,7 +77,7 @@ public class BusinessRule7Test {
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
 		
-		Yugi.signUp(theVol4, 0);
+		Yugi.signUpForJob(theVol4, 0);
 		
 
         assertTrue(br7.test("Yugi@yahoo.com", tradeForBlueEyesWhiteDragon, myJobList));

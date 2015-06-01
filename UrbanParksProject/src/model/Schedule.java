@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import model.businessRules.BusinessRule1;
@@ -213,7 +214,16 @@ public class Schedule implements Serializable {
     }
     
     
-    
+    public void updatePastJobs() {
+    	GregorianCalendar currentDate = new GregorianCalendar();
+		long currentTime = currentDate.getTimeInMillis() + 2670040009l;
+		
+		for (Job job : myJobList.getJobList()) { 
+			if(currentTime > job.getStartDate().getTimeInMillis()) {
+				job.setInPast(true);
+			}
+		}
+    }
     
     
     /*===============*
