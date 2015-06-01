@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.DataPollster;
 import model.Job;
 import model.ParkManager;
 import model.Volunteer;
@@ -22,9 +23,9 @@ public class ParkManagerUI extends UI {
 	 * Construct the manager.
 	 * @param theManager the manager
 	 */
-	public ParkManagerUI(ParkManager theManager) {
+	public ParkManagerUI(String theManagerEmail) {
 		super();
-		this.myManager = theManager;
+		this.myManager = DataPollster.getInstance().getParkManager(theManagerEmail);
 	}
 	
 	

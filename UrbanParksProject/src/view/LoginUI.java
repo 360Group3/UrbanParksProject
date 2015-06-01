@@ -104,19 +104,15 @@ public class LoginUI extends UI {
         UI userUI = null;
 
         if (user instanceof ParkManager) {
-            ParkManager manager = DataPollster.getInstance().getParkManager(userInfo[1]);
-            userUI = new ParkManagerUI(manager);
+            userUI = new ParkManagerUI(userInfo[1]);
         }
 
         else if (user instanceof Administrator) {
-            Administrator admin = DataPollster.getInstance().getAdministrator(userInfo[1]);
-            userUI = new AdministratorUI(admin);
-
+            userUI = new AdministratorUI(userInfo[1]);
         }
 
         else if (user instanceof Volunteer) {
-            Volunteer volunteer = DataPollster.getInstance().getVolunteer(userInfo[1]);
-            userUI = new VolunteerUI(volunteer);
+            userUI = new VolunteerUI(userInfo[1]);
         }
 
         if (userUI != null)

@@ -23,9 +23,10 @@ public class AdministratorUI extends UI {
      * @param theAdmin
      *            the administrator
      */
-    public AdministratorUI(Administrator theAdmin) {
-        myAdmin = theAdmin;
-    }
+	public AdministratorUI(String theAdminEmail) {
+		super();
+		this.myAdmin = DataPollster.getInstance().getAdministrator(theAdminEmail);
+	}
 
     @Override
     public void commandLoop() {
