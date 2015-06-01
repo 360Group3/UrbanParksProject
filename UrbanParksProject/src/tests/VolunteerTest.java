@@ -271,8 +271,8 @@ public class VolunteerTest {
 	
 	/**
 	 * Get a list of the jobs a volunteer has signed up for.
-	 * (volunteer will sign up for 3 jobs so the 
-	 * size of the list should be 3).
+	 * (volunteer will sign up for 2 jobs so the 
+	 * size of the list should be 2).
 	 */
 	@Test
 	public void testGetMyJobsOnListWithManyJobs() {
@@ -282,24 +282,6 @@ public class VolunteerTest {
 		
 		Arsh.signUp(theVol5, 0);
 		Arsh.signUp(theVol5, 1);
-		Arsh.signUp(theVol5, 2);
-		assertEquals(Arsh.getMyJobs().size(), 3);
-	}
-	
-	/**
-	 * This gets the number of jobs that are available to sign up for.
-	 */
-	@Test
-	public void testGetTheJobsTest() {
-		
-		List<Job> daJobs = Arsh.getTheJobs();
-		int count = 0;
-		for(Job job : daJobs) {
-			if (!job.isInPast()) {
-				count++;
-			}
-		}
-		
-		assertEquals(count, 3); 
+		assertEquals(Arsh.getMyJobs().size(), 2);
 	}
 }
