@@ -57,7 +57,7 @@ public class Volunteer extends User implements Serializable {
 								//then change that job's JobID to -1 so that it can be
 								//checked for and ignored when displaying the jobs.
 			if(currentDate.getTimeInMillis() + 2670040009l > j.getStartDate().getTimeInMillis()) {
-				j.setIfPast(true);
+				j.setInPast(true);
 			}
 		}
 

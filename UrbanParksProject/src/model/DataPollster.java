@@ -27,6 +27,9 @@ public class DataPollster implements Serializable {
 	}
 
 	// Singleton Instance
+	/**
+	 * Return the instance of the DataPollster Singleton.
+	 */
 	public static DataPollster getInstance() {
 		return dataPollster;
 	}
@@ -306,22 +309,37 @@ public class DataPollster implements Serializable {
 	 * List Getters *
 	 *==============*/
 
+	/**
+	 * Return a copy of the List of all Jobs.
+	 */
 	public List<Job> getJobListCopy() {
 		return myJobList.getCopyList();
 	}
 
+	/**
+	 * Return a copy of the List of all Users.
+	 */
 	public List<User> getAllUserList() {
 		return myUserList.getUserListCopy();
 	}
 
+	/**
+	 * Return a copy of the List of all Volunteers.
+	 */
 	public List<User> getVolunteerListCopy() {
 		return myUserList.getVolunteerListCopy();
 	}
 
+	/**
+	 * Return a copy of the List of all ParkManagers.
+	 */
 	public List<User> getManagerListCopy() {
 		return myUserList.getParkManagerListCopy();
 	}
 
+	/**
+	 * Return a copy of the List of all Administrators.
+	 */
 	public List<User> getAdministratorListCopy() {
 		return myUserList.getAdministratorListCopy();
 	}
@@ -330,10 +348,16 @@ public class DataPollster implements Serializable {
 	 * List Setters *
 	 *==============*/
 	
+	/**
+	 * Update the List of all Jobs with a new List.
+	 */
 	public void setJobList(JobList theJobList) {
 		this.myJobList = theJobList;
 	}
 
+	/**
+	 * Update the List of all Users with a new List.
+	 */
 	public void setUserList(UserList theUserList) {
 		this.myUserList = theUserList;
 	}
