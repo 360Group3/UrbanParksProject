@@ -99,17 +99,10 @@ public class VolunteerTest {
             //System.out.println(todaysDate3);
             catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<>());
         }
-        
-        
-        
+        catchMew.getStartDate().get(5);
         Schedule.getInstance().receiveJob(defeatFrieza);
         Schedule.getInstance().receiveJob(findSasuke);
-        Schedule.getInstance().receiveJob(catchMew);
         Schedule.getInstance().receiveJob(tradeForBlueEyesWhiteDragon);
-        
-        
-        //System.out.println("There are " + Schedule.getInstance().getJobList().getNumberOfJobs() + " jobs.");
-        
     }
     
     /**
