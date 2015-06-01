@@ -82,9 +82,9 @@ public class UserList implements Serializable {
     
     
     
-    /*==============*
-     * Helper Class *
-     *==============*/
+    /*===============*
+     * Helper Method *
+     *===============*/
     
     /**
      * Return a list of all Users that match the specified type.

@@ -54,9 +54,9 @@ public class UserListTest {
         
         ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
         myUL.addNewUser(p);
-        assertTrue(myUL.getUserListCopy().contains(p));
+        assertTrue(myUL.getUserListCopy().contains(p)); 
         
-        assertEquals(3, myUL.getUserListCopy().size());
+        assertEquals("Size of list should be 3", 3, myUL.getUserListCopy().size());
     }
 
     /**
