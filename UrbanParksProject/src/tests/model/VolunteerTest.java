@@ -104,7 +104,6 @@ public class VolunteerTest {
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);
 		Schedule.getInstance().receiveJob(findSasuke);
-		Schedule.getInstance().receiveJob(catchMew);
 		Schedule.getInstance().receiveJob(tradeForBlueEyesWhiteDragon);
 		
 		
