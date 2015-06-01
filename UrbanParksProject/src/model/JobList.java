@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -49,6 +50,25 @@ public class JobList implements Serializable {
         return myJobList.size();
     }
     
+    /**
+     * This method counts the number of pending jobs.
+     * @return the number of pending jobs.
+     */
+    public int getNumberOfPendingJobs() {
+    	int count = 0;
+    	GregorianCalendar currentDate = new GregorianCalendar();
+    	long currentTime = currentDate.getTimeInMillis();
+    	
+    	for (Job j: myJobList) {
+    		if(currentTime > j.getStartDate().getTimeInMillis()) {
+				j.setInPast(true);
+    		} else {
+    			count++;
+    		}
+    	}
+    	
+    	return count;	
+    }
     
     
     /*==============*
