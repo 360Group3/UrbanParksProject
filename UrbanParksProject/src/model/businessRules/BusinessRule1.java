@@ -12,7 +12,8 @@ public class BusinessRule1 {
      */
     public static final int MAX_JOBS = 30;
 
+    //FIXME: receivejob is showing the 5 jobs in a week exception when this fails.
     public boolean test(JobList theJobList) {
-        return theJobList.getNumberOfPendingJobs() <= MAX_JOBS;
+        return theJobList.getNumberOfPendingJobs() < MAX_JOBS;
     }
 }
