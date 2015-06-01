@@ -33,7 +33,7 @@ public class BusinessRule7Test {
 	Job beatJadenYuki;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 	    br7 = new BusinessRule7();
 	    
 		myUserList = new UserList();
@@ -45,10 +45,9 @@ public class BusinessRule7Test {
 	
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
 		
-		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<>());
-		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<>());
-		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<>());
-        
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", new ArrayList<>());
+		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "07112015", "07122015", "ten@uw.edu", new ArrayList<>());
+		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "07152015", "07152015", "ten@uw.edu", new ArrayList<>());
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);
 		Schedule.getInstance().receiveJob(tradeForBlueEyesWhiteDragon);
@@ -59,7 +58,7 @@ public class BusinessRule7Test {
      * Adding a volunteer to a day he is not working.
      */
     @Test
-    public void testSignUpForValid() {
+    public void testSignUpOnJobForDayVolunteerNotAlreadyWorkingAnotherJobThatDay() {
         ArrayList<String> theVol4 = new ArrayList<String>();
         theVol4.add("Yugi@yahoo.com");
         theVol4.add("Medium");
@@ -73,7 +72,7 @@ public class BusinessRule7Test {
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
 	@Test
-	public void testSignUpForAlreadyWorking() {
+	public void testSignUpOnAlreadyWorkingJobSameDayAsAnotherJobSignedUpFor() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");

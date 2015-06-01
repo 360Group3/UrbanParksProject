@@ -108,13 +108,13 @@ public class DataPollsterTest {
 		
 		jl = new JobList();
 		List<Job> jBank = jl.getJobList();
-		job1 = new Job(0, park, 5, 5, 5, "06152015", "06152015", "foo@gmail.com", 
+		job1 = new Job(0, park, 5, 5, 5, "07152015", "07152015", "foo@gmail.com", 
 				new ArrayList<>());
-		job2 = new Job(1, park, 5, 5, 5, "06162015", "06162015", "bar@gmail.com", 
+		job2 = new Job(1, park, 5, 5, 5, "07162015", "07162015", "bar@gmail.com", 
 				new ArrayList<>());
-		job3 = new Job(2, park, 5, 5, 5, "06172015", "06172015", "buzz@gmail.com", 
+		job3 = new Job(2, park, 5, 5, 5, "07172015", "07172015", "buzz@gmail.com", 
 				new ArrayList<>());
-		job4 = new Job(3, "A Different Park", 5, 5, 5, "06182015", "06182015", "bazz@gmail.com", 
+		job4 = new Job(3, "A Different Park", 5, 5, 5, "07182015", "07182015", "bazz@gmail.com", 
 				new ArrayList<>());
 		
 		jBank.add(job1);
@@ -270,17 +270,17 @@ public class DataPollsterTest {
 	@Test
 	public void testGetNextJobIDOnAddingMoreJobs() {
 		String park = "Woohoo Park";
-		Job j4 = new Job(4, park, 5, 5, 5, "06012015", "06012015", "emailJ4@gmail.com",
+		Job j4 = new Job(4, park, 5, 5, 5, "07012015", "07012015", "emailJ4@gmail.com",
 				new ArrayList<>());
-		Job j5 = new Job(5, park, 5, 5, 5, "06022015", "06022015", "emailJ5@gmail.com",
+		Job j5 = new Job(5, park, 5, 5, 5, "07022015", "07022015", "emailJ5@gmail.com",
 				new ArrayList<>());
-		Job j6 = new Job(6, park, 5, 5, 5, "06032015", "06032015", "emailJ6@gmail.com",
+		Job j6 = new Job(6, park, 5, 5, 5, "07032015", "07032015", "emailJ6@gmail.com",
 				new ArrayList<>());
-		Job j7 = new Job(7, park, 5, 5, 5, "06042015", "06042015", "emailJ7@gmail.com",
+		Job j7 = new Job(7, park, 5, 5, 5, "07042015", "07042015", "emailJ7@gmail.com",
 				new ArrayList<>());
-		Job j8 = new Job(8, park, 5, 5, 5, "06052015", "06052015", "emailJ8@gmail.com",
+		Job j8 = new Job(8, park, 5, 5, 5, "07052015", "07052015", "emailJ8@gmail.com",
 				new ArrayList<>());
-		Job j9 = new Job(9, park, 5, 5, 5, "06062015", "06062015", "emailJ9@gmail.com",
+		Job j9 = new Job(9, park, 5, 5, 5, "07062015", "07062015", "emailJ9@gmail.com",
 				new ArrayList<>());
 		Job[] jobs = {j4, j5, j6, j7, j8, j9};
 		List<Job> localJL = jl.getJobList();

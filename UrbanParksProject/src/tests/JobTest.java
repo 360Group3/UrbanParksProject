@@ -19,9 +19,9 @@ public class JobTest {
     private ParkManager myParkManager;
 
     @Before
-    public void setUp() throws Exception {
-        String startDate = "06111992";
-        String endDate = "06111992";
+    public void setUp() {
+        String startDate = "07111992";
+        String endDate = "07111992";
 
         List<String> pList = new ArrayList<String>();
         pList.add("Foo Park");
@@ -43,8 +43,8 @@ public class JobTest {
 
         for (int i = 1; i <= 5; i++) {
             Job j = new Job(i, "Ariel Park", 2, 2, 2, 
-                            "06" + (11 + i) + 1992, 
-                            "06" + (11 + i) + 1992,
+                            "07" + (11 + i) + 1992, 
+                            "07" + (11 + i) + 1992,
                             "moverby@gmail.com",
                             new ArrayList<>());
             assertEquals(i, j.getJobID());
@@ -216,7 +216,7 @@ public class JobTest {
     }
 
     @Test
-    public void TestGetHeavyCurrent() {
+    public void testGetHeavyCurrent() {
         assertEquals(0, myJob.getHeavyCurrent());
 
         ArrayList<String> vol6 = new ArrayList<>();

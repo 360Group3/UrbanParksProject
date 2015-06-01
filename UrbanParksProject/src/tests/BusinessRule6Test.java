@@ -20,7 +20,7 @@ public class BusinessRule6Test {
 	BusinessRule6 br6;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 	    br6 = new BusinessRule6();
 	}
 
@@ -28,7 +28,7 @@ public class BusinessRule6Test {
      * Adding volunteer to a job in the future.
      */
     @Test
-    public void testSignUpForFutureJob() {
+    public void testTestOnFutureJob() {
         Job job1 = new Job(5, "dud", 0, 0, 1, "04123015", "04123015", "ten@uw.edu", new ArrayList<>());
         
         assertTrue(br6.test(job1));
@@ -38,7 +38,7 @@ public class BusinessRule6Test {
 	 * Adding volunteer to a job in the past.
 	 */
 	@Test
-	public void testSignUpForPastJob() {
+	public void testTestOnPastJob() {
 		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<>());
 
 		assertFalse(br6.test(job1));

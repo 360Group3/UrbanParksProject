@@ -18,7 +18,7 @@ public class LoginTest {
     UserList myUL;
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myLogin = new Login();
         
         myUL = new UserList();
@@ -28,7 +28,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testRegisterUserForInvalidUserInfo() {
+    public void testRegisterUserOnInvalidUserInfo() {
         myLogin.setUserInfoRegister(null, "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertFalse(myLogin.registerUser());
         
@@ -46,20 +46,19 @@ public class LoginTest {
     }
     
     @Test
-    public void testRegisterUserForValid() {
+    public void testRegisterUserOnValidUserInfo() {
         myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertTrue(myLogin.registerUser());
     }
 
-
     @Test
-    public void testLoginUserForNotInUserList() {
+    public void testLoginUserOnUserNotInUserList() {
         myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertFalse(myLogin.loginUser());
     }
     
     @Test
-    public void testLoginUserForOriginalUser() {
+    public void testLoginUserOnUserThatExistsInUserList() {
         myUL.addNewUser(new Volunteer("email@yo.com", "Mimiru", "Tsukasa"));
 
         DataPollster.getInstance().setUserList(myUL);
@@ -70,11 +69,11 @@ public class LoginTest {
     }
     
     /**
-     * These are all emails that conform to the standard - Yes, really - but are unsupported by our application.
+     * These are all emails that conform to the standard - Yes, really 
+	 * - but are unsupported by our application.
      */
     @Test
-    public void testCheckEmailFormatForValidButUnsupported()
-    {
+    public void testCheckEmailFormatOnValidButUnsupportedEmails() {
         assertFalse(myLogin.checkEmailFormat("Abc\\@def@example.com"));
         assertFalse(myLogin.checkEmailFormat("Fred\\ Bloggs@example.com"));
         assertFalse(myLogin.checkEmailFormat("Joe.\\\\Blow@example.com"));
@@ -87,8 +86,7 @@ public class LoginTest {
      * These are all valid email addresses. Really.
      */
     @Test
-    public void testCheckEmailFormatForValidWeird()
-    {
+    public void testCheckEmailFormatOnValidButWeirdEmails() {
         assertTrue(myLogin.checkEmailFormat("l@d"));
         assertTrue(myLogin.checkEmailFormat("user+mailbox@example.com"));
         assertTrue(myLogin.checkEmailFormat("customer/department=shipping@example.com"));
@@ -109,8 +107,7 @@ public class LoginTest {
      * These are all valid email addresses.
      */
     @Test
-    public void testCheckEmailFormatForValidOrdinary()
-    {
+    public void testCheckEmailFormatOnValidAndOrdinaryEmails() {
         assertTrue(myLogin.checkEmailFormat("moverby@gmail.com"));
         assertTrue(myLogin.checkEmailFormat("pattern@overstock.co.uk"));
         assertTrue(myLogin.checkEmailFormat("m.overby@overstock.co.uk"));
@@ -124,8 +121,7 @@ public class LoginTest {
      * These are invalid email addresses.
      */
     @Test
-    public void testCheckEmailFormatForInvalid()
-    {
+    public void testCheckEmailFormatOnInvalidEmails() {
         assertFalse(myLogin.checkEmailFormat("NoAtSign"));
         assertFalse(myLogin.checkEmailFormat("moverby@gmail..com"));
         assertFalse(myLogin.checkEmailFormat("pattern@.overstock.co.uk"));
@@ -146,14 +142,12 @@ public class LoginTest {
     }
     
     @Test
-    public void testCheckEmailFormatForNull()
-    {
+    public void testCheckEmailFormatOnNull() {
         assertFalse(myLogin.checkEmailFormat(null));
     }
     
     @Test
-    public void testCheckEmailFormatForEmptyString()
-    {
+    public void testCheckEmailFormatOnEmptyString() {
         assertFalse(myLogin.checkEmailFormat(""));
     }
 }

@@ -119,10 +119,8 @@ public class Login {
             return false;
         
         boolean isValid = true;
-        for (String str : myUserInfo)
-        {
-            if (str == null)
-            {
+        for (String str : myUserInfo) {
+            if (str == null) {
                 isValid = false;
                 break;
             }
