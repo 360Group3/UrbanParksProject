@@ -12,6 +12,9 @@ import java.util.regex.Pattern;
  */
 public class Login {
 	
+    public static String LOGIN_ACTION = "login";
+    public static String REGISTER_ACTION = "register";
+    
 	private String[] myUserInfo;
 	
 	public Login() {
