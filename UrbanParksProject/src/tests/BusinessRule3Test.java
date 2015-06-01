@@ -1,6 +1,7 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class BusinessRule3Test {
 
 	    
 		defeatFrieza = new Job(0, "Namek", 0, 1, 5,
-				"06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+				"06122015", "06122015", "ten@uw.edu", new ArrayList<>());
 	}	
 	
 	

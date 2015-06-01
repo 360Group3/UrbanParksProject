@@ -173,7 +173,7 @@ public class ParkManagerUI extends UI {
 			String startDate = getStartDate();
 			String endDate = getEndDate();
 			
-			ArrayList<ArrayList<String>> volunteerList = new ArrayList<ArrayList<String>>();
+			List<List<String>> volunteerList = new ArrayList<>();
 			
 			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
 					endDate, myManager.getEmail(), volunteerList);

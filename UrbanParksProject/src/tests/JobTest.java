@@ -29,7 +29,7 @@ public class JobTest {
         myParkManager = new ParkManager("tjsg1992@gmail.com", "Taylor", "Gorman", pList);
 
         myJob = new Job(1, "Ariel Park", 3, 3, 3, startDate, endDate,
-                        myParkManager.getEmail(), new ArrayList<ArrayList<String>>());
+                        myParkManager.getEmail(), new ArrayList<>());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class JobTest {
                             "06" + (11 + i) + 1992, 
                             "06" + (11 + i) + 1992,
                             "moverby@gmail.com",
-                            new ArrayList<ArrayList<String>>());
+                            new ArrayList<>());
             assertEquals(i, j.getJobID());
         }
     }

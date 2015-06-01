@@ -153,7 +153,7 @@ public class DataPollster implements Serializable {
 		Job job = myJobList.getJobCopy(theJobID);
 
 		if (job != null) {
-			for (ArrayList<String> volunteer : job.getVolunteerList()) {
+			for (List<String> volunteer : job.getVolunteerList()) {
 				String volunteerEmail = volunteer.get(0);
 				volunteerList.add(getVolunteer(volunteerEmail));
 			}
@@ -201,7 +201,7 @@ public class DataPollster implements Serializable {
 
 		Job job = myJobList.getJobCopy(theJobID);
 		if (job != null) {
-			for (ArrayList<String> volunteer : job.getVolunteerList()) {
+			for (List<String> volunteer : job.getVolunteerList()) {
 				if (volunteer.get(0).equals(theVolunteerEmail)) {
 					gradeToReturn = volunteer.get(1);
 				}

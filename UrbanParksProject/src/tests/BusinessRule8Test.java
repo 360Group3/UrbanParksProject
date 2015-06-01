@@ -39,7 +39,7 @@ public class BusinessRule8Test {
 	 */
 	@Test
 	public void testParkForGoodPark() {
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<>());
 		
 		assertTrue(br8.test(findSasuke, parkList));
 	}
@@ -50,7 +50,7 @@ public class BusinessRule8Test {
 	 */
 	@Test
 	public void testParkForBadPark() {
-		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<>());
 
 		assertFalse(br8.test(findSasuke, parkList));
 	}

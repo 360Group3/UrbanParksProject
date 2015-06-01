@@ -5,7 +5,6 @@ package tests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import model.Job;
 import model.businessRules.BusinessRule4;
 
