@@ -33,8 +33,8 @@ public class SaveLoadTest {
 		myUserList = new UserList();
 		mySaveLoader = new SaveLoad();
 		
-		mySaveLoader.saveJobList(myJobList, "testJobList.ser");
-		mySaveLoader.saveUserList(myUserList, "testUserList.ser");
+		mySaveLoader.saveJobList(myJobList, "src/tests/model/testJobList.ser");
+		mySaveLoader.saveUserList(myUserList, "src/tests/model/testUserList.ser");
 		
 		//Fill the Job List with several Jobs.
 		List<List<String>> volunteerArray = new ArrayList<>();
