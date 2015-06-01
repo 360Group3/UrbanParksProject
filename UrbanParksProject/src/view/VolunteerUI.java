@@ -123,7 +123,9 @@ public class VolunteerUI extends UI {
 	 */
 	private void signUp() {
 		int jobID = getJobID();
-
+		//display the available grades
+		printGradeInfo(jobID);
+		
 		String level = getDifficultyLevel();
 
 		ArrayList<String> volArray = new ArrayList<String>();
@@ -136,6 +138,24 @@ public class VolunteerUI extends UI {
 
 	}
 
+
+	private void printGradeInfo(int jobID) {
+		Job leJob = findJob(jobID);
+
+		if (leJob.hasLightRoom() || leJob.hasHeavyRoom() || leJob.hasMediumRoom()) {
+			System.out.println();			
+			System.out.println("There are available spots in the following grades:");
+			if (leJob.hasLightRoom()) {
+				System.out.println("LIGHT");
+			}
+			if (leJob.hasMediumRoom()) {
+				System.out.println("MEDIUM");
+			}
+			if (leJob.hasHeavyRoom()) {
+				System.out.println("HEAVY");
+			}
+		}
+	}
 
 	/**
 	 * The volunteer can view the jobs that he/she has signed up for.
@@ -248,6 +268,24 @@ public class VolunteerUI extends UI {
 		
 		return levelString;
 	}
+	
+	/**
+     * Finds the job associated with this jobID.
+     * @param theJobID is the jobs ID
+     * @return the Job that has this Job ID, null otherwise.
+     */
+    private Job findJob(int theJobID) {
+        //Calls JobList.getJobList() to get the master job list which is editable
+        List<Job> editableJobList = myVol.getTheJobs();
+
+
+        for (int i = 0; i < editableJobList.size(); i++) {
+            if (editableJobList.get(i).getJobID() == theJobID) {
+                return editableJobList.get(i);
+            }
+        }
+        return null;
+    }
 
 	/**
 	 * Display a success method to let the volunteer know that he/she has been added
