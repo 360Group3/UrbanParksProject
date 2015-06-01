@@ -77,42 +77,72 @@ public class Job implements Serializable {
         return myEndDate;
     }
     
+    /**
+     * Return the unique Job ID of the Job.
+     */
     public int getJobID() {
         return myJobID;
     }
 
+    /**
+     * Return the list of Volunteers for the Job.
+     */
     public List<List<String>> getVolunteerList() {
         return myVolunteerList;
     }
 
+    /**
+     * Return the maximum amount of Volunteers that can sign up for Light Grade work.
+     */
     public int getLightMax() {
         return myLightMax;
     }
 
+    /**
+     * Return the amount of Volunteers that have signed up for Light Grade work.
+     */
     public int getLightCurrent() {
         return getNumberOfSlots(0);
     }
 
+    /**
+     * Return the maximum amount of Volunteers that can sign up for Medium Grade work.
+     */
     public int getMediumMax() {
         return myMediumMax;
     }
 
+    /**
+     * Return the amount of Volunteers that have signed up for Medium Grade work.
+     */
     public int getMediumCurrent() {
         return getNumberOfSlots(1);
     }
 
+    /**
+     * Return the maximum amount of Volunteers that can sign up for Heavy Grade work.
+     */
     public int getHeavyMax() {
         return myHeavyMax;
     }
 
+    /**
+     * Return the amount of Volunteers that have signed up for Heavy Grade work.
+     */
     public int getHeavyCurrent() {
         return getNumberOfSlots(2);
     }
 
+    /**
+     * Return the Park that the Job is located at.
+     */
     public String getPark() {
         return myPark;
     }
 
+    /**
+     * Return the ParkManager for the Job.
+     */
     public String getManager() {
         return myManager;
     }
@@ -125,40 +155,28 @@ public class Job implements Serializable {
      *=============*/
 
     /**
-     * This method is called when someone needs to know if there are any more
-     * light positions available.
-     * 
-     * @return true if there are light positions available, false otherwise.
+     * Return true if there are slots for Light Grade work available; false otherwise 
      */
     public boolean hasLightRoom() {
         return (myLightMax - getNumberOfSlots(0)) > 0;
     }
 
     /**
-     * This method is called when someone needs to know if there are any more
-     * medium positions available.
-     * 
-     * @return true if there are medium positions available, false otherwise.
+     * Return true if there are slots for Medium Grade work available; false otherwise 
      */
     public boolean hasMediumRoom() {
         return (myMediumMax - getNumberOfSlots(1)) > 0;
     }
 
     /**
-     * This method is called when someone needs to know if there are any more
-     * heavy positions available.
-     * 
-     * @return true if there are heavy positions available, false otherwise.
+     * Return true if there are slots for Heavy Grade work available; false otherwise 
      */
     public boolean hasHeavyRoom() {
         return (myHeavyMax - getNumberOfSlots(2)) > 0;
     }
 
     /**
-     * This method is called when someone wants to know if there is room for
-     * another volunteer in the job.
-     * 
-     * @return true if there are positions available, false otherwise.
+     * Return true if there are slots for any grade of work available; false otherwise 
      */
     public boolean hasRoom() {
         return hasLightRoom() || hasMediumRoom() || hasHeavyRoom();
@@ -171,10 +189,16 @@ public class Job implements Serializable {
      * Check Date *
      *============*/
     
+    /**
+     * Return true if the Start Date of the Job is in the past.
+     */
     public boolean isInPast() {
         return isPast;
     }
 
+    /**
+     * Set whether or not the Start Date of the Job is in the past.
+     */
     public void setInPast(boolean theIsPastFlag) {
         this.isPast = theIsPastFlag;
     }
@@ -185,6 +209,11 @@ public class Job implements Serializable {
      * Add Volunteer *
      *===============*/
     
+    /**
+     * Add a List<String> to the Volunteer List for a job.<br>
+     * The first String of the List is the e-mail of the Volunteer; the second String is the grade of work that
+     * the Volunteer wants to work.
+     */
     public void addVolunteer(List<String> theVolunteer) {
         myVolunteerList.add(theVolunteer);
     }
