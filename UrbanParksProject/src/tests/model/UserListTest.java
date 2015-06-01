@@ -44,18 +44,24 @@ public class UserListTest {
      */
     @Test
     public void testAddNewUserOnMultipleValidUsers() {
+        UserList testList = new UserList();
+        
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
         myUL.addNewUser(v);
+        testList.addNewUser(v);
         assertTrue(myUL.getUserListCopy().contains(v));
         
-        Administrator a = new Administrator("email2@yahoo.com", "Lazy", "Naming");
+        Administrator a = new Administrator("email2@yahoo.com", "Second", "Naming");
         myUL.addNewUser(a);
+        testList.addNewUser(a);
         assertTrue(myUL.getUserListCopy().contains(a));
         
-        ParkManager p = new ParkManager("email3@yahoo.com", "Lazy", "Naming", new ArrayList<>());
+        ParkManager p = new ParkManager("email3@yahoo.com", "Third", "Naming", new ArrayList<>());
         myUL.addNewUser(p);
+        testList.addNewUser(p);
         assertTrue(myUL.getUserListCopy().contains(p)); 
         
+        assertEquals(testList, myUL);
         assertEquals("Size of list should be 3", 3, myUL.getUserListCopy().size());
     }
 

@@ -2,7 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * User List contains a list of all users, including Volunteers, Park Managers, and
@@ -102,5 +104,33 @@ public class UserList implements Serializable {
         }
 
         return users;
+    }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o != null && o instanceof UserList)
+        {
+            UserList other = (UserList) o;
+            
+            return myUserList.equals(other.myUserList);
+        }
+        
+        return false;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString()
+    {
+        return myUserList.toString();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(myUserList);
     }
  }
