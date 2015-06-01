@@ -17,13 +17,18 @@ public class Login {
     
     //Class Variable
 	private String[] myUserInfo;
-	
+	private Pattern myEmailPattern;
 	
 	/**
 	 * Constructor for Login model.
 	 */
 	public Login() {
 		myUserInfo = new String[5];
+		
+		//Hand-crafted by Mike
+        String pat = "(?=^[^@]{1,64}@)([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)@(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)";
+        
+        myEmailPattern= Pattern.compile(pat);
 	}
     
 	
@@ -125,12 +130,7 @@ public class Login {
         if (theEmail == null)
             return false;
         
-        //Hand-crafted by Mike
-    	String pat = "(?=^[^@]{1,64}@)([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)@(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)";
-    	
-    	Pattern pattern = Pattern.compile(pat);
-    	Matcher matcher = pattern.matcher(theEmail);
-    	return matcher.matches();
+    	return myEmailPattern.matcher(theEmail).matches();
     }
     
     
