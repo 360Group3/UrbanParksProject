@@ -16,7 +16,7 @@ import model.Volunteer;
  *
  */
 public class LoginUI extends UI {
-
+    
 	private Login myLogin;
 
     public LoginUI() {
@@ -47,7 +47,7 @@ public class LoginUI extends UI {
     		switch (userChoice) {
     		case 1: // login
     			loginUserInfo();
-    			if (myLogin.getUserInfo()[0].equals("login")) {
+    			if (myLogin.getUserInfo()[0].equals(Login.LOGIN_ACTION)) {
     				loginSuccess = myLogin.loginUser();
                     if (loginSuccess)
                         giveControlToUser();
@@ -56,7 +56,7 @@ public class LoginUI extends UI {
     		case 2: // register
     			registerUserInfo();
     			if (myLogin.getUserInfo()[0] != null 
-    					&& myLogin.getUserInfo()[0].equals("register")) {
+    					&& myLogin.getUserInfo()[0].equals(Login.REGISTER_ACTION)) {
     				registerSuccess = myLogin.registerUser();
     				if (registerSuccess)
     				    giveControlToUser();
@@ -86,7 +86,7 @@ public class LoginUI extends UI {
     private void registerUserInfo() {
     	String email = getNewEmail();
     	if (!DataPollster.getInstance().checkEmail(email)) {
-    		myLogin.setUserInfoRegister("register", email, getFirstName(), getLastName(),
+    		myLogin.setUserInfoRegister(Login.REGISTER_ACTION, email, getFirstName(), getLastName(),
         							getUserType());
     	} else {
     		displayDuplicateEmailError();
@@ -124,7 +124,7 @@ public class LoginUI extends UI {
     }
     
     private void loginUserInfo() {
-    	myLogin.setUserInfoLogin("login", getReturnEmail());
+    	myLogin.setUserInfoLogin(Login.LOGIN_ACTION, getReturnEmail());
     }
 
     private String getReturnEmail() {
