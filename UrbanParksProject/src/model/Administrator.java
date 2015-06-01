@@ -53,7 +53,7 @@ public class Administrator extends User implements Serializable {
 
         //Sort all Volunteers with that last name by their first names.
         if (!matchingVolunteers.isEmpty()) {
-        	matchingVolunteers = sortVolunteersByFirstName(matchingVolunteers);
+        	Collections.sort(matchingVolunteers);
         }        
         
         return matchingVolunteers;        
@@ -73,33 +73,7 @@ public class Administrator extends User implements Serializable {
     public List<User> getSortedVolunteers() {    	
     	//Get the List of all Volunteers, then sort it.
         List<User> volunteerList = DataPollster.getInstance().getVolunteerListCopy();
-        
-        List<User> sortedVolunteerList = sortVolunteersByFullName(volunteerList);        
-        return sortedVolunteerList;
-    }
-    
-    
-    
-    /*================*
-     * Helper Methods *
-     *================*/
-    
-    //Sort the List of Volunteers by first name (ascending)
-    private List<User> sortVolunteersByFirstName(List<User> theVolunteerList) {
-    	
-    	//To do so, we implement our own version of Collections.sort
-        Collections.sort(theVolunteerList);
-        
-        return theVolunteerList;
-    }
-    
-    
-    //Sort the List of Volunteers by last name (ascending), then first name (ascending).
-    private List<User> sortVolunteersByFullName(List<User> theVolunteerList) {
-    	
-        //To do so, we implement our own version of Collections.sort
-        Collections.sort(theVolunteerList);
-        
-        return theVolunteerList;
+        Collections.sort(volunteerList);
+        return volunteerList;
     }
 }
