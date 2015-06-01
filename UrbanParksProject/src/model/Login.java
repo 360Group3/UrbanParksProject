@@ -39,7 +39,13 @@ public class Login {
 		myUserInfo = new String[5];
 		
 		//Hand-crafted by Mike
-        myEmailPattern = Pattern.compile("(?=^[^@]{1,64}@)([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)@(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)");
+		                //local
+		String pat = "(?=^[^@]{1,64}@)([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)"
+		                //separator
+                        + "@"
+                        //domain
+                        + "(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)";
+        myEmailPattern = Pattern.compile(pat);
 	}
     
 	
