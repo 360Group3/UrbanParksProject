@@ -89,13 +89,7 @@ public class Administrator extends User implements Serializable {
     private List<User> sortVolunteersByFirstName(List<User> theVolunteerList) {
     	
     	//To do so, we implement our own version of Collections.sort
-        Collections.sort(theVolunteerList, new Comparator<User>() {
-            @Override
-            public int compare(final User theVol1, final User theVol2) {
-                return theVol1.getFirstName().compareTo(theVol2.getFirstName());
-            }
-
-        });
+        Collections.sort(theVolunteerList);
         
         return theVolunteerList;
     }
@@ -105,18 +99,7 @@ public class Administrator extends User implements Serializable {
     private List<User> sortVolunteersByFullName(List<User> theVolunteerList) {
     	
         //To do so, we implement our own version of Collections.sort
-        Collections.sort(theVolunteerList, new Comparator<User>() {        	
-            @Override
-            public int compare(User theVol1, User theVol2) {
-            	//Sort by last name
-                int result = theVol1.getLastName().compareTo(theVol2.getLastName());
-                //If the last names match, then sort by first name
-                if (result == 0) {
-                    result = theVol1.getFirstName().compareTo(theVol2.getFirstName());
-                }
-                return result;
-            }
-        });
+        Collections.sort(theVolunteerList);
         
         return theVolunteerList;
     }

@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author Reid Thompson - initial implementation
  * @version 5.16.2015
  */
-public abstract class User implements Serializable {
+public abstract class User implements Serializable, Comparable<User> {
 
     private static final long serialVersionUID = 6L;
 
@@ -35,6 +35,17 @@ public abstract class User implements Serializable {
 
     public String getEmail() {
         return myEmail;
+    }
+    
+    @Override
+    public int compareTo(User theOther) {
+            //Sort by last name
+            int result = this.getLastName().compareTo(theOther.getLastName());
+            //If the last names match, then sort by first name
+            if (result == 0) {
+                result = this.getFirstName().compareTo(theOther.getFirstName());
+            }
+            return result;
     }
     
     @Override
