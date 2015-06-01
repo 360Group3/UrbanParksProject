@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import model.DataPollster;
 import model.Job;
@@ -21,7 +22,7 @@ public class ParkManagerUI extends UI {
 	
 	/**
 	 * Construct the manager.
-	 * @param theManager the manager
+	 * @param theManagerEmail the manager email
 	 */
 	public ParkManagerUI(String theManagerEmail) {
 		super();
@@ -177,18 +178,24 @@ public class ParkManagerUI extends UI {
 			
 			List<List<String>> volunteerList = new ArrayList<>();
 			
-			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
-					endDate, myManager.getEmail(), volunteerList);
+            boolean jobAdded = false;
 			
-			boolean jobAdded = false;
-			
-			try {
-				jobAdded = myManager.addJob(newJob);
-			} catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-			
-			
+            Pattern p = Pattern.compile("\\d{6}");
+            if (p.matcher(startDate).matches() && p.matcher(endDate).matches()) {
+            
+    			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
+    					endDate, myManager.getEmail(), volunteerList);
+    			
+    			try {
+    				jobAdded = myManager.addJob(newJob);
+    			} catch(IllegalArgumentException e) {
+    				System.out.println(e.getMessage());
+    			}
+            }
+            else
+            {
+                System.out.println("At least one of your dates was improperly formed.");
+            }
 			displayJobStatus(jobAdded);
 		}
 	}
