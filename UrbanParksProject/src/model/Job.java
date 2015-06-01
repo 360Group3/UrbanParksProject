@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * This class is used to create an instance of a Job.
