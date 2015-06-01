@@ -102,7 +102,7 @@ public class Job implements Serializable {
      * Return the amount of Volunteers that have signed up for Light Grade work.
      */
     public int getLightCurrent() {
-        return getNumberOfSlots(0);
+        return getNumberOfSlots("Light");
     }
 
     /**
@@ -116,7 +116,7 @@ public class Job implements Serializable {
      * Return the amount of Volunteers that have signed up for Medium Grade work.
      */
     public int getMediumCurrent() {
-        return getNumberOfSlots(1);
+        return getNumberOfSlots("Medium");
     }
 
     /**
@@ -130,7 +130,7 @@ public class Job implements Serializable {
      * Return the amount of Volunteers that have signed up for Heavy Grade work.
      */
     public int getHeavyCurrent() {
-        return getNumberOfSlots(2);
+        return getNumberOfSlots("Heavy");
     }
 
     /**
@@ -158,21 +158,21 @@ public class Job implements Serializable {
      * Return true if there are slots for Light Grade work available; false otherwise 
      */
     public boolean hasLightRoom() {
-        return (myLightMax - getNumberOfSlots(0)) > 0;
+        return (myLightMax - getNumberOfSlots("Light")) > 0;
     }
 
     /**
      * Return true if there are slots for Medium Grade work available; false otherwise 
      */
     public boolean hasMediumRoom() {
-        return (myMediumMax - getNumberOfSlots(1)) > 0;
+        return (myMediumMax - getNumberOfSlots("Medium")) > 0;
     }
 
     /**
      * Return true if there are slots for Heavy Grade work available; false otherwise 
      */
     public boolean hasHeavyRoom() {
-        return (myHeavyMax - getNumberOfSlots(2)) > 0;
+        return (myHeavyMax - getNumberOfSlots("Heavy")) > 0;
     }
 
     /**
@@ -230,53 +230,25 @@ public class Job implements Serializable {
         return myPark.toString();
     }
 
-    /**
+    /*
      * Return the number of available job slots for a given work grade.
-     * 
-     * @param theGradeType
-     *            0 for Light, 1 for Medium, 2 for Heavy
-     * @return
      */
-    private int getNumberOfSlots(int theGradeType) {
-        int numLight = 0;
-        int numMedium = 0;
-        int numHeavy = 0;
+    private int getNumberOfSlots(String theGradeType) {
+        int numberInSlot = 0;
 
-        // Iterate Volunteer List and count up how many are in each job grade
+        //For each Volunteer in the Volunteer List matching the Grade, we increment the return value.
         for (List<String> volunteer : myVolunteerList) {
-            if (volunteer.get(1).equals("Light")) {
-                numLight++;
-            }
-            if (volunteer.get(1).equals("Medium")) {
-                numMedium++;
-            }
-            if (volunteer.get(1).equals("Heavy")) {
-                numHeavy++;
+            if (volunteer.get(1).equals(theGradeType)) {
+            	numberInSlot++;
             }
         }
-
-        // Return the appropriate count.
-        switch (theGradeType) {
-            case 0:
-                return numLight;
-            case 1:
-                return numMedium;
-            case 2:
-                return numHeavy;
-            default:
-                return 0;
-        }
+        
+        return numberInSlot;
     }
 
     
-    /**
-     * Convert a date string to a Gregorian Calendar object. 
-     * 
-     * @param stringDate
-     *            A string representing a date, of format mmddyyyy
-     * @return A Gregorian Calendar object representing that date.
-     * 
-     * @author Taylor Gorman
+    /*
+     * Convert a date string of format mmddyyyy to a GregorianCalendar object, which is returned.
      */
     private GregorianCalendar stringToCalendar(String stringDate) {
         int myDay = Integer.parseInt(stringDate.substring(0, 2));
