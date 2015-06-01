@@ -29,6 +29,10 @@ public class BusinessRule6 {
 			return false;
 		}
 		
+		if (theJob.isInPast()) {
+			return false;
+		}
+		
 		return true;
 	}
 }
