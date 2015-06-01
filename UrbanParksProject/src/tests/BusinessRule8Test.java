@@ -40,7 +40,7 @@ public class BusinessRule8Test {
 	 */
 	@Test
 	public void testTestOnJobAtParkThatAlreadyExists() {
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06102015", "06102015", "ten@uw.edu", 
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "07102015", "07102015", "ten@uw.edu", 
 				new ArrayList<ArrayList<String>>());
 		assertTrue(br8.test(findSasuke, parkList));
 	}
@@ -51,7 +51,7 @@ public class BusinessRule8Test {
 	 */
 	@Test
 	public void testParkForJobAtParkThatDoesNotAlreadyExist() {
-		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06152015", "06152015", 
+		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "07152015", "07152015", 
 				"ten@uw.edu", new ArrayList<ArrayList<String>>());
 		assertFalse(br8.test(findSasuke, parkList));
 	}

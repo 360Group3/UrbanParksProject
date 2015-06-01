@@ -35,7 +35,7 @@ public class BusinessRule3Test {
 
 	    
 		defeatFrieza = new Job(0, "Namek", 0, 1, 5,
-				"06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+				"07122015", "07122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
 	}	
 	
 	

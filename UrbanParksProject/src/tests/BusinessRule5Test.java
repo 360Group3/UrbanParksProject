@@ -50,7 +50,7 @@ public class BusinessRule5Test {
 	 */
 	@Test
 	public void testPastTestOnCorrectTimeframe() {
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", 
 				new ArrayList<ArrayList<String>>());
 		assertTrue(new BusinessRule5().pastTest(defeatFrieza));
 	}
@@ -60,7 +60,7 @@ public class BusinessRule5Test {
 	 */
 	@Test
 	public void testFutureTestOnCorrectTimeframe() {
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", 
 				new ArrayList<ArrayList<String>>());
 		assertTrue(new BusinessRule5().futureTest(defeatFrieza));
 	}

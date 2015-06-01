@@ -44,9 +44,9 @@ public class BusinessRule7Test {
 	
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
 		
-		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "07112015", "07122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "07152015", "07152015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
         
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);

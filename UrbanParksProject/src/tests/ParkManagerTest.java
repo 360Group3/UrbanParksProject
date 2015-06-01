@@ -92,11 +92,11 @@ public class ParkManagerTest {
         volunteer4Array.add("Heavy");
 
         //Create Test Jobs
-        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "06102015", "06102015",
+        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "07102015", "07102015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "06112015", "06112015",
+        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "07112015", "07112015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
-        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "06122015", "06122015",
+        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "07122015", "07122015",
                         "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
 
         //Add the Test Jobs to the JobList, and then add the Volunteer arrays to those jobs.
@@ -158,7 +158,7 @@ public class ParkManagerTest {
     	List<Job> managerJobList = testManager.getJobs();
     	
     	//Show that we can create a new Job, and then get the details on that Job.
-        Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "06152015", "06152015",
+        Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "07152015", "07152015",
                 "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
         Schedule.getInstance().receiveJob(newJob);
         
@@ -188,7 +188,7 @@ public class ParkManagerTest {
         
         //Show that we can't get the details on a Job created in a Park that the ParkManager
         //doesn't manage.
-        Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "06202015", "06212015",
+        Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "07202015", "07212015",
         		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
         Schedule.getInstance().receiveJob(foreignJob);        
         Schedule.getInstance().addVolunteerToJob(volunteer4Array, 4);
@@ -212,7 +212,7 @@ public class ParkManagerTest {
      */
     public void testAddJobOnValidJob() {
     	volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
+        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "07252015", "07252015",
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
 
@@ -229,7 +229,7 @@ public class ParkManagerTest {
     @Test
     public void testAddJobOnJobAtParkNotManagedByThisPM() {
         //Show that we cannot add a Job for a Park we do not manage.
-        Job testJob2 = new Job(4, "Not My Park", 10, 10, 10, "06202015", "06202015",
+        Job testJob2 = new Job(4, "Not My Park", 10, 10, 10, "07202015", "07202015",
         		"nottestmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
@@ -243,7 +243,7 @@ public class ParkManagerTest {
     @Test
     public void testAddJobOnJobThatLastsMoreThanTwoDays() {
     	//Show that we cannot add a Job that lasts longer than two days.
-        Job testJob3 = new Job(4, "Test Park 1", 10, 10, 10, "06202015", "06222015",
+        Job testJob3 = new Job(4, "Test Park 1", 10, 10, 10, "07202015", "07222015",
         		"testmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
@@ -257,7 +257,7 @@ public class ParkManagerTest {
     @Test
     public void testAddJobOnJobInPast() {
     	//Show that we cannot add a Job that is in the past.
-        Job testJob4 = new Job(4, "Test Park 1", 10, 10, 10, "06202014", "06202014",
+        Job testJob4 = new Job(4, "Test Park 1", 10, 10, 10, "07202014", "07202014",
         		"testmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
@@ -278,7 +278,7 @@ public class ParkManagerTest {
     @Test
     public void testGetNewJobIDOnAddingNewJob() {
     	volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
+        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "07252015", "07252015",
                 "testmanager@gmail.com", volunteerList);
         
       //Show that the Job ID increments only after the new job is added.
@@ -306,7 +306,7 @@ public class ParkManagerTest {
         parkArray.add("Foreign Park");
 
         volunteerList = new ArrayList<ArrayList<String>>();
-        Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "06252015", "06252015",
+        Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "07252015", "07252015",
                                 "nottestmanager@gmail.com", volunteerList);
         Schedule.getInstance().receiveJob(testJob);
 
@@ -415,7 +415,7 @@ public class ParkManagerTest {
     public void testGetJobVolunteerListOnAccessingVolDetailsForJobsAtForeignParks() {
     	//Show that the ParkManager cannot access any details about Volunteers assigned to
         //Jobs in Parks that they do not manage.
-        Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "06202015", "06212015",
+        Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "07202015", "07212015",
         		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
         Schedule.getInstance().receiveJob(foreignJob);
         

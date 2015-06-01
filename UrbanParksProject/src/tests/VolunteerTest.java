@@ -66,12 +66,12 @@ public class VolunteerTest {
 		parkList.add("Kento");
 		Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
 		myUserList.addNewUser(Tenenberg);
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", 
 				new ArrayList<ArrayList<String>>());
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", 
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "07032015", "07032015", "ten@uw.edu", 
 				new ArrayList<ArrayList<String>>());
 		
-		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", 
+		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "07112015", "07122015", 
 				"ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
 		

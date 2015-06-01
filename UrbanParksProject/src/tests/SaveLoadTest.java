@@ -39,10 +39,10 @@ public class SaveLoadTest {
 		//Fill the Job List with several Jobs.
 		ArrayList<ArrayList<String>> volunteerArray = new ArrayList<ArrayList<String>>();
 		
-		Job job1 = new Job(0, "Test Park", 5, 5, 5, "06202015", "06202015", "testmanager@gmail.com", volunteerArray);
-		Job job2 = new Job(1, "Test Park 2", 15, 15, 15, "06222015", "06222015", "testmanager2@gmail.com", volunteerArray);
-		Job job3 = new Job(2, "Test Park 2", 25, 25, 25, "06232015", "06242015", "testmanager2@gmail.com", volunteerArray);
-		Job job4 = new Job(3, "Test Park 3", 35, 35, 35, "06272015", "06272015", "testmanager3@gmail.com", volunteerArray);
+		Job job1 = new Job(0, "Test Park", 5, 5, 5, "07202015", "07202015", "testmanager@gmail.com", volunteerArray);
+		Job job2 = new Job(1, "Test Park 2", 15, 15, 15, "07222015", "07222015", "testmanager2@gmail.com", volunteerArray);
+		Job job3 = new Job(2, "Test Park 2", 25, 25, 25, "07232015", "07242015", "testmanager2@gmail.com", volunteerArray);
+		Job job4 = new Job(3, "Test Park 3", 35, 35, 35, "07272015", "07272015", "testmanager3@gmail.com", volunteerArray);
 		
 		List<Job> listOfJobs = new ArrayList<Job>();
 		listOfJobs.add(job1);

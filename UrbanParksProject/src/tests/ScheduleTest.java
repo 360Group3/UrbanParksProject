@@ -48,7 +48,7 @@ public class ScheduleTest {
         List<String> pList = new ArrayList<>();
         pList.add("Foo Park");
 
-        myJob = new Job(55, "Foo Park", 10, 10, 10, "06172015", "06172015",
+        myJob = new Job(55, "Foo Park", 10, 10, 10, "07172015", "07172015",
                         "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
 
 
@@ -70,7 +70,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobOnInvalidDates() {
-        Job badDates = new Job(0, "Foo Park", 10, 10, 10, "06172015", "06152015",
+        Job badDates = new Job(0, "Foo Park", 10, 10, 10, "07172015", "07152015",
                                 "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
         mySchedule.receiveJob(badDates);
     }
@@ -96,7 +96,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobOnNoWorkers() {
-        Job noSpace = new Job(55, "Foo Park", 0, 0, 0, "06172015", "06172015",
+        Job noSpace = new Job(55, "Foo Park", 0, 0, 0, "07172015", "07172015",
                                 "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
         mySchedule.receiveJob(noSpace);
     }
@@ -106,7 +106,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobOnNullPark() {
-        Job nullPark = new Job(55, null, 2, 2, 2, "06172015", "06172015",
+        Job nullPark = new Job(55, null, 2, 2, 2, "07172015", "07172015",
                                 "tjsg1992@gmail.com", new ArrayList<ArrayList<String>>());
         mySchedule.receiveJob(nullPark);
     }
@@ -116,7 +116,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testReceiveJobOnNullParkManager() {
-        Job nullMngr = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015", null,
+        Job nullMngr = new Job(55, "Foo Park", 2, 2, 2, "07172015", "07172015", null,
                                 new ArrayList<ArrayList<String>>());
         mySchedule.receiveJob(nullMngr);
     }
@@ -160,7 +160,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddVolunteerToJobOnSameDateVolunteer() {
-        Job someJob = new Job(55, "Foo Park", 2, 2, 2, "06172015", "06172015", "manager@job.net",
+        Job someJob = new Job(55, "Foo Park", 2, 2, 2, "07172015", "07172015", "manager@job.net",
                 new ArrayList<ArrayList<String>>());
         
         ArrayList<String> temp = new ArrayList<>();
@@ -168,7 +168,7 @@ public class ScheduleTest {
         temp.add("Light");
         mySchedule.addVolunteerToJob(temp, someJob.getJobID());
         
-        Job sameDate = new Job(100, "Foo Park", 3,3,3, "06172015", "06172015", "manager2@job.net",
+        Job sameDate = new Job(100, "Foo Park", 3,3,3, "07172015", "07172015", "manager2@job.net",
                                 new ArrayList<ArrayList<String>>());
         mySchedule.addVolunteerToJob(temp, sameDate.getJobID());
     }
@@ -192,7 +192,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddVolunteerToJobOnFullLightGrade() {
-        Job jobWithNoLight = new Job(55, "Foo Park", 0, 1, 0, "06172015", "06172015", "manager@job.net",
+        Job jobWithNoLight = new Job(55, "Foo Park", 0, 1, 0, "07172015", "07172015", "manager@job.net",
                 new ArrayList<ArrayList<String>>());
         
         ArrayList<String> temp = new ArrayList<>();
@@ -206,7 +206,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddVolunteerToJobOnFullMediumGrade() {
-        Job jobWithNoMedium = new Job(55, "Foo Park", 1, 0, 0, "06172015", "06172015", "manager@job.net",
+        Job jobWithNoMedium = new Job(55, "Foo Park", 1, 0, 0, "07172015", "07172015", "manager@job.net",
                 new ArrayList<ArrayList<String>>());
         
         ArrayList<String> temp = new ArrayList<>();
@@ -220,7 +220,7 @@ public class ScheduleTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testAddVolunteerToJobOnFullHeavyGrade() {
-        Job jobWithNoHeavy = new Job(55, "Foo Park", 1, 0, 0, "06172015", "06172015", "manager@job.net",
+        Job jobWithNoHeavy = new Job(55, "Foo Park", 1, 0, 0, "07172015", "07172015", "manager@job.net",
                 new ArrayList<ArrayList<String>>());
         
         ArrayList<String> temp = new ArrayList<>();
