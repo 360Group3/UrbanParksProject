@@ -19,7 +19,7 @@ public class JobTest {
     private ParkManager myParkManager;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         String startDate = "06111992";
         String endDate = "06111992";
 
@@ -216,7 +216,7 @@ public class JobTest {
     }
 
     @Test
-    public void TestGetHeavyCurrent() {
+    public void testGetHeavyCurrent() {
         assertEquals(0, myJob.getHeavyCurrent());
 
         ArrayList<String> vol6 = new ArrayList<>();

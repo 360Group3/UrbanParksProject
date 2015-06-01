@@ -29,19 +29,18 @@ import org.junit.rules.ExpectedException;
 public class ParkManagerTest {
 
 	//Class Variables that will be reused throughout several tests.
-    static JobList myJobList;
-    static UserList myUserList;
-    static ParkManager testManager;
-    static ArrayList<ArrayList<String>> volunteerList;
+    JobList myJobList;
+    UserList myUserList;
+    ParkManager testManager;
+    ArrayList<ArrayList<String>> volunteerList;
 
     /**
      * Called before every test. Here, we setup the JobList and User List, and then create test
      * parks, Jobs, Volunteers, and a test ParkManager. These are all added to the Job List
      * and User List to be used later.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     	
     	//Create Lists and add them to Schedule and Pollster
         myJobList = new JobList();
@@ -111,21 +110,17 @@ public class ParkManagerTest {
         Schedule.getInstance().addVolunteerToJob(volunteer3Array, 2);
     }
     
-    
-    
     /*
      * After setup(), we now have a UserList with a ParkManager (with 3 Parks) and 5 Volunteers.
      * We also have a JobList with 3 Jobs, all assigned to that ParkManager, with different
      * Volunteers signed up for them.
      */
 
-    
     /**
      * Test to ensure that the construction of a new ParkManager is working as intended.
      */
     @Test
     public void testParkManager() {
-    	
     	//Create an entirely new ParkManager from scratch.
         List<String> parkList = new ArrayList<String>();
         parkList.add("Constructor Test 1");
@@ -146,16 +141,23 @@ public class ParkManagerTest {
      * Test to ensure that a ParkManager can get all Jobs for Parks that they manage.
      */
     @Test
-    public void testGetJobs() {
+    public void testGetJobsOnDataFromSetup() {
     	//Show that we can recover the data from a Job we created in setup.
         List<Job> managerJobList = testManager.getJobs();
         assertEquals(managerJobList.size(), 3);
         assertEquals(managerJobList.get(0).getJobID(), 0);
         assertEquals(managerJobList.get(0).getVolunteerList().get(0).get(0),
                     "testvolunteer4@gmail.com");
-        
-        
-        //Show that we can create a new Job, and then get the details on that Job.
+    }
+    
+    /**
+     * Test to ensure that a ParkManager can get all Jobs for Parks that they manage.
+     */
+    @Test
+    public void testGetJobsOnNewJobAdded() {
+    	List<Job> managerJobList = testManager.getJobs();
+    	
+    	//Show that we can create a new Job, and then get the details on that Job.
         Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "06152015", "06152015",
                 "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
         Schedule.getInstance().receiveJob(newJob);
@@ -171,7 +173,18 @@ public class ParkManagerTest {
         assertEquals(managerJobList.get(3).getJobID(), 3);
         assertEquals(managerJobList.get(3).getHeavyMax(), 10);
         assertEquals(managerJobList.get(3).getPark(), "Test Park 1");
-        
+    }
+
+    /**
+     * Test to ensure that a ParkManager can get all Jobs for Parks that they manage.
+     */
+    @Test
+    public void testGetJobsOnNotGettingDetailsOfJobManagedByDifferentPM() {
+    	List<Job> managerJobList = testManager.getJobs();
+    	
+    	ArrayList<String> volunteer4Array = new ArrayList<String>();
+        volunteer4Array.add("testvolunteer4@gmail.com");
+        volunteer4Array.add("Heavy");
         
         //Show that we can't get the details on a Job created in a Park that the ParkManager
         //doesn't manage.
@@ -189,7 +202,7 @@ public class ParkManagerTest {
         }
         assertFalse(jobFound);
     }
-
+    
     @Rule
     public ExpectedException exception = ExpectedException.none();
     
@@ -197,9 +210,8 @@ public class ParkManagerTest {
      * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
      * Jobs are rejected.
      */
-    @Test
-    public void testAddJob() {
-        volunteerList = new ArrayList<ArrayList<String>>();
+    public void testAddJobOnValidJob() {
+    	volunteerList = new ArrayList<ArrayList<String>>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
@@ -208,57 +220,87 @@ public class ParkManagerTest {
         assertEquals(DataPollster.getInstance().getJobCopy(3).getPark(), "Test Park 1");
         assertEquals(DataPollster.getInstance().getJobCopy(3).getManager(),
                      "testmanager@gmail.com");
-        
+    }
+    
+    /**
+     * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
+     * Jobs are rejected.
+     */
+    @Test
+    public void testAddJobOnJobAtParkNotManagedByThisPM() {
         //Show that we cannot add a Job for a Park we do not manage.
         Job testJob2 = new Job(4, "Not My Park", 10, 10, 10, "06202015", "06202015",
         		"nottestmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
         testManager.addJob(testJob2);
-        
-        //Show that we cannot add a Job that lasts longer than two days.
+    }
+
+    /**
+     * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
+     * Jobs are rejected.
+     */
+    @Test
+    public void testAddJobOnJobThatLastsMoreThanTwoDays() {
+    	//Show that we cannot add a Job that lasts longer than two days.
         Job testJob3 = new Job(4, "Test Park 1", 10, 10, 10, "06202015", "06222015",
         		"testmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
         testManager.addJob(testJob3);
-        
-        //Show that we cannot add a Job that is in the past.
+    }
+    
+    /**
+     * Test to ensure that a ParkManager can add a Job to the JobList, and that invalid
+     * Jobs are rejected.
+     */
+    @Test
+    public void testAddJobOnJobInPast() {
+    	//Show that we cannot add a Job that is in the past.
         Job testJob4 = new Job(4, "Test Park 1", 10, 10, 10, "06202014", "06202014",
         		"testmanager@gmail.com", volunteerList);
         
         exception.expect(IllegalArgumentException.class);
         testManager.addJob(testJob4);
     }
-
     
     /**
      * Tests to ensure that a ParkManager can acquire the correct JobID for a new job.
      */
     @Test
-    public void testGetNewJobID() {
+    public void testGetNewJobIDOnDataFromSetup() {
         assertEquals(testManager.getNewJobID(), 3);
-
-        volunteerList = new ArrayList<ArrayList<String>>();
+    }
+    
+    /**
+     * Tests to ensure that a ParkManager can acquire the correct JobID for a new job.
+     */
+    @Test
+    public void testGetNewJobIDOnAddingNewJob() {
+    	volunteerList = new ArrayList<ArrayList<String>>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
-                "testmanager@gmail.com", volunteerList);        
-
-        //Show that the Job ID increments only after the new job is added.
-        assertEquals(testManager.getNewJobID(), 3);
+                "testmanager@gmail.com", volunteerList);
+        
+      //Show that the Job ID increments only after the new job is added.
         testManager.addJob(testJob);
         assertEquals(testManager.getNewJobID(), 4);
     }
-
     
     /**
      * Test to ensure that a ParkManager can tell if it is the ParkManager of a Job.
      */
     @Test
-    public void testIsManagerOfJob() {
+    public void testIsManagerOfJobOnDataFromSetup() {
     	//Show that testManager is the ParkManager of previously added jobs.
         assertTrue(testManager.isManagerOfJob(0));
         assertTrue(testManager.isManagerOfJob(1));
-        
+    }
+    
+    /**
+     * Test to ensure that a ParkManager can tell if it is the ParkManager of a Job.
+     */
+    @Test
+    public void testIsManagerOfJobOnForeignPM() {
         //Show that isManagerOfJob() returns false when testManager isn't the ParkManager.
         List<String> parkArray = new ArrayList<String>();
         parkArray.add("Foreign Park");
@@ -269,25 +311,37 @@ public class ParkManagerTest {
         Schedule.getInstance().receiveJob(testJob);
 
         assertFalse(testManager.isManagerOfJob(4));
-        
-        //Show that isManagerOfJob() still returns false for Jobs that do not exist.
-        assertFalse(testManager.isManagerOfJob(5));
     }
 
+    /**
+     * Test to ensure that a ParkManager can tell if it is the ParkManager of a Job.
+     */
+    @Test
+    public void testIsManagerOfJobOnJobThatDoesNotExist() {
+    	//Show that isManagerOfJob() still returns false for Jobs that do not exist.
+        assertFalse(testManager.isManagerOfJob(5));
+    }
     
     /**
      * Test to ensure that the ParkManager can return a list of the Parks that it is attached
      * to.
      */
     @Test
-    public void testGetManagedParks() {
+    public void testGetManagedParksOnDataFromSetup() {
     	//Shows that getManagedParks() works for all Parks that we have previously added
     	//for this ParkManager.
         assertEquals(testManager.getManagedParks().get(0), "Test Park 1");
         assertEquals(testManager.getManagedParks().get(1), "Test Park 2");
         assertTrue(testManager.getManagedParks().contains("Test Park 3"));
-
-        //Shows that getManagedParks() will not retrieve a Park that exists, but another
+    }
+    
+    /**
+     * Test to ensure that the ParkManager can return a list of the Parks that it is attached
+     * to.
+     */
+    @Test
+    public void testGetManagedParksOnParkForForeignPM() {
+    	//Shows that getManagedParks() will not retrieve a Park that exists, but another
         //ParkManager manages.
         List<String> parkList = new ArrayList<String>();
         parkList.add("Not Our Park");
@@ -299,13 +353,12 @@ public class ParkManagerTest {
                         .getManagedParks().contains("Not Our Park"));
         assertFalse(testManager.getManagedParks().contains("Not Our Park"));
     }
-
-    
+   
     /**
      * Test to ensure that the ParkManager can update the Parks that it is attached to.
      */
     @Test
-    public void testSetManagedParks() {
+    public void testSetManagedParksOnAddingAParkToThisPMsListOfManagedParks() {
     	//Shows that we still have a Park List size of 3.
         assertEquals(testManager.getManagedParks().size(), 3);
 
@@ -317,8 +370,14 @@ public class ParkManagerTest {
    
         assertEquals(testManager.getManagedParks().size(), 4);
         assertEquals(testManager.getManagedParks().get(3), "Our Park");
+    }
 
-        //Show that if we call setManagedParks() on a ParkManager, it adds it to the Park
+    /**
+     * Test to ensure that the ParkManager can update the Parks that it is attached to.
+     */
+    @Test
+    public void testSetManagedParksOnAddingAParkToForeignPMsListOfManagedParks() {
+    	//Show that if we call setManagedParks() on a ParkManager, it adds it to the Park
         //List of that ParkManager only.
         Schedule.getInstance().addUser("nottestmanager@gmail.com", "Not", "Manager",
                                         "ParkManager");
@@ -333,22 +392,28 @@ public class ParkManagerTest {
         assertFalse(DataPollster.getInstance().getParkManager("testmanager@gmail.com")
                         .getManagedParks().contains("Not Our Park"));
     }
-
     
     /**
      * Test to ensure that the ParkManager can get the List of Volunteers attached to a Job
      * with a Park that they manage.
      */
     @Test
-    public void testGetJobVolunteerList() {
+    public void testGetJobVolunteerListOnAccessingVolDetailsForJobsAtThisPMsParks() {
     	//Show that the ParkManager can access various details of the Volunteers
     	//assigned to Jobs in Parks that they manage.
         assertEquals(testManager.getJobVolunteerList(0).size(), 2);
         assertEquals(testManager.getJobVolunteerList(0).get(0).getEmail(), "testvolunteer4@gmail.com");
         assertEquals(testManager.getJobVolunteerList(0).get(1).getFirstName(), "Test2");        
         assertEquals(testManager.getJobVolunteerList(2).size(), 1);
-        
-        //Show that the ParkManager cannot access any details about Volunteers assigned to
+    }
+    
+    /**
+     * Test to ensure that the ParkManager can get the List of Volunteers attached to a Job
+     * with a Park that they manage.
+     */
+    @Test
+    public void testGetJobVolunteerListOnAccessingVolDetailsForJobsAtForeignParks() {
+    	//Show that the ParkManager cannot access any details about Volunteers assigned to
         //Jobs in Parks that they do not manage.
         Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "06202015", "06212015",
         		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
@@ -361,5 +426,4 @@ public class ParkManagerTest {
         
         assertTrue(testManager.getJobVolunteerList(3) == null); //Can't even see the list!
     }
-
 }

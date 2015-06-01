@@ -24,7 +24,7 @@ public class BusinessRule8Test {
     List<String> parkList;
     
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		br8 = new BusinessRule8();
 		
 		parkList = new ArrayList<String>();
@@ -35,24 +35,24 @@ public class BusinessRule8Test {
 	}
 	
 	/**
-	 * This tests whether a job can be created with a good park.
+	 * This tests whether a job can be created with a Job at a Park that already
+	 * exists in the system.
 	 */
 	@Test
-	public void testParkForGoodPark() {
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		
+	public void testTestOnJobAtParkThatAlreadyExists() {
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06102015", "06102015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
 		assertTrue(br8.test(findSasuke, parkList));
 	}
 	
-	
 	/**
-	 * This tests whether a job can be created with a bad park.
+	 * This tests whether a job can be created with a Job at a Park that doesn't
+	 * exist in the system.
 	 */
 	@Test
-	public void testParkForBadPark() {
-		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-
+	public void testParkForJobAtParkThatDoesNotAlreadyExist() {
+		Job findSasuke = new Job(1, "Seattle Park", 2, 2, 0, "06152015", "06152015", 
+				"ten@uw.edu", new ArrayList<ArrayList<String>>());
 		assertFalse(br8.test(findSasuke, parkList));
 	}
-	
 }

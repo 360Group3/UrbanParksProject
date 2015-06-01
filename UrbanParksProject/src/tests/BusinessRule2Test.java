@@ -24,7 +24,7 @@ public class BusinessRule2Test {
     List<String> myWeek;
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myRule = new BusinessRule2();
         myJobList = new JobList();
         myWeek = new ArrayList<>();
@@ -39,7 +39,7 @@ public class BusinessRule2Test {
     }
 
     @Test
-    public void testTestForEmptyWeek() {
+    public void testTestOnEmptyWeek() {
         assertTrue(myRule.test(myJob, myJobList));
     }
 
@@ -47,7 +47,7 @@ public class BusinessRule2Test {
      * First half of the week has all the week's jobs.
      */
     @Test
-    public void testTestForFullWeekEarly() {
+    public void testTestOnFullWeekEarly() {
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK; i++)
             jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(0), myWeek.get(0),
@@ -61,7 +61,7 @@ public class BusinessRule2Test {
      * Second half of the week has all the week's jobs.
      */
     @Test
-    public void testTestForFullWeekLate() {
+    public void testTestOnFullWeekLate() {
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK; i++)
             jobs.add(new Job(0, "Foo Park", 4, 4, 4, 
@@ -77,7 +77,7 @@ public class BusinessRule2Test {
      * The job's day has all the week's jobs.
      */
     @Test
-    public void testTestForFullWeekOnDay() {
+    public void testTestOnFullWeekOnDay() {
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK; i++)
             jobs.add(new Job(0, "Foo Park", 4, 4, 4, 
@@ -90,7 +90,7 @@ public class BusinessRule2Test {
     }
 
     @Test
-    public void testTestForFullWeekEarlyTwoDayJobs() {
+    public void testTestOnFullWeekEarlyTwoDayJobs() {
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK; i++)
             jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(0), myWeek.get(1),
@@ -101,7 +101,7 @@ public class BusinessRule2Test {
     }
 
     @Test
-    public void testTestForFullWeekLateTwoDayJobs() {
+    public void testTestOnFullWeekLateTwoDayJobs() {
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < BusinessRule2.MAX_JOBS_IN_WEEK; i++)
             jobs.add(new Job(0, "Foo Park", 4, 4, 4, 
@@ -117,7 +117,7 @@ public class BusinessRule2Test {
      * Relies on 2 day job counting twice.
      */
     @Test
-    public void testTestForFullWeekEarlySingleTwoDayJobs() {
+    public void testTestOnFullWeekEarlySingleTwoDayJobs() {
         List<Job> jobs = new ArrayList<>();
         jobs.add(new Job(0, "Foo Park", 4, 4, 4, myWeek.get(0), myWeek.get(1),
                 "moverby@vivaldi.com", null));
@@ -132,7 +132,7 @@ public class BusinessRule2Test {
     }
 
     @Test
-    public void testTestForFullWeekLateSingleTwoDayJobs() {
+    public void testTestOnFullWeekLateSingleTwoDayJobs() {
         List<Job> jobs = new ArrayList<>();
         jobs.add(new Job(0, "Foo Park", 4, 4, 4, 
                         myWeek.get(BusinessRule2.LIMITING_DURATION / 2 - 2), 

@@ -13,21 +13,22 @@ import org.junit.Test;
 public class JobListTest {
 
     JobList myJL;
+    
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myJL = new JobList();
 
     }
 
     @Test
-    public void testGetJobCopyValidJob() {
+    public void testGetJobCopyOnValidJob() {
         Job j0 = new Job(0, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
         myJL.getJobList().add(j0);
         assertEquals(j0, myJL.getJobCopy(j0.getJobID()));
     }
 
     @Test
-    public void testGetJobCopyValidJobMultipleJobs() {
+    public void testGetJobCopyOnValidJobMultipleJobs() {
         Job j0 = new Job(0, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
         Job j1 = new Job(1, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
         Job j2 = new Job(2, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
@@ -43,7 +44,7 @@ public class JobListTest {
     }
     
     @Test
-    public void testGetJobCopyInvalidJob() {
+    public void testGetJobCopyOnInvalidJob() {
         Job j0 = new Job(0, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
         Job j1 = new Job(1, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());
         Job j2 = new Job(2, "Test", 1, 1, 1, "12203000", "12203000", "manager@mail.com", new ArrayList<>());

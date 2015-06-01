@@ -22,10 +22,10 @@ public class UserListTest {
     UserList myUL;
     
     /**
-     * @throws java.lang.Exception
+     * Initializes test data for the following test methods.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myUL = new UserList();
     }
 
@@ -33,7 +33,7 @@ public class UserListTest {
      * Test method for {@link model.UserList#addNewUser(model.User)}.
      */
     @Test
-    public void testAddNewUserForValidUser() {
+    public void testAddNewUserOnValidUser() {
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
         myUL.addNewUser(v);
         assertTrue(myUL.getUserListCopy().contains(v));
@@ -43,7 +43,7 @@ public class UserListTest {
      * Test method for {@link model.UserList#addNewUser(model.User)}.
      */
     @Test
-    public void testAddNewUserForMultipleValidUsers() {
+    public void testAddNewUserOnMultipleValidUsers() {
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
         myUL.addNewUser(v);
         assertTrue(myUL.getUserListCopy().contains(v));
@@ -63,7 +63,7 @@ public class UserListTest {
      * Test method for {@link model.UserList#addNewUser(model.User)}.
      */
     @Test
-    public void testAddNewUserForTwoUsersSameEmail() {
+    public void testAddNewUserOnTwoUsersSameEmail() {
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
         myUL.addNewUser(v);
         assertTrue(myUL.getUserListCopy().contains(v));
@@ -78,19 +78,19 @@ public class UserListTest {
      * Test method for {@link model.UserList#addNewUser(model.User)}.
      */
     @Test
-    public void testAddNewUserForInvalidUser() {
+    public void testAddNewUserOnInvalidUser() {
         Volunteer v = null;
         myUL.addNewUser(v);
         assertFalse(myUL.getUserListCopy().contains(v));
     }
 
     @Test
-    public void testGetAdministratorListCopyForEmpty() {
+    public void testGetAdministratorListCopyOnEmpty() {
         assertEquals(new ArrayList<>(), myUL.getAdministratorListCopy());
     }
     
     @Test
-    public void testGetAdministratorListCopyForFilled() {
+    public void testGetAdministratorListCopyOnFilled() {
         List<User> testList = new ArrayList<>();
         
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
@@ -107,12 +107,12 @@ public class UserListTest {
     }
 
     @Test
-    public void testGetVolunteerListCopyForEmpty() {
+    public void testGetVolunteerListCopyOnEmpty() {
         assertEquals(new ArrayList<>(), myUL.getVolunteerListCopy());
     }
     
     @Test
-    public void testGetVolunteerListCopyForFilled() {
+    public void testGetVolunteerListCopyOnFilled() {
         List<User> testList = new ArrayList<>();
         
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");
@@ -129,12 +129,12 @@ public class UserListTest {
     }
     
     @Test
-    public void testGetParkManagerListCopyForEmpty() {
+    public void testGetParkManagerListCopyOnEmpty() {
         assertEquals(new ArrayList<>(), myUL.getParkManagerListCopy());
     }
     
     @Test
-    public void testGetParkManagerListCopyForFilled() {
+    public void testGetParkManagerListCopyOnFilled() {
         List<User> testList = new ArrayList<>();
         
         Volunteer v = new Volunteer("email@yahoo.com", "Lazy", "Naming");

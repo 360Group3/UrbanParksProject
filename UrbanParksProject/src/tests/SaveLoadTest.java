@@ -27,7 +27,7 @@ public class SaveLoadTest {
 	 * Before each test, we reset the JobList and UserList, and then add various data to them.
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		//Reset the lists, SaveLoader, and the .ser files.
 		myJobList = new JobList();
 		myUserList = new UserList();
@@ -74,7 +74,7 @@ public class SaveLoadTest {
 	 * the data has persisted.
 	 */
 	@Test
-	public void testSaveLoadJobList() {
+	public void testSaveLoadJobListOnSetupData() {
 		//Save myJobList into testJobList.ser
 		mySaveLoader.saveJobList(myJobList, "testJobList.ser");	
 		
@@ -95,7 +95,7 @@ public class SaveLoadTest {
 	 * the data has persisted.
 	 */
 	@Test
-	public void testSaveLoadUserList() {
+	public void testSaveLoadUserListOnSetupData() {
 		//Save myUserList into testUserList.ser
 		mySaveLoader.saveUserList(myUserList, "testUserList.ser");
 		
@@ -110,5 +110,4 @@ public class SaveLoadTest {
 		assertEquals(loadUserList.getParkManagerListCopy().get(0).getEmail(), "testmanager@gmail.com");
 		assertEquals(loadUserList.getAdministratorListCopy().get(0).getFirstName(), "Test5");
 	}
-
 }

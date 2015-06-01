@@ -27,9 +27,8 @@ public class BusinessRule5Test {
 	UserList myUserList;
 	JobList myJobList;
 	
-	
 	@Before
-	public void setup() throws Exception {
+	public void setup() {
 		myUserList = new UserList();
 		myJobList = new JobList();
 		Schedule.getInstance().setJobList(myJobList);
@@ -50,20 +49,29 @@ public class BusinessRule5Test {
 	 * This test creates a job that is within the proper time frame.
 	 */
 	@Test
-	public void testTestForCorrectTimeframe() {
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		
+	public void testPastTestOnCorrectTimeframe() {
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
 		assertTrue(new BusinessRule5().pastTest(defeatFrieza));
-        assertTrue(new BusinessRule5().futureTest(defeatFrieza));
+	}
+	
+	/**
+	 * This test creates a job that is within the proper time frame.
+	 */
+	@Test
+	public void testFutureTestOnCorrectTimeframe() {
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
+		assertTrue(new BusinessRule5().futureTest(defeatFrieza));
 	}
 	
 	/**
 	 * This test creates a job that is way in the past.
 	 */
 	@Test
-	public void testTestForPastJob() {
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "03122015", "03122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-
+	public void testPastTestOnPastJob() {
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "03122015", "03122015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
 		assertFalse(new BusinessRule5().pastTest(defeatFrieza));
 		
 	}
@@ -72,10 +80,9 @@ public class BusinessRule5Test {
 	 * This test creates a job that is more than 3 months into the future.
 	 */
 	@Test
-	public void testTestForFarFutureJob() {
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "10122015", "10122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-
+	public void testFutureTestOnFarFutureJob() {
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "10122015", "10122015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
 		assertFalse(new BusinessRule5().futureTest(defeatFrieza));
-	}
-	
+	}	
 }

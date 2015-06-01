@@ -20,7 +20,7 @@ public class BusinessRule4Test {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myRule = new BusinessRule4();
     }
 
@@ -28,7 +28,7 @@ public class BusinessRule4Test {
      * Test method for {@link model.businessRules.BusinessRule4#test(java.lang.Object[])}.
      */
     @Test
-    public void testTestForSingleDayJob() {
+    public void testTestOnSingleDayJob() {
         Job myJob = new Job(0, "Foo Park", 4, 4, 4, "09012015", "09012015",
                             "moverby@vivaldi.com", null);
         assertTrue(myRule.test(myJob));
@@ -38,7 +38,7 @@ public class BusinessRule4Test {
      * Test method for {@link model.businessRules.BusinessRule4#test(java.lang.Object[])}.
      */
     @Test
-    public void testTestForDuoDayJob() {
+    public void testTestOnDuoDayJob() {
         int day = BusinessRule4.MAX_DURATION;
         String dayStr = day < 10 ? "0" + day : "" + day;
 
@@ -51,7 +51,7 @@ public class BusinessRule4Test {
      * Test method for {@link model.businessRules.BusinessRule4#test(java.lang.Object[])}.
      */
     @Test
-    public void testTestForTooLongJob() {
+    public void testTestOnTooLongJob() {
         int day = BusinessRule4.MAX_DURATION + 1;
         String dayStr = day < 10 ? "0" + day : "" + day;
 

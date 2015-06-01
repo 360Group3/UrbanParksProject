@@ -22,18 +22,18 @@ public class BusinessRule1Test {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         myRule = new BusinessRule1();
         myJobList = new JobList();
     }
 
     @Test
-    public void testTestForEmptyJoblist() {
+    public void testTestOnEmptyJoblist() {
         assertTrue(myRule.test(myJobList));
     }
 
     @Test
-    public void testTestForPartlyFilledJoblist() {
+    public void testTestOnPartlyFilledJoblist() {
         List<Job> j = new ArrayList<Job>();
         j.add(new Job(0, "Foo Park", 4, 4, 4, "09082015", "09082015",
                 "moverby@vivaldi.com", null));
@@ -48,7 +48,7 @@ public class BusinessRule1Test {
     }
 
     @Test
-    public void testTestForFilledJoblist() {
+    public void testTestOnFilledJoblist() {
         List<Job> j = new ArrayList<Job>();
         j.add(new Job(0, "Foo Park", 4, 4, 4, "09082015", "09082015",
                 "moverby@vivaldi.com", null));
@@ -63,7 +63,7 @@ public class BusinessRule1Test {
     }
 
     @Test
-    public void testTestForOverfilledJoblist() {
+    public void testTestOnOverfilledJoblist() {
         List<Job> j = new ArrayList<Job>();
         j.add(new Job(0, "Foo Park", 4, 4, 4, "09082015", "09082015",
                 "moverby@vivaldi.com", null));

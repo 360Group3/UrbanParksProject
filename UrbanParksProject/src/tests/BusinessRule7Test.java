@@ -32,7 +32,7 @@ public class BusinessRule7Test {
 	Job beatJadenYuki;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 	    br7 = new BusinessRule7();
 	    
 		myUserList = new UserList();
@@ -58,7 +58,7 @@ public class BusinessRule7Test {
      * Adding a volunteer to a day he is not working.
      */
     @Test
-    public void testSignUpForValid() {
+    public void testSignUpOnJobForDayVolunteerNotAlreadyWorkingAnotherJobThatDay() {
         ArrayList<String> theVol4 = new ArrayList<String>();
         theVol4.add("Yugi@yahoo.com");
         theVol4.add("Medium");
@@ -72,7 +72,7 @@ public class BusinessRule7Test {
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
 	@Test
-	public void testSignUpForAlreadyWorking() {
+	public void testSignUpOnAlreadyWorkingJobSameDayAsAnotherJobSignedUpFor() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");

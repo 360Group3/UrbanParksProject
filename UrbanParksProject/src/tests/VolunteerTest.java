@@ -39,7 +39,7 @@ public class VolunteerTest {
 	JobList myJobList;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		myUserList = new UserList();
 		myJobList = new JobList();
 		Schedule.getInstance().setJobList(myJobList);
@@ -66,10 +66,13 @@ public class VolunteerTest {
 		parkList.add("Kento");
 		Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
 		myUserList.addNewUser(Tenenberg);
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", 
+				new ArrayList<ArrayList<String>>());
 		
-		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", 
+				"ten@uw.edu", new ArrayList<ArrayList<String>>());
 		
 		
 		//This part is necessary to create a job for todays date.
@@ -116,7 +119,7 @@ public class VolunteerTest {
 	 * Add a volunteer to a job's grade which has no positions.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void signUpTEST1() {
+	public void testSignUpOnJobGradeWithNoOpenPositions() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Light");
@@ -124,12 +127,11 @@ public class VolunteerTest {
 		Naruto.signUp(theVol, 0);
 	}
 	
-	
 	/**
 	 * Adding a volunteer to a job with an open medium portion.
 	 */
 	@Test
-	public void signUpTEST2() {
+	public void testSignUpOnJobGradeWithOpenPositions() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
@@ -144,7 +146,7 @@ public class VolunteerTest {
 	 * This should assert false b/c you cannot add to a full portion.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void signUpTEST3() {
+	public void testSignUpOnVolSignUpSuccessThenVolSignUpFailure() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
@@ -161,7 +163,7 @@ public class VolunteerTest {
 	 * And then adding 1 volunteer to the heavy portion (max 5) of that job.
 	 */
 	@Test
-	public void signUpTEST4() {
+	public void testSignUpOnTwoVolsSignedUpForDifferentGradesButBothSuccessful() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
@@ -178,7 +180,7 @@ public class VolunteerTest {
 	 * And then adding 1 volunteer to the light portion (max 2) of that job.
 	 */
 	@Test
-	public void signUpTEST5() {
+	public void testSignUpOnAddingVolsToMaxMedGradeThenAddingOneVolToLight() {
 		ArrayList<String> theVol = new ArrayList<String>();
 		theVol.add("Naruto@yahoo.com");
 		theVol.add("Medium");
@@ -195,26 +197,23 @@ public class VolunteerTest {
 		theVol3.add("Light");
 		assertEquals(Goku.signUp(theVol3, 1), true);
 	}
-	
-	
+		
 	/**
 	 * Adding volunteer to a job that does not exist.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void signUpTEST6() {
+	public void testSignUpOnNonexistentJob() {
 		ArrayList<String> theVol3 = new ArrayList<String>();
 		theVol3.add("Goku@yahoo.com");
 		theVol3.add("Light");
 		Goku.signUp(theVol3, 279);
 	}
 	
-	
-
 	/**
-	 * Adding volunteer to a job in the past
+	 * Adding volunteer to a job in the past.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void signUpTEST7() {
+	public void testSignUpOnPastJob() {
 		JobList testJobList = new JobList();
 
 		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
@@ -233,15 +232,11 @@ public class VolunteerTest {
 		Arsh.signUp(theVol5, 5);
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Adding a volunteer to a job on a day that he is already working.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void signUpTEST8() {
+	public void testSignUpOnNewJobOnSameDayAsJobAlreadyWorking() {
 		ArrayList<String> theVol4 = new ArrayList<String>();
 		theVol4.add("Yugi@yahoo.com");
 		theVol4.add("Medium");
@@ -250,26 +245,23 @@ public class VolunteerTest {
 		Yugi.signUp(theVol4, 2);
 	}
 	
-	
 	/**
 	 * Get an empty list of the jobs a volunteer has signed up for.
 	 * (volunteer has so far signed up for no jobs).
 	 */
 	@Test
-	public void getMyJobTest() {
+	public void testGetMyJobsOnEmptyList() {
 		List<Job> emptylist = new ArrayList<Job>();
 		assertEquals(Arsh.getMyJobs(), emptylist);
 	}
 	
-	
 	/**
 	 * Get a list of the jobs a volunteer has signed up for.
 	 * (volunteer will sign up for 1 job so the 
-	 * size of the list should be 1.
-	 * 
+	 * size of the list should be 1).
 	 */
 	@Test
-	public void getMyJobTest2() {
+	public void testGetMyJobsOnListWithOneJob() {
 		ArrayList<String> theVol5 = new ArrayList<String>();
 		theVol5.add("Arsh@yahoo.com");
 		theVol5.add("Medium");
@@ -277,12 +269,28 @@ public class VolunteerTest {
 		assertEquals(Arsh.getMyJobs().size(), 1);
 	}
 	
+	/**
+	 * Get a list of the jobs a volunteer has signed up for.
+	 * (volunteer will sign up for 3 jobs so the 
+	 * size of the list should be 3).
+	 */
+	@Test
+	public void testGetMyJobsOnListWithManyJobs() {
+		ArrayList<String> theVol5 = new ArrayList<String>();
+		theVol5.add("Arsh@yahoo.com");
+		theVol5.add("Medium");
+		
+		Arsh.signUp(theVol5, 0);
+		Arsh.signUp(theVol5, 1);
+		Arsh.signUp(theVol5, 2);
+		assertEquals(Arsh.getMyJobs().size(), 3);
+	}
 	
 	/**
 	 * This gets the number of jobs that are available to sign up for.
 	 */
 	@Test
-	public void getTheJobsTest() {
+	public void testGetTheJobsTest() {
 		
 		List<Job> daJobs = Arsh.getTheJobs();
 		int count = 0;
