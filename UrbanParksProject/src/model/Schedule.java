@@ -177,7 +177,7 @@ public class Schedule implements Serializable {
      * @return true if the Volunteer was added to the Job; false otherwise.
      * @throws IllegalArgumentException thrown for various input errors.
      */ 
-    public boolean addVolunteerToJob(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
+    public boolean addVolunteerToJob(List<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
     	
         //Check that the Job ID is valid.
         boolean validID = checkJobValidity(theJobID);

@@ -39,7 +39,7 @@ public class Volunteer extends User implements Serializable {
 	 * @return true if the volunteer successfully signed up for the Job; false otherwise.
 	 * @throws IllegalArgumentException if the Volunteer was not able to be added to the Job.
 	 */
-	public boolean signUpForJob(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
+	public boolean signUpForJob(List<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
 			return Schedule.getInstance().addVolunteerToJob(theVolunteerInfo, theJobID);
 	}
 	
