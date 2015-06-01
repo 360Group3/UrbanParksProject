@@ -55,7 +55,7 @@ public class ParkManager extends User implements Serializable {
      * Add a Job to the JobList, with this ParkManager set as the manager for the job.
      * @return true if the Job was successfully added; false otherwise
      */
-    public boolean addJob(Job theJob) {
+    public boolean addJob(Job theJob) throws IllegalArgumentException {
         //  Check to find whether the manager manages the park that this job is at.
         
         if (!(new BusinessRule8().test(theJob, myManagedParks))) {

@@ -178,7 +178,14 @@ public class ParkManagerUI extends UI {
 			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
 					endDate, myManager.getEmail(), volunteerList);
 			
-			boolean jobAdded = myManager.addJob(newJob);
+			boolean jobAdded = false;
+			
+			try {
+				jobAdded = myManager.addJob(newJob);
+			} catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			
 			
 			displayJobStatus(jobAdded);
 		}

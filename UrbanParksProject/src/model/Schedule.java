@@ -13,236 +13,212 @@ import model.businessRules.BusinessRule6;
 import model.businessRules.BusinessRule7;
 
 /**
- * Defines the Schedule object for an application.
- * This entity contains the master job list and enforces
- * business rules associated with its role in the program.
- * 
+ * Schedule controls data going to the JobList and enforces business rules accordingly. 
  * @author Reid Thompson
- * @version 5.3.2015
+ * @version May 31 2015
  */
 public class Schedule implements Serializable {
 
-    private static final long serialVersionUID = 5L;
+	//Class Constant
+    private static final long serialVersionUID = 5L;          
     
-    private static Schedule schedule = new Schedule();     
+    //Class Variables
     private JobList myJobList;  
     private UserList myUserList;
+    private static Schedule mySchedule = new Schedule();
     
-    /**
-     * Constructs a Schedule object.
-     */
+    
+    //Constructor
     private Schedule() {
         //Not to be instantiated; Singleton
     }
     
+	// Singleton Instance
+	/**
+	 * Return the instance of the Schedule Singleton.
+	 */
     public static Schedule getInstance() {
-        return schedule;
+        return mySchedule;
     }
 
+    
+    
+    /*=============*
+     * Add New Job *
+     *=============*/
+    
+    
+    /*
+     * receiveJob() and addVolunteerToJob() are both very length methods.
+     * 
+     * However, they consist of calling a long series of tests, and actually do not have very much
+     * logic to them. That logic, instead, is broken up into various Business Rule classes.
+     * 
+     * As such, trying to break down these methods any further would be largely trivial.
+     */    
+    
     /**
-     * Receives a job and adds it to the master job list if its data is valid.
-     * 
-     * For user story #1. Called by createJob() method of ParkManager class.
-     * 
-     * @param theJob is the Job to potentially add to Schedule's list of Jobs.
-     * @return true if theJob was added, and false otherwise.
+     * Receive a job and add it to the master JobList if its data is valid.
+     * @param theJob the Job to potentially add to Schedule's List of Jobs.
+     * @return true if theJob was added; false otherwise.
      */
     public boolean receiveJob(Job theJob) throws IllegalArgumentException {     
-        
-        // Checks the fields of the object to make sure they're valid.
-        boolean okToAdd = true;
+
+    	/*
+    	 * We subject both the Job and JobList to a wide variety of tests.
+    	 * If all of the tests are passed, then we add the Job to the JobList.
+    	 */
+        boolean addFlag = true;
         
         if (theJob == null)
-        {
-            okToAdd = false;
-        }
-        //BIZ rule 1. A job may not be added if the total number of pending jobs is currently 30.       
+            addFlag = false;
+        
+        //Check to ensure that the total number of pending jobs is less than 30.    
         else if (!(new BusinessRule1().test(myJobList))) { 
             throw new IllegalArgumentException("Sorry, but the limit of 30 pending jobs has already been reached.");
-        }
-        //BIZ rule 2. A job may not be added if the total number of pending jobs during that week 
-            //(3 days on either side of the job days) is currently 5.
+        }        
+
+        /*
+         * Check to ensure that the total number of Jobs for the week that this Job is to occur is
+         * less than 5.
+         * A week is defined as 3 days before a Job's Start Date and 3 days after its End Date.
+         */
         else if (!(new BusinessRule2().test(theJob, myJobList))) {
             throw new IllegalArgumentException("Sorry, but the limit of 5 jobs has already been reached for the week that "
             		+ "this job was scheduled.");
         } 
         
-        //BIZ rule 4. A job may not be scheduled that lasts more than two days.
+        //Check that the Job is not scheduled to last longer than two days.
         else if (!(new BusinessRule4().test(theJob))) {
             throw new IllegalArgumentException("Sorry, but a job cannot last any longer than two days.");
         }
         
-        //BIZ rule 5. A job may not be added that is in the past or more than three months in the future. 
-                //I am going to say that the manager can only create a job on a date after today.
-        
+        //Check that a Job is scheduled to begin after the current date.        
         else if (!(new BusinessRule5().pastTest(theJob))) {
             throw new IllegalArgumentException("Sorry but the date you entered for this "
                     + "job has already passed.");
         }
         
+        //Check that a Job is scheduled to begin within the next three months.
         else if (!(new BusinessRule5().futureTest(theJob))) {
             throw new IllegalArgumentException("Sorry but the date you entered is too far "
                     + "into the future. \nAll jobs must be scheduled within the next 3 months.");
         }
         
-        // checks if date range is valid
+        //Check that the Start Date and End Date are not swapped.
         else if (theJob.getStartDate().after(theJob.getEndDate())) {
             throw new IllegalArgumentException("Sorry, but the Start Date must come before or on the same date as the End Date.");
         }
         
         
-        // checks that the job id is valid
+        //Check that the Job ID is valid.
         else if (theJob.getJobID() < 0 || theJob.getJobID() > Job.MAX_NUM_JOBS) {
             throw new IllegalArgumentException("Error: Invalid Job ID. Please logout and try again.");
         }
         
-        // checks if volunteer list is null
+        //Check that the Volunteer List is not null.
         else if (theJob.getVolunteerList() == null) {
             throw new IllegalArgumentException("Error: Null Volunteer List. Please logout and try again.");
         }
         
-        // checks if volunteer list is empty
+        //Check that the Volunteer List is empty.
         else if (!theJob.getVolunteerList().isEmpty()) {
             throw new IllegalArgumentException("Error: Non-empty Volunteer List. Please logout and try again.");
         }
         
-        
+        //Check that there is at least one slot available for a Volunteer to sign up for.
         else if (!theJob.hasLightRoom() && !theJob.hasMediumRoom() && !theJob.hasHeavyRoom()) {
             throw new IllegalArgumentException("Sorry, but a slot in at least one Volunteer Grade must be available.");
         }
         
+        //Check that none of the slots are set to negative numbers.
         else if (theJob.getLightCurrent() > theJob.getLightMax() || theJob.getMediumCurrent() > theJob.getMediumMax()
                 || theJob.getHeavyCurrent() > theJob.getHeavyMax()) {
             throw new IllegalArgumentException("Sorry, but the number of slots for a Volunteer Grade cannot be negative.");
         }
         
+        //Check that the Park for the Job is not null.
         else if (theJob.getPark() == null) {
             throw new IllegalArgumentException("Error: Null Park. Please logout and try again.");
         }
         
+        //Check that the ParkManager for the Job is not null.
         else if (theJob.getManager() == null) {
             throw new IllegalArgumentException("Error: Null ParkManager. Please logout and try again.");
         }
         
-        if (okToAdd) {
+        //If all tests passed, then we add the Job to the Schedule.
+        if (addFlag) {
             // To get the master job list which is editable
             List<Job> editableJobList = myJobList.getJobList();
             editableJobList.add(theJob); // add valid job to list
         } 
         else {
-            throw new IllegalArgumentException("Error: job data is invalid and can not be added.");
+        	//If we somehow got here without throwing an exception, and the Job is not valid, then we throw a general exception.
+            throw new IllegalArgumentException("Error: Job data is invalid for unknown reasons. Please logout and try again.");
         }
 
-        return okToAdd;
+        return addFlag;
     }   
     
+    
+    
+    
+    /*======================*
+     * Add Volunteer to Job *
+     *======================*/
+        
     /**
-     * Adds a Volunteer to an existing Job if the given data is valid.
+     * Add a Volunteer to an existing Job if the given data is valid.
      * 
-     * For User Story #3. Called by Volunteer.signup()
-     * 
-     * @param theVolunteer the Volunteer to add to a particular job as well as the workgrade.
+     * @param theVolunteerInfo the email of the Volunteer and their desired work grade.
      * @param theJobID the ID number for the Job to which the Volunteer will be added.
-     * I'm assuming this value would be 1 = light, 2 = medium, or 3 = heavy.
-     * @return true if the Volunteer was added to the Job and false otherwise.
-     * @throws IllegalArgumentException if a parameter was not quite right.
+     * @return true if the Volunteer was added to the Job; false otherwise.
+     * @throws IllegalArgumentException thrown for various input errors.
      */ 
-    public boolean addVolunteerToJob(ArrayList<String> theVolunteer, int theJobID) throws IllegalArgumentException {
-        //CHECK 1
-        boolean validID = checkJobValidity(theJobID); //Schedule will check to make sure the Job ID is valid
+    public boolean addVolunteerToJob(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
+    	
+        //Check that the Job ID is valid.
+        boolean validID = checkJobValidity(theJobID);
         if (!validID){
-            throw new IllegalArgumentException("This job ID cannot exist"); 
+            throw new IllegalArgumentException("Sorry, but the Job ID you entered was invalid."); 
         }
 
-        //CHECK 2
+        //Check that the Job exists.
         Job thisJob = findJob(theJobID);
         if (thisJob == null) {
-            throw new IllegalArgumentException("Job does not exist");
+            throw new IllegalArgumentException("Sorry, but the Job you are trying to sign up for does not exist.");
         }
 
-        //CHECK 3
+        //Check that the Job has not already been completed.
         if (!(new BusinessRule6().test(thisJob))) {
-            throw new IllegalArgumentException("Sorry, but this job has already completed.");
+            throw new IllegalArgumentException("Sorry, but you cannot sign up for a job has already completed.");
         }
 
-        //CHECK 4
-        if (new BusinessRule7().test(theVolunteer.get(0), thisJob, myJobList)) { 
+        //Check that the Volunteer is not signed up for a Job that occurs on the same date.
+        if (new BusinessRule7().test(theVolunteerInfo.get(0), thisJob, myJobList)) { 
             throw new IllegalArgumentException("Sorry, but you are already signed up "
                     + "for a job that occurs the same date!");
         }
 
-        //CHECK 5
-        if (!(new BusinessRule3().test(thisJob,theVolunteer.get(1)))) {
+        //Check that the grade of work that the Volunteer is signing up for is not already full.
+        if (!(new BusinessRule3().test(thisJob,theVolunteerInfo.get(1)))) {
             throw new IllegalArgumentException("Sorry, but that grade in this job "
                     + "is already full.");
         }
 
-        // If all the checks pass, we add the Volunteer to the Job's Volunteer List,
-        // Increment the grade slot, and return.
-        thisJob.getVolunteerList().add(theVolunteer);
+        // If all the checks pass, we add the Volunteer to the Job's Volunteer List.
+        thisJob.getVolunteerList().add(theVolunteerInfo);
         return true;
     }
     
     
     
     
-    /**
-     * Schedule will check to make sure the Job ID is valid
-     * @param theJobID is the id number of the job.
-     * @return false if invalid
-     */
-    private boolean checkJobValidity(int theJobID) {
-        if (theJobID < 0 || theJobID > Job.MAX_NUM_JOBS) {
-            return false;
-        }
-        return true;
-    }
     
-
-    /**
-     * Finds the job associated with this jobID.
-     * @param theJobID is the jobs ID
-     * @return the Job that has this Job ID, null otherwise.
-     */
-    private Job findJob(int theJobID) {
-        //Calls JobList.getJobList() to get the master job list which is editable
-        List<Job> editableJobList = myJobList.getJobList();
-
-
-        for (int i = 0; i < editableJobList.size(); i++) {
-            if (editableJobList.get(i).getJobID() == theJobID) {
-                return editableJobList.get(i);
-            }
-        }
-        return null;
-    }
-    
-    public List<Job> getJobList() {
-        return myJobList.getJobList();
-    }
-
-    public void addUser(String theEmail, String theFirstName, String theLastName,
-                        String theUserType) {
-        User u = null;
-        switch (theUserType) {
-            
-            case "Volunteer":
-                u = new Volunteer(theEmail, theFirstName, theLastName);
-                break;
-                
-            case "Administrator":
-                u = new Administrator(theEmail, theFirstName, theLastName);
-                break;
-
-            case "ParkManager":
-                u = new ParkManager(theEmail, theFirstName, theLastName,
-                                    new ArrayList<String>());
-                break;
-            default:
-                throw new IllegalArgumentException("Not a valid user type.");
-        }
-        myUserList.addNewUser(u);
-    }
+    /*===============*
+     * Add Park/User *
+     *===============*/
     
     /**
      * Update the list of managed parks of a Park Manager.
@@ -259,13 +235,92 @@ public class Schedule implements Serializable {
         
     }
     
+    
+    public void addUser(String theEmail, String theFirstName, String theLastName,
+            String theUserType) {    
+    	
+		User user = null;
+		
+		switch (theUserType) {
+		case "Volunteer":
+		    user = new Volunteer(theEmail, theFirstName, theLastName);
+		    break;		    
+		case "Administrator":
+		    user = new Administrator(theEmail, theFirstName, theLastName);
+		    break;		
+		case "ParkManager":
+		    user = new ParkManager(theEmail, theFirstName, theLastName, new ArrayList<String>());
+		    break;
+		default:
+		    throw new IllegalArgumentException("Error: Invalid user type. Please logout and try again.");
+		}
+		
+		myUserList.addNewUser(user);
+	}
+    
+    
+    
+    
+    /*=================*
+     * Getters/Setters *
+     *=================*/
+    
+    /**
+     * Update the JobList with a new List of Jobs.
+     */
     public void setJobList(JobList theJobList) {
         this.myJobList = theJobList;
     }
     
+    /**
+     * Update the UserList with a new List of Users.
+     */
     public void setUserList(UserList theUserList) {
         this.myUserList = theUserList;
     }
+    
+    /**
+     * Return the JobList.
+     */
+    public List<Job> getJobList() {
+        return myJobList.getJobList();
+    }
+    
+    
+    
+    
+    /*================*
+     * Helper Methods *
+     *================*/
+    
+    /**
+     * Call Schedule to check that the Job ID is valid
+     * @param theJobID is the id number of the job.
+     * @return false if invalid
+     */
+    private boolean checkJobValidity(int theJobID) {
+        if (theJobID < 0 || theJobID > Job.MAX_NUM_JOBS) {
+            return false;
+        }
+        return true;
+    }
 
+    /**
+     * Find the job associated with the jobID; null if one does not exist.
+     * @param theJobID is the jobs ID
+     */
+    private Job findJob(int theJobID) {
+    	//Get an actual reference to the JobList.
+        List<Job> editableJobList = myJobList.getJobList();
+        
+        Job returnJob = null;
+
+        //Search for the Job in the JobList.
+        for (int i = 0; i < editableJobList.size(); i++) {
+            if (editableJobList.get(i).getJobID() == theJobID) {
+                returnJob = editableJobList.get(i);
+            }
+        }
+        return returnJob;
+    }
 }
-
