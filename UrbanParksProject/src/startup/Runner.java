@@ -24,8 +24,8 @@ public class Runner {
         LoginUI UI = new LoginUI();
 
         //Set File Names
-        String jobFile = "rsc/jobListBR1.ser";
-        String userFile = "rsc/userListBR1.ser";
+        String jobFile = "rsc/jobListBR2.ser";
+        String userFile = "rsc/userListBR2.ser";
         
         /*
          * This constitutes the main, outer loop of the program.
