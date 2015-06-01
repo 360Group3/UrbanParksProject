@@ -2,106 +2,70 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This is a volunteer.
  * 
  * @author Reid Thompson
  * @author Arsh Singh
- * @version 5.10.2015
+ * @version May 31 2015
  */
 public class Volunteer extends User implements Serializable {
 
+	//Class Constant
     private static final long serialVersionUID = 8L;
 
+    /**
+     * Volunteer Constructor
+     * @param theEmail the email address of the Volunteer
+     * @param theFirstName the first name of the Volunteer
+     * @param theLastName the last name of the Volunteer
+     */
     public Volunteer(String theEmail, String theFirstName, String theLastName) {
         super(theFirstName, theLastName, theEmail);
     }
 	
 	/**
-	 * This signs the volunteer up for a job.
-	 * @param theVol is the volunteer's email and work grade.
-	 * @param theID is the jobs id number
-	 * @return true if the volunteer was signed up, false otherwise.
-	 * @throws IllegalArgumentException If something went wrong with adding the volunteer to job
+	 * Sign the Volunteer up for a Job.
+	 * @param theVolunteerInfo the volunteer's email and work grade.
+	 * @param theJobID the ID Number of the Job that the Volunteer is signing up for.
+	 * @return true if the volunteer successfully signed up for the Job; false otherwise.
+	 * @throws IllegalArgumentException if the Volunteer was not able to be added to the Job.
 	 */
-	public boolean signUp(ArrayList<String> theVol, int theID) throws IllegalArgumentException {
-			return Schedule.getInstance().addVolunteerToJob(theVol, theID);
+	public boolean signUp(ArrayList<String> theVolunteerInfo, int theJobID) throws IllegalArgumentException {
+			return Schedule.getInstance().addVolunteerToJob(theVolunteerInfo, theJobID);
 	}
 	
 	
 	/**
-	 * This returns a copy of the list of jobs.
-	 * @return the list of jobs.
+	 * Return all pending Jobs from DataPollster that are visible to the Volunteer.<br>
+	 * Also goes through to find any Jobs that are now considered to be in the past, and updates them accordingly.
 	 */
-	public List<Job> getJobs() {
-		return Schedule.getInstance().getJobList();
-	}
-	
-	
-	/**
-	 * This method gets the list of jobs from DataPollster and sends it on to
-	 * wherever its needed.
-	 * It also sets each jobs 'myPast' field which indicates whether or not 
-	 * the job is in the past.
-	 */
-	public List<Job> getTheJobs() {
-		List<Job> daJobs = Schedule.getInstance().getJobList();
-		Calendar currentDate = new GregorianCalendar();
+	public List<Job> getTheJobs() {		
+		/*
+		 * We update Jobs at this moment, to handle cases where the Volunteer is, for example,
+		 * signing up for a Job near midnight.
+		 */		
+		List<Job> visibleJobs = Schedule.getInstance().getJobList();
 		
-		for (Job j: daJobs) { //go through each job and find out what job is in the past.
-								//then change that job's JobID to -1 so that it can be
-								//checked for and ignored when displaying the jobs.
-			if(currentDate.getTimeInMillis() + 2670040009l > j.getStartDate().getTimeInMillis()) {
-				j.setInPast(true);
+		GregorianCalendar currentDate = new GregorianCalendar();
+		long currentTime = currentDate.getTimeInMillis() + 2670040009l;
+		
+		for (Job job: visibleJobs) { 
+			if(currentTime > job.getStartDate().getTimeInMillis()) {
+				job.setInPast(true);
 			}
 		}
 
-		return daJobs;
+		return visibleJobs;
 	}
 	
 	/**
-	 * This method returns a list of all the jobs this volunteer 
-	 * has signed up for.
-	 * @return a list of jobs.
+	 * Return a List of all Jobs that the Volunteer has signed up for.
 	 */
 	public List<Job> getMyJobs() {
-		List<Job> jobList = Schedule.getInstance().getJobList();
-		
-		List<Job> mines = new ArrayList<Job>();
-		
-		//go through each job in the list and see if the volunteer has signed up for that job.
-		for(Job job : jobList) {
-			List<List<String>> volunteerList = job.getVolunteerList();
-			
-			for(List<String> volunteer : volunteerList) {
-				if(volunteer.get(0).equals(getEmail())) {
-					mines.add(job);
-				}
-			}
-		}
-		return mines;
-		
-	}
-	
-    @Override
-    public boolean equals(Object theO) {
-        if (!(theO instanceof Volunteer))
-            return false;
-
-        Volunteer theOther = (Volunteer) theO;
-        
-        return (super.getFirstName().equals(theOther.getFirstName()) 
-                && super.getLastName().equals(theOther.getLastName()))
-                || super.getEmail().equals(theOther.getEmail());
-    }
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.getFirstName(), super.getLastName(), super.getEmail());
+		return DataPollster.getInstance().getVolunteerJobs(super.getEmail());		
 	}
 }

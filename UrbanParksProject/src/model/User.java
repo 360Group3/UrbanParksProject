@@ -91,7 +91,9 @@ public abstract class User implements Serializable, Comparable<User> {
         
         if (o instanceof User) {
             User other = (User) o;
-            isEqual = myEmail.equals(other.getEmail());
+            isEqual = (myFirstName.equals(other.getFirstName()) 
+                    && myLastName.equals(other.getLastName()))
+                    || myEmail.equals(other.getEmail());
         }
         
         return isEqual;
