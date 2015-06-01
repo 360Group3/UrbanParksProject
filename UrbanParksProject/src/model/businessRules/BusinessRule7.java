@@ -1,7 +1,7 @@
 package model.businessRules;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import model.Job;
 import model.JobList;
@@ -29,7 +29,7 @@ public class BusinessRule7 {
 		GregorianCalendar endDate = theJob.getEndDate();
 
 		for(Job job : theJobList.getCopyList()) {
-			for(ArrayList<String> volunteer : job.getVolunteerList()) {
+			for(List<String> volunteer : job.getVolunteerList()) {
 				if(volunteer.get(0).equals(theEmail)) {
 					//Found a job with the volunteer in it!
 					if(startDate.equals(job.getStartDate())) return true;

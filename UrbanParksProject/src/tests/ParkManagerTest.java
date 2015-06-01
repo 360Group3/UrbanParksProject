@@ -32,7 +32,7 @@ public class ParkManagerTest {
     static JobList myJobList;
     static UserList myUserList;
     static ParkManager testManager;
-    static ArrayList<ArrayList<String>> volunteerList;
+    static List<List<String>> volunteerList;
 
     /**
      * Called before every test. Here, we setup the JobList and User List, and then create test
@@ -94,11 +94,11 @@ public class ParkManagerTest {
 
         //Create Test Jobs
         Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "06102015", "06102015",
-                        "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
+                        "testmanager@gmail.com", new ArrayList<>());
         Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "06112015", "06112015",
-                        "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
+                        "testmanager@gmail.com", new ArrayList<>());
         Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "06122015", "06122015",
-                        "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
+                        "testmanager@gmail.com", new ArrayList<>());
 
         //Add the Test Jobs to the JobList, and then add the Volunteer arrays to those jobs.
         Schedule.getInstance().receiveJob(job1);
@@ -157,7 +157,7 @@ public class ParkManagerTest {
         
         //Show that we can create a new Job, and then get the details on that Job.
         Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "06152015", "06152015",
-                "testmanager@gmail.com", new ArrayList<ArrayList<String>>());
+                "testmanager@gmail.com", new ArrayList<>());
         Schedule.getInstance().receiveJob(newJob);
         
         ArrayList<String> volunteer4Array = new ArrayList<String>();
@@ -176,7 +176,7 @@ public class ParkManagerTest {
         //Show that we can't get the details on a Job created in a Park that the ParkManager
         //doesn't manage.
         Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "06202015", "06212015",
-        		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
+        		"othermanager@gmail.com", new ArrayList<>());
         Schedule.getInstance().receiveJob(foreignJob);        
         Schedule.getInstance().addVolunteerToJob(volunteer4Array, 4);
         
@@ -199,7 +199,7 @@ public class ParkManagerTest {
      */
     @Test
     public void testAddJob() {
-        volunteerList = new ArrayList<ArrayList<String>>();
+        volunteerList = new ArrayList<>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
                 "testmanager@gmail.com", volunteerList);
         testManager.addJob(testJob);
@@ -239,7 +239,7 @@ public class ParkManagerTest {
     public void testGetNewJobID() {
         assertEquals(testManager.getNewJobID(), 3);
 
-        volunteerList = new ArrayList<ArrayList<String>>();
+        volunteerList = new ArrayList<>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "06252015", "06252015",
                 "testmanager@gmail.com", volunteerList);        
 
@@ -263,7 +263,7 @@ public class ParkManagerTest {
         List<String> parkArray = new ArrayList<String>();
         parkArray.add("Foreign Park");
 
-        volunteerList = new ArrayList<ArrayList<String>>();
+        volunteerList = new ArrayList<>();
         Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "06252015", "06252015",
                                 "nottestmanager@gmail.com", volunteerList);
         Schedule.getInstance().receiveJob(testJob);
@@ -351,7 +351,7 @@ public class ParkManagerTest {
         //Show that the ParkManager cannot access any details about Volunteers assigned to
         //Jobs in Parks that they do not manage.
         Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "06202015", "06212015",
-        		"othermanager@gmail.com", new ArrayList<ArrayList<String>>());
+        		"othermanager@gmail.com", new ArrayList<>());
         Schedule.getInstance().receiveJob(foreignJob);
         
         ArrayList<String> volunteer4Array = new ArrayList<String>();

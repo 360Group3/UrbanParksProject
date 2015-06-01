@@ -1,6 +1,7 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -44,9 +45,9 @@ public class BusinessRule7Test {
 	
 		Yugi = new Volunteer("Yugi@yahoo.com", "Yugi", "Muto");
 		
-		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<>());
+		tradeForBlueEyesWhiteDragon = new Job(1, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<>());
+		beatJadenYuki = new Job(2, "Egypt", 0, 1, 0, "06152015", "06152015", "ten@uw.edu", new ArrayList<>());
         
 		
 		Schedule.getInstance().receiveJob(defeatFrieza);

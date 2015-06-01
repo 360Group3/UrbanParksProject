@@ -1,6 +1,8 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class DataPollsterTest {
 	private UserList ul;
 	private DataPollster dp;
 	private Schedule s;
-	private ArrayList<ArrayList<String>> volALofALs;
+	private List<List<String>> volALofALs;
 	private Volunteer vol1;
 	private Volunteer vol2;
 	private Volunteer vol3;

@@ -10,9 +10,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import model.DataPollster;
 import model.Job;
 import model.JobList;
@@ -20,6 +17,9 @@ import model.ParkManager;
 import model.Schedule;
 import model.UserList;
 import model.Volunteer;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /** This is the test class for the volunteer.
  * @author Arshdeep Singh
@@ -66,10 +66,10 @@ public class VolunteerTest {
 		parkList.add("Kento");
 		Tenenberg = new ParkManager("ten@uw.edu", "Mr", "Teacher", parkList);
 		myUserList.addNewUser(Tenenberg);
-		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
-		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "06122015", "06122015", "ten@uw.edu", new ArrayList<>());
+		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "06032015", "06032015", "ten@uw.edu", new ArrayList<>());
 		
-		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "06112015", "06122015", "ten@uw.edu", new ArrayList<>());
 		
 		
 		//This part is necessary to create a job for todays date.
@@ -88,16 +88,16 @@ public class VolunteerTest {
 		Job catchMew;
 		if (now.get(4) >= 10 && now.get(5) >= 10) { //everything good
 			//System.out.println(todaysDate0);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<>());
 		} else if (now.get(4) >= 10 && now.get(5) < 10) { //bad day
 			//System.out.println(todaysDate1);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<>());
 		} else if (now.get(4) < 10 && now.get(5) >= 10) { //bad month
 			//System.out.println(todaysDate2);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<>());
 		} else { //bad both
 			//System.out.println(todaysDate3);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<ArrayList<String>>());
+			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<>());
 		}
 		
 		
@@ -217,7 +217,7 @@ public class VolunteerTest {
 	public void signUpTEST7() {
 		JobList testJobList = new JobList();
 
-		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<ArrayList<String>>());
+		Job job1 = new Job(5, "dud", 0, 0, 1, "04122015", "04122015", "ten@uw.edu", new ArrayList<>());
 
 		List<Job> myList = new ArrayList<Job>();
 		myList.add(job1);

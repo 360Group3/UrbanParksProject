@@ -76,9 +76,9 @@ public class Volunteer extends User implements Serializable {
 		
 		//go through each job in the list and see if the volunteer has signed up for that job.
 		for(Job job : jobList) {
-			ArrayList<ArrayList<String>> volunteerList = job.getVolunteerList();
+			List<List<String>> volunteerList = job.getVolunteerList();
 			
-			for(ArrayList<String> volunteer : volunteerList) {
+			for(List<String> volunteer : volunteerList) {
 				if(volunteer.get(0).equals(getEmail())) {
 					mines.add(job);
 				}

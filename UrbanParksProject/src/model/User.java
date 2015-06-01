@@ -40,10 +40,10 @@ public abstract class User implements Serializable, Comparable<User> {
     @Override
     public int compareTo(User theOther) {
             //Sort by last name
-            int result = this.getLastName().compareTo(theOther.getLastName());
+            int result = myLastName.compareTo(theOther.getLastName());
             //If the last names match, then sort by first name
             if (result == 0) {
-                result = this.getFirstName().compareTo(theOther.getFirstName());
+                result = myLastName.compareTo(theOther.getFirstName());
             }
             return result;
     }

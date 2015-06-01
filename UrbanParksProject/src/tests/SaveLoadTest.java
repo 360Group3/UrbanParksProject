@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class SaveLoadTest {
 		mySaveLoader.saveUserList(myUserList, "testUserList.ser");
 		
 		//Fill the Job List with several Jobs.
-		ArrayList<ArrayList<String>> volunteerArray = new ArrayList<ArrayList<String>>();
+		List<List<String>> volunteerArray = new ArrayList<>();
 		
 		Job job1 = new Job(0, "Test Park", 5, 5, 5, "06202015", "06202015", "testmanager@gmail.com", volunteerArray);
 		Job job2 = new Job(1, "Test Park 2", 15, 15, 15, "06222015", "06222015", "testmanager2@gmail.com", volunteerArray);

@@ -1,8 +1,8 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * This class is used to create an instance of a Job.
@@ -25,7 +25,7 @@ public class Job implements Serializable {
      * This is the list which holds the e-mail addresses of all volunteers that
      * have signed up to participate in this job.
      */
-    private ArrayList<ArrayList<String>> myVolunteerList;
+    private List<List<String>> myVolunteerList;
 
     
     /**
@@ -81,7 +81,7 @@ public class Job implements Serializable {
      */
     public Job(int theJobID, String thePark, int theLightMax, int theMediumMax,
             int theHeavyMax, String theStartDate, String theEndDate,
-            String theManagerEmail, ArrayList<ArrayList<String>> theVolunteerList) {
+            String theManagerEmail, List<List<String>> theVolunteerList) {
 
         this.myJobID = theJobID;
         this.myPark = thePark;
@@ -188,7 +188,7 @@ public class Job implements Serializable {
         int numHeavy = 0;
 
         // Iterate Volunteer List and count up how many are in each job grade
-        for (ArrayList<String> volunteer : myVolunteerList) {
+        for (List<String> volunteer : myVolunteerList) {
             if (volunteer.get(1).equals("Light")) {
                 numLight++;
             }
@@ -217,7 +217,7 @@ public class Job implements Serializable {
         return myJobID;
     }
 
-    public ArrayList<ArrayList<String>> getVolunteerList() {
+    public List<List<String>> getVolunteerList() {
         return myVolunteerList;
     }
 
@@ -253,7 +253,7 @@ public class Job implements Serializable {
         return myManager;
     }
 
-    public void addVolunteer(ArrayList<String> theV) {
+    public void addVolunteer(List<String> theV) {
         myVolunteerList.add(theV);
     }
 
