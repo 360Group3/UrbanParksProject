@@ -30,6 +30,13 @@ public class Administrator extends User implements Serializable {
     }
     
     
+    public Administrator(String theEmail) {
+    	super(DataPollster.getInstance().getAdministrator(theEmail).getFirstName(), 
+    			DataPollster.getInstance().getAdministrator(theEmail).getLastName(),
+    			theEmail);
+    }
+    
+    
     
     /*=================*
      * Sort Volunteers *

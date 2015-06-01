@@ -26,6 +26,13 @@ public class Volunteer extends User implements Serializable {
     }
     
     
+    public Volunteer(String theEmail) {
+    	super(DataPollster.getInstance().getVolunteer(theEmail).getFirstName(), 
+    			DataPollster.getInstance().getVolunteer(theEmail).getLastName(),
+    			theEmail);
+    }
+    
+    
     
     /*============*
      * Job Signup *

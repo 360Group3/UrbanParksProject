@@ -25,7 +25,7 @@ public class AdministratorUI extends UI {
      */
 	public AdministratorUI(String theAdminEmail) {
 		super();
-		this.myAdmin = DataPollster.getInstance().getAdministrator(theAdminEmail);
+		this.myAdmin = new Administrator(theAdminEmail);
 	}
 
     @Override

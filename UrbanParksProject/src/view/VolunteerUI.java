@@ -3,7 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.DataPollster;
 import model.Job;
 import model.Volunteer;
 
@@ -24,7 +23,7 @@ public class VolunteerUI extends UI {
 	 */
 	public VolunteerUI(String theVolunteerEmail) {
 		super();
-		this.myVol = DataPollster.getInstance().getVolunteer(theVolunteerEmail);
+		this.myVol = new Volunteer(theVolunteerEmail);
 	}
 	
 	/**

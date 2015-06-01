@@ -34,9 +34,9 @@ public abstract class User implements Serializable, Comparable<User> {
     }
     
     
-    /*=========*
-     * Getters *
-     *=========*/
+    /*=================*
+     * Getters/Setters *
+     *=================*/
 
     /**
      * Return the first name of the User.
@@ -59,7 +59,21 @@ public abstract class User implements Serializable, Comparable<User> {
         return myEmail;
     }
     
+    /**
+     * Set the first name of the User.
+     * @param theFirstName the first name of the user.
+     */
+    public void setFirstName(String theFirstName) {
+    	this.myFirstName = theFirstName;
+    }
     
+    /**
+     * Set the last name of the User.
+     * @param theLastName the last name of the User.
+     */
+    public void setLastName(String theLastName) {
+    	this.myLastName = theLastName;
+    }
     
     
     /*===========*

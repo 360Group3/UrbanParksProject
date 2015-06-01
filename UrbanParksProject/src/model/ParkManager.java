@@ -29,10 +29,19 @@ public class ParkManager extends User implements Serializable {
     /**
      * ParkManager Constructor
      */
-    public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {    	
+    public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {
         super(theFirstName, theLastName, theEmail);
+    }
+    
+    public ParkManager(String theEmail) {
+    	super(DataPollster.getInstance().getParkManager(theEmail).getFirstName(), 
+    			DataPollster.getInstance().getParkManager(theEmail).getLastName(),
+    			theEmail);
+    	
+    	
 
         //theParkList is an Unmodifiable List, so it is copied into myManagedParks.
+        List<String> theParkList = DataPollster.getInstance().getParkList(theEmail);
         List<String> copiedParks = new ArrayList<String>();
         copiedParks.addAll(theParkList);
         this.myManagedParks = copiedParks;
