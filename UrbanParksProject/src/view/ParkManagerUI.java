@@ -180,7 +180,7 @@ public class ParkManagerUI extends UI {
 			
             boolean jobAdded = false;
 			
-            Pattern p = Pattern.compile("\\d{6}");
+            Pattern p = Pattern.compile("\\d{8}");
             if (p.matcher(startDate).matches() && p.matcher(endDate).matches()) {
             
     			Job newJob = new Job(jobID, parkName, lightSlots, mediumSlots, heavySlots, startDate,
