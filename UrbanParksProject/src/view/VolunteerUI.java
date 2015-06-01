@@ -71,7 +71,7 @@ public class VolunteerUI extends UI {
 		case "view":	
 		case "v":
 		case "1":
-			displayJobs(myVol.getTheJobs());
+			displayJobs(myVol.getPendingJobs());
 			break;
 
 		case "sign up":
@@ -132,7 +132,7 @@ public class VolunteerUI extends UI {
 		volArray.add(myVol.getEmail());
 		volArray.add(level);
 
-		if(myVol.signUp(volArray, jobID)) {
+		if(myVol.signUpForJob(volArray, jobID)) {
 			displaySuccessMessage();
 		}
 
@@ -276,7 +276,7 @@ public class VolunteerUI extends UI {
      */
     private Job findJob(int theJobID) {
         //Calls JobList.getJobList() to get the master job list which is editable
-        List<Job> editableJobList = myVol.getTheJobs();
+        List<Job> editableJobList = myVol.getPendingJobs();
 
 
         for (int i = 0; i < editableJobList.size(); i++) {
