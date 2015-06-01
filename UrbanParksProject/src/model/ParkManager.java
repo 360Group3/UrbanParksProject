@@ -26,7 +26,9 @@ public class ParkManager extends User implements Serializable {
     private List<String> myManagedParks;
     private String myEmail = super.getEmail();
 
-    // Constructor
+    /**
+     * ParkManager Constructor
+     */
     public ParkManager(String theEmail, String theFirstName, String theLastName, List<String> theParkList) {    	
         super(theFirstName, theLastName, theEmail);
 

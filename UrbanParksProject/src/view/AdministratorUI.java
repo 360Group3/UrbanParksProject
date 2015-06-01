@@ -55,7 +55,7 @@ public class AdministratorUI extends UI {
             switch (theChoice) { // no default case needed because of original
                                  // if test
                 case 1: // list all volunteers by last name, first name (sorted ascending)
-                    displayVolunteers(myAdmin.getAllVolunteersByLNFN());
+                    displayVolunteers(myAdmin.getSortedVolunteers());
                     break;
                 case 2: // search volunteers by last name
                     searchByLastName();

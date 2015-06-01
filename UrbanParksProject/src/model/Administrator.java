@@ -7,90 +7,117 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * The class for the Administrator user for the system.
- * 
+ * The class for the Administrator user for the system.<br>
  * Administrators can search for Volunteers by last name.
  * 
  * @author Reid Thompson
  * @author Taylor Gorman
- * @version 8 May 2015
+ * @version 31 May 2015
  */
 public class Administrator extends User implements Serializable {
 
+	//Class Constant
     private static final long serialVersionUID = 0L;
 
+    
     /**
-     * Constructs an Administrator object.
-     * 
-     * @param theFirstName
-     *            The first name of the Administrator.
-     * @param theLastName
-     *            The last name of the Administrator.
-     * @param theEmail
-     *            The email of the Administrator.
+     * Constructs an Administrator with a first name, last name, and email.
+     * @param theFirstName the first name of the Administrator.
+     * @param theLastName the last name of the Administrator.
+     * @param theEmail the email of the Administrator.
      */
     public Administrator(String theEmail, String theFirstName, String theLastName) {
         super(theFirstName, theLastName, theEmail);
     }
+    
+    
+    
+    /*=================*
+     * Sort Volunteers *
+     *=================*/
 
     /**
-     * Returns a List of all Volunteers matching the given last name.
-     * 
-     * @param theLastName
-     *            is the last name by which to search for Volunteer matches.
-     * @return a List of Volunteers with the same last name as theLastName.
+     * Return a List of all Volunteers matching the given last name. 
+     * @param theLastName the last name by which to search for Volunteer matches.
+     * @return a List of Volunteers with a matching last name.
      */
     public List<User> getMatchingVolunteers(String theLastName) {
-        List<User> matchingVols = new ArrayList<>();
+    	List<User> allVolunteers = DataPollster.getInstance().getVolunteerListCopy();
+        List<User> matchingVolunteers = new ArrayList<>();
 
-        List<User> allVols = DataPollster.getInstance().getVolunteerListCopy();
-
-        for (int i = 0; i < allVols.size(); i++) {
-            final User currVol = allVols.get(i);
-
-            if (currVol.getLastName().equals(theLastName)) {
-                matchingVols.add(currVol);
+        for (int i = 0; i < allVolunteers.size(); i++) {
+            User currentVolunteer = allVolunteers.get(i);
+            if (currentVolunteer.getLastName().equals(theLastName)) {
+                matchingVolunteers.add(currentVolunteer);
             }
         }
 
-        // Sort by last name
-        if (!matchingVols.isEmpty()) {
-            Collections.sort(matchingVols, new Comparator<User>() {
-
-                // to sort Volunteers in ascending order based on first name
-                @Override
-                public int compare(final User theVol1, final User theVol2) {
-                    return theVol1.getFirstName().compareTo(theVol2.getFirstName());
-                }
-
-            });
-        }
-
-        return matchingVols;
+        //Sort all Volunteers with that last name by their first names.
+        if (!matchingVolunteers.isEmpty()) {
+        	matchingVolunteers = sortVolunteersByFirstName(matchingVolunteers);
+        }        
+        
+        return matchingVolunteers;        
     }
+    
+    
+    
+    
+    /*===================*
+     * Search Volunteers *
+     *===================*/
 
     /**
-     * Get a list of all volunteers, sorted by last name then first name.
-     * 
-     * @return a list of all volunteers
+     * Get a list of all volunteers, sorted by last name (ascending), then first name (ascending). 
+     * @return a sorted list of all Volunteers
      */
-    public List<User> getAllVolunteersByLNFN() {
-        List<User> allVols = DataPollster.getInstance().getVolunteerListCopy();
+    public List<User> getSortedVolunteers() {    	
+    	//Get the List of all Volunteers, then sort it.
+        List<User> volunteerList = DataPollster.getInstance().getVolunteerListCopy();
+        
+        List<User> sortedVolunteerList = sortVolunteersByFullName(volunteerList);        
+        return sortedVolunteerList;
+    }
+    
+    
+    
+    /*================*
+     * Helper Classes *
+     *================*/
+    
+    //Sort the List of Volunteers by first name (ascending)
+    private List<User> sortVolunteersByFirstName(List<User> theVolunteerList) {
+    	
+    	//To do so, we implement our own version of Collections.sort
+        Collections.sort(theVolunteerList, new Comparator<User>() {
+            @Override
+            public int compare(final User theVol1, final User theVol2) {
+                return theVol1.getFirstName().compareTo(theVol2.getFirstName());
+            }
 
-        Collections.sort(allVols, new Comparator<User>() {
-
-            // to sort Volunteers by last name ascending and then by first name
-            // ascending
+        });
+        
+        return theVolunteerList;
+    }
+    
+    
+    //Sort the List of Volunteers by last name (ascending), then first name (ascending).
+    private List<User> sortVolunteersByFullName(List<User> theVolunteerList) {
+    	
+        //To do so, we implement our own version of Collections.sort
+        Collections.sort(theVolunteerList, new Comparator<User>() {        	
             @Override
             public int compare(User theVol1, User theVol2) {
+            	//Sort by last name
                 int result = theVol1.getLastName().compareTo(theVol2.getLastName());
+                //If the last names match, then sort by first name
                 if (result == 0) {
                     result = theVol1.getFirstName().compareTo(theVol2.getFirstName());
                 }
                 return result;
             }
-
         });
-        return allVols;
+        
+        return theVolunteerList;
     }
 }

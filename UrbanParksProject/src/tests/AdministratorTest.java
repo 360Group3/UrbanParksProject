@@ -73,7 +73,7 @@ public class AdministratorTest {
         alphabetizedUsers.add(myUserList.getVolunteerListCopy().get(1));
         alphabetizedUsers.add(myUserList.getVolunteerListCopy().get(2));
 
-        assertEquals(alphabetizedUsers, myAdmin.getAllVolunteersByLNFN());
+        assertEquals(alphabetizedUsers, myAdmin.getSortedVolunteers());
     }
 
 }
