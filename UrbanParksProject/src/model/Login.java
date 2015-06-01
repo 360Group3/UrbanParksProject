@@ -5,32 +5,52 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class to handle all of the login functionality for one specific user.
- * 
+ * Handles all of the login and registration functionality for one specific user.
  * @author Reid Thompson - most recent implementation.
- * @version 5.26.2015
+ * @version May 31 2015
  */
 public class Login {
 	
+	//Class Constants
     public static String LOGIN_ACTION = "login";
     public static String REGISTER_ACTION = "register";
     
+    //Class Variable
 	private String[] myUserInfo;
 	
+	
+	/**
+	 * Constructor for Login model.
+	 */
 	public Login() {
 		myUserInfo = new String[5];
 	}
     
-	// setters and getters
 	
-	public void setUserInfoLogin(String theAction, String theEmail) {
-    	myUserInfo[0] = theAction;
+
+	/*=================*
+	 * Setters/Getters *
+	 *=================*/
+	
+	/**
+	 * Set the information needed for an existing User to Login.
+	 * @param theEmail the email of the User.
+	 */
+	public void setUserInfoLogin(String theEmail) {
+    	myUserInfo[0] = LOGIN_ACTION;
     	myUserInfo[1] = theEmail;
     }
     
-    public void setUserInfoRegister(String theAction, String theEmail, String theFirstName,
+	/**
+	 * Set the information needed for a new User to register.
+	 * @param theEmail the email of the User.
+	 * @param theFirstName the first name of the User.
+	 * @param theLastName the last name of the User.
+	 * @param theUserType the type of the User, either "Volunteer", "ParkManager", or "Administrator"
+	 */
+    public void setUserInfoRegister(String theEmail, String theFirstName,
     								String theLastName, String theUserType) {
-    	myUserInfo[0] = theAction;
+    	myUserInfo[0] = REGISTER_ACTION;
     	myUserInfo[1] = theEmail;
     	myUserInfo[2] = theFirstName;
     	myUserInfo[3] = theLastName;
@@ -38,7 +58,7 @@ public class Login {
     }
     
     /**
-     * The User Info is an array of strings with the following meanings:
+     * Return the login/register information of the User, which is an array of strings consisting of:
      * <ol>
      *  <li>the Action of the user</li>
      *  <li>the user's email</li>
@@ -46,16 +66,19 @@ public class Login {
      *  <li>the user's last name</li>
      *  <li>the user's type</li>
      * </ol>
-     * @return the User Info
      */
     public String[] getUserInfo() {
     	return Arrays.copyOf(myUserInfo, myUserInfo.length);
     }
 	
-    // functional methods
+    
+
+    /*========================*
+     * Login/Register Process *
+     *========================*/
 	
     /**
-     * @return true if the registration was successful and false otherwise.
+     * Return true if the registration was successful and false otherwise.
      */
     public boolean registerUser() {  
     	boolean registerSuccess = false;
@@ -69,7 +92,7 @@ public class Login {
     }
     
     /**
-     * @return true if the login was successful and false otherwise.
+     * Return true if the login was successful and false otherwise.
      */
     public boolean loginUser() {
     	boolean loginSuccess = false;
@@ -79,8 +102,12 @@ public class Login {
         return loginSuccess;
     }
     
+    /*==================*
+     * Email Validation *
+     *==================*/
+    
     /**
-     * Validates an email based on the following criteria, a partial implementation of RFC 3696.
+     * Validate an email based on the following criteria, a partial implementation of RFC 3696.
      * <ul>
      *  <li>The local part must be between 1 and 64 characters.</li>
      *  <li>The local part can consist of ASCII word characters, as well as the special characters  !#$%&'*+-/=?^_`.{|}~. The local part cannot begin or end with a period (.).</li>
@@ -96,23 +123,29 @@ public class Login {
         if (theEmail == null)
             return false;
         
+        //Hand-crafted by Mike
     	String pat = "(?=^[^@]{1,64}@)([\\w!#$%&'*+\\-/=?^_`{|}~]+(?:\\.[\\w!#$%&'*+\\-/=?^_`{|}~]+)*)@(?=[^@]{1,255}$)(\\w+(?:(?:\\.|-)\\w+)*)";
+    	
     	Pattern pattern = Pattern.compile(pat);
     	Matcher matcher = pattern.matcher(theEmail);
     	return matcher.matches();
     }
     
+    
+    
+    /*================*
+     * Helper Methods *
+     *================*/
+    
     /**
-     * Returns true if email is already used and false otherwise.
-     * @return true if email is already used and false otherwise.
+     * Return true if email is already used; false otherwise.
      */
     private boolean duplicateUserRegistrationCheck() {
         return DataPollster.getInstance().checkEmail(myUserInfo[1]);
     }
     
     /**
-     * Returns true if the user info is valid and false otherwise.
-     * @return true if the user info is valid and false otherwise.
+     * Return true if the User Info is valid by making sure no elements are null; false otherwise.
      */
     private boolean validUserRegistrationCheck() {
         if (myUserInfo == null)
@@ -122,10 +155,8 @@ public class Login {
         for (String str : myUserInfo) {
             if (str == null) {
                 isValid = false;
-                break;
             }
         }
-        
         return isValid;
     }
 }

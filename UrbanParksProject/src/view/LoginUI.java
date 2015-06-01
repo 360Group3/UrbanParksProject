@@ -86,7 +86,7 @@ public class LoginUI extends UI {
     private void registerUserInfo() {
     	String email = getNewEmail();
     	if (!DataPollster.getInstance().checkEmail(email)) {
-    		myLogin.setUserInfoRegister(Login.REGISTER_ACTION, email, getFirstName(), getLastName(),
+    		myLogin.setUserInfoRegister(email, getFirstName(), getLastName(),
         							getUserType());
     	} else {
     		displayDuplicateEmailError();
@@ -124,7 +124,7 @@ public class LoginUI extends UI {
     }
     
     private void loginUserInfo() {
-    	myLogin.setUserInfoLogin(Login.LOGIN_ACTION, getReturnEmail());
+    	myLogin.setUserInfoLogin(getReturnEmail());
     }
 
     private String getReturnEmail() {

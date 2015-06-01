@@ -29,17 +29,10 @@ import org.junit.rules.ExpectedException;
 public class ParkManagerTest {
 
 	//Class Variables that will be reused throughout several tests.
-<<<<<<< HEAD
     static JobList myJobList;
     static UserList myUserList;
     static ParkManager testManager;
     static List<List<String>> volunteerList;
-=======
-    JobList myJobList;
-    UserList myUserList;
-    ParkManager testManager;
-    ArrayList<ArrayList<String>> volunteerList;
->>>>>>> refs/heads/masterMay31Reid
 
     /**
      * Called before every test. Here, we setup the JobList and User List, and then create test
@@ -99,21 +92,12 @@ public class ParkManagerTest {
         volunteer4Array.add("Heavy");
 
         //Create Test Jobs
-<<<<<<< HEAD
         Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "07102015", "07102015",
                         "testmanager@gmail.com", new ArrayList<>());
         Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "07112015", "07112015",
                         "testmanager@gmail.com", new ArrayList<>());
         Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "07122015", "07122015",
                         "testmanager@gmail.com", new ArrayList<>());
-=======
-        Job job1 = new Job(0, "Test Park 1", 5, 5, 5, "07102015", "07102015",
-                        "testmanager@gmail.com", new ArrayList<List<String>>());
-        Job job2 = new Job(1, "Test Park 2", 5, 5, 5, "07112015", "07112015",
-                        "testmanager@gmail.com", new ArrayList<List<String>>());
-        Job job3 = new Job(2, "Test Park 3", 5, 5, 5, "07122015", "07122015",
-                        "testmanager@gmail.com", new ArrayList<List<String>>());
->>>>>>> refs/heads/masterMay31Reid
 
         //Add the Test Jobs to the JobList, and then add the Volunteer arrays to those jobs.
         Schedule.getInstance().receiveJob(job1);
@@ -164,26 +148,11 @@ public class ParkManagerTest {
         assertEquals(managerJobList.get(0).getJobID(), 0);
         assertEquals(managerJobList.get(0).getVolunteerList().get(0).get(0),
                     "testvolunteer4@gmail.com");
-<<<<<<< HEAD
-        
         
         //Show that we can create a new Job, and then get the details on that Job.
         Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "07152015", "07152015",
                 "testmanager@gmail.com", new ArrayList<>());
-=======
-    }
-    
-    /**
-     * Test to ensure that a ParkManager can get all Jobs for Parks that they manage.
-     */
-    @Test
-    public void testGetJobsOnNewJobAdded() {
-    	List<Job> managerJobList = testManager.getJobs();
-    	
-    	//Show that we can create a new Job, and then get the details on that Job.
-        Job newJob = new Job(3, "Test Park 1", 10, 10, 10, "07152015", "07152015",
-                "testmanager@gmail.com", new ArrayList<List<String>>());
->>>>>>> refs/heads/masterMay31Reid
+
         Schedule.getInstance().receiveJob(newJob);
         
         ArrayList<String> volunteer4Array = new ArrayList<String>();
@@ -212,13 +181,8 @@ public class ParkManagerTest {
         
         //Show that we can't get the details on a Job created in a Park that the ParkManager
         //doesn't manage.
-<<<<<<< HEAD
         Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "07202015", "07212015",
         		"othermanager@gmail.com", new ArrayList<>());
-=======
-        Job foreignJob = new Job(4, "Other Park", 15, 15, 15, "07202015", "07212015",
-        		"othermanager@gmail.com", new ArrayList<List<String>>());
->>>>>>> refs/heads/masterMay31Reid
         Schedule.getInstance().receiveJob(foreignJob);        
         Schedule.getInstance().addVolunteerToJob(volunteer4Array, 4);
         
@@ -300,7 +264,6 @@ public class ParkManagerTest {
     @Test
     public void testGetNewJobIDOnDataFromSetup() {
         assertEquals(testManager.getNewJobID(), 3);
-<<<<<<< HEAD
 
         volunteerList = new ArrayList<>();
         Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "07252015", "07252015",
@@ -308,20 +271,6 @@ public class ParkManagerTest {
 
         //Show that the Job ID increments only after the new job is added.
         assertEquals(testManager.getNewJobID(), 3);
-=======
-    }
-    
-    /**
-     * Tests to ensure that a ParkManager can acquire the correct JobID for a new job.
-     */
-    @Test
-    public void testGetNewJobIDOnAddingNewJob() {
-    	volunteerList = new ArrayList<List<String>>();
-        Job testJob = new Job(3, "Test Park 1", 5, 5, 5, "07252015", "07252015",
-                "testmanager@gmail.com", volunteerList);
-        
-      //Show that the Job ID increments only after the new job is added.
->>>>>>> refs/heads/masterMay31Reid
         testManager.addJob(testJob);
         assertEquals(testManager.getNewJobID(), 4);
     }
@@ -345,13 +294,8 @@ public class ParkManagerTest {
         List<String> parkArray = new ArrayList<String>();
         parkArray.add("Foreign Park");
 
-<<<<<<< HEAD
         volunteerList = new ArrayList<>();
         Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "07252015", "07252015",
-=======
-        volunteerList = new ArrayList<List<String>>();
-        Job testJob = new Job(4, "Other Test Park", 5, 5, 5, "07252015", "07252015",
->>>>>>> refs/heads/masterMay31Reid
                                 "nottestmanager@gmail.com", volunteerList);
         Schedule.getInstance().receiveJob(testJob);
 
@@ -460,13 +404,8 @@ public class ParkManagerTest {
     public void testGetJobVolunteerListOnAccessingVolDetailsForJobsAtForeignParks() {
     	//Show that the ParkManager cannot access any details about Volunteers assigned to
         //Jobs in Parks that they do not manage.
-<<<<<<< HEAD
         Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "07202015", "07212015",
         		"othermanager@gmail.com", new ArrayList<>());
-=======
-        Job foreignJob = new Job(3, "Other Park", 15, 15, 15, "07202015", "07212015",
-        		"othermanager@gmail.com", new ArrayList<List<String>>());
->>>>>>> refs/heads/masterMay31Reid
         Schedule.getInstance().receiveJob(foreignJob);
         
         ArrayList<String> volunteer4Array = new ArrayList<String>();

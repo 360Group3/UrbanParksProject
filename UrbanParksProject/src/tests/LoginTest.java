@@ -29,31 +29,28 @@ public class LoginTest {
 
     @Test
     public void testRegisterUserOnInvalidUserInfo() {
-        myLogin.setUserInfoRegister(null, "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        myLogin.setUserInfoRegister(null, "Mimiru", "Tsukasa", "Volunteer");
         assertFalse(myLogin.registerUser());
         
-        myLogin.setUserInfoRegister("Foo", null, "Mimiru", "Tsukasa", "Volunteer");
-        assertFalse(myLogin.registerUser());
-        
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", null, "Tsukasa", "Volunteer");
+        myLogin.setUserInfoRegister("email@yo.com", null, "Tsukasa", "Volunteer");
         assertFalse(myLogin.registerUser());
 
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", null, "Volunteer");
+        myLogin.setUserInfoRegister("email@yo.com", "Mimiru", null, "Volunteer");
         assertFalse(myLogin.registerUser());
         
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", null);
+        myLogin.setUserInfoRegister("email@yo.com", "Mimiru", "Tsukasa", null);
         assertFalse(myLogin.registerUser());
     }
     
     @Test
     public void testRegisterUserOnValidUserInfo() {
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        myLogin.setUserInfoRegister("email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertTrue(myLogin.registerUser());
     }
 
     @Test
     public void testLoginUserOnUserNotInUserList() {
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        myLogin.setUserInfoRegister("email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertFalse(myLogin.loginUser());
     }
     
@@ -64,7 +61,7 @@ public class LoginTest {
         DataPollster.getInstance().setUserList(myUL);
         Schedule.getInstance().setUserList(myUL);
         
-        myLogin.setUserInfoRegister("Foo", "email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
+        myLogin.setUserInfoRegister("email@yo.com", "Mimiru", "Tsukasa", "Volunteer");
         assertTrue(myLogin.loginUser());
     }
     
