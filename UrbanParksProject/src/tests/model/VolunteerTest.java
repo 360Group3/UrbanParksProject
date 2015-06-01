@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tests;
+package tests.model;
 
 import static org.junit.Assert.assertEquals;
 
