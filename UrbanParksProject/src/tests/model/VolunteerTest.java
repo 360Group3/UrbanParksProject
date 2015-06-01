@@ -69,8 +69,6 @@ public class VolunteerTest {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", new ArrayList<>());
 		Job findSasuke = new Job(1, "Konoha", 2, 2, 0, "07032015", "07032015", "ten@uw.edu", new ArrayList<>());
 		
-		Job tradeForBlueEyesWhiteDragon = new Job(2, "Egypt", 0, 1, 0, "07112015", "07122015", "ten@uw.edu", new ArrayList<>());
-		
 		
 		//This part is necessary to create a job for todays date.
 		Calendar now = new GregorianCalendar();
@@ -85,19 +83,19 @@ public class VolunteerTest {
 		
 		String todaysDate3 = "0" + now.get(4) + "0" + now.get(5) + "" + now.get(1); //bad both
 		
-		Job catchMew;
+		Job tradeForBlueEyesWhiteDragon;
 		if (now.get(4) >= 10 && now.get(5) >= 10) { //everything good
 			//System.out.println(todaysDate0);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<>());
+			tradeForBlueEyesWhiteDragon = new Job(3, "Kento", 0, 5, 0, todaysDate0, todaysDate0, "ten@uw.edu", new ArrayList<>());
 		} else if (now.get(4) >= 10 && now.get(5) < 10) { //bad day
 			//System.out.println(todaysDate1);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<>());
+			tradeForBlueEyesWhiteDragon = new Job(3, "Kento", 0, 5, 0, todaysDate1, todaysDate1, "ten@uw.edu", new ArrayList<>());
 		} else if (now.get(4) < 10 && now.get(5) >= 10) { //bad month
 			//System.out.println(todaysDate2);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<>());
+			tradeForBlueEyesWhiteDragon = new Job(3, "Kento", 0, 5, 0, todaysDate2, todaysDate2, "ten@uw.edu", new ArrayList<>());
 		} else { //bad both
 			//System.out.println(todaysDate3);
-			catchMew = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<>());
+			tradeForBlueEyesWhiteDragon = new Job(3, "Kento", 0, 5, 0, todaysDate3, todaysDate3, "ten@uw.edu", new ArrayList<>());
 		}
 		
 		
