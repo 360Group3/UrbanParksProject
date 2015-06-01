@@ -82,7 +82,7 @@ public class Administrator extends User implements Serializable {
     
     
     /*================*
-     * Helper Classes *
+     * Helper Methods *
      *================*/
     
     //Sort the List of Volunteers by first name (ascending)
