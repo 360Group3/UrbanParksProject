@@ -73,7 +73,7 @@ public class AdministratorUI extends UI {
     /**
      * Prints the commands that the Administrator can select.
      */
-    public void listCommands() {
+    private void listCommands() {
         System.out.println("\n------------------------------------------\n"
                 + "Administrator Menu\n" + "\nWhat would you like to do?");
         System.out.println("1) List All Volunteers");
@@ -133,7 +133,7 @@ public class AdministratorUI extends UI {
      * 
      * @return a String of the last name of the Volunteer to search for.
      */
-    public String promptForVolsLastName() {
+    private String promptForVolsLastName() {
         System.out.print("Please enter the last name of the Volunteer to search for: ");
         String lastName = getUserString();
 

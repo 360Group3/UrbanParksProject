@@ -55,7 +55,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Display the possible commands that the user could type. 
 	 */
-	public void listCommands() {
+	private void listCommands() {
 		System.out.println("\n------------------------------------------\nPark Manager Menu\n\nWhat would you like to do?");
 		System.out.println("1) Create New Job");
 		System.out.println("2) View My Jobs");
@@ -72,7 +72,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Take an ArrayList of Jobs, parse them, and then display their information in the console.
 	 */
-	public void displayJobs() {
+	private void displayJobs() {
 		
 		List<Job> jobList = myManager.getJobs();
 		
@@ -106,7 +106,7 @@ public class ParkManagerUI extends UI {
 	 * View Job Volunteers *
 	 *=====================*/
 	
-	public void viewJobVolunteers() {
+	private void viewJobVolunteers() {
 		int jobID = getJobID();
 		List<Volunteer> volunteerList = myManager.getJobVolunteerList(jobID);
 		
@@ -123,7 +123,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Prompt the user to enter the ID of a Job, and then return it.
 	 */
-	public int getJobID() {
+	private int getJobID() {
 		System.out.println("------------------------------------------\n\n"
 				+ "Please input the ID of the job whose volunteers you would"
 				+ " like to view.");
@@ -134,7 +134,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Take a List of Volunteers, and display their information to the console.
 	 */
-	public void displayVolunteers(List<Volunteer> theVolunteerList) {
+	private void displayVolunteers(List<Volunteer> theVolunteerList) {
 		if (!theVolunteerList.isEmpty()) {
 			for(Volunteer volunteer : theVolunteerList) {
 				System.out.println("Name: " + volunteer.getFirstName() + " " + volunteer.getLastName());
@@ -150,7 +150,7 @@ public class ParkManagerUI extends UI {
 	 * Job Creation *
 	 *==============*/
 	
-	public void createNewJob() {
+	private void createNewJob() {
 		List<String> managedParks = new ArrayList<String>();
 		managedParks.addAll(myManager.getManagedParks());
 				
@@ -196,7 +196,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Request the user to select the appropriate park number.
 	 */
-	public void displayParkNumberRequest() {
+	private void displayParkNumberRequest() {
 		System.out.println("\n------------------------------------------\n"
 				+ "Please select the number preceding the park where the job is located.");
 	}
@@ -204,7 +204,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Display all of the parks that the Park Manager manages in the console.
 	 */
-	public void displayParks(List<String> myManagedParks) {
+	private void displayParks(List<String> myManagedParks) {
 		int i;
 		for(i = 0; i < myManagedParks.size(); i++) {
 			System.out.println(i + ") " + myManagedParks.get(i));
@@ -212,7 +212,7 @@ public class ParkManagerUI extends UI {
 		System.out.println(i + ") Add New Park...");
 	}
 	
-	public String createNewPark() {
+	private String createNewPark() {
 		System.out.println("\n------------------------------------------");
 		
 		System.out.println("What is the name of the park?");
@@ -225,7 +225,7 @@ public class ParkManagerUI extends UI {
 	 * Prompt the user to enter how many volunteers they want for light grade work, then
 	 * return it.
 	 */
-	public int getLightSlots() {		
+	private int getLightSlots() {		
 		System.out.println("\nHow many volunteers do you want for light grade work?");
 		int myLight = 0;
 		myLight = getUserInt();
@@ -236,7 +236,7 @@ public class ParkManagerUI extends UI {
 	 * Prompt the user to enter how many volunteers they want for medium grade work, then
 	 * return it.
 	 */
-	public int getMediumSlots() {		
+	private int getMediumSlots() {		
 		System.out.println("\nHow many volunteers do you want for medium grade work?");
 		int myMedium = getUserInt();
 		return myMedium;
@@ -246,7 +246,7 @@ public class ParkManagerUI extends UI {
 	 * Prompt the user to enter how many volunteers they want for heavy grade work, then
 	 * return it.
 	 */
-	public int getHeavySlots() {	
+	private int getHeavySlots() {	
 		System.out.println("\nHow many volunteers do you want for heavy grade work?");
 		int myHeavy = getUserInt();
 		return myHeavy;
@@ -256,7 +256,7 @@ public class ParkManagerUI extends UI {
 	 * Prompt the user to enter when they want to start the job, then return it.
 	 * @return The start date in format mmddyyyy
 	 */
-	public String getStartDate() {
+	private String getStartDate() {
 		System.out.println("Please enter the start date of the job in the following format:"
 				+ " mmddyyyy");
 		String myStartDate = getUserString();
@@ -267,7 +267,7 @@ public class ParkManagerUI extends UI {
 	 * Prompt the user to enter when they want to end the job, then return it.
 	 * @return The end date in format ddmmyyyy
 	 */
-	public String getEndDate() {
+	private String getEndDate() {
 		System.out.println("Please enter the end date of the job in the following format:"
 				+ " mmddyyyy");
 		String myEndDate = getUserString();
@@ -278,7 +278,7 @@ public class ParkManagerUI extends UI {
 	/**
 	 * Tell the user whether or not the job was successfully added.
 	 */
-	public void displayJobStatus(boolean addSuccess) {
+	private void displayJobStatus(boolean addSuccess) {
 		if(addSuccess){
 			System.out.println("Your job was successfully added!");
 		} else {
