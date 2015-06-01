@@ -83,4 +83,8 @@ public class Administrator extends User implements Serializable {
         Collections.sort(volunteerList);
         return volunteerList;
     }
+    
+    public List<Job> getVolunteerJobs(User v) {
+    	return DataPollster.getInstance().getVolunteerJobs(v.getEmail());
+    }
 }

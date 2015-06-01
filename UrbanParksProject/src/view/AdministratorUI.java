@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 
 import model.Administrator;
-import model.DataPollster;
 import model.Job;
 import model.User;
 
@@ -114,7 +113,7 @@ public class AdministratorUI extends UI {
             final User v = theMatchingVols.get(i);
             System.out.println(v.getFirstName() + " " + v.getLastName());
             System.out.println("Email: " + v.getEmail());
-            List<Job> jobs = DataPollster.getInstance().getVolunteerJobs(v.getEmail());
+            List<Job> jobs = myAdmin.getVolunteerJobs(v);
             if (!jobs.isEmpty()) {
                 System.out.println("Jobs signed up for: ");
                 for (int j = 0; j < jobs.size(); j++) {
