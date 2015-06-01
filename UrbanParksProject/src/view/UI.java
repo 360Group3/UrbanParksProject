@@ -54,4 +54,12 @@ public abstract class UI {
                 theCalendar.get(Calendar.YEAR);
         return returnString;
     }
+    
+    /**
+     * All UIs display this message when, inside their menu, an invalid command
+     * was entered by the User.
+     */
+    protected void displayInvalidCommandEntered() {
+    	System.out.println("Invalid command entered. Please try again.\n");
+    }
 }

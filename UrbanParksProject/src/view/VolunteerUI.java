@@ -101,7 +101,7 @@ public class VolunteerUI extends UI {
 			status = false; //return false if user wants to exit.
 			break;
 		default: 
-			System.out.println("You did not enter a valid number.");
+			displayInvalidCommandEntered();
 			break; //return true and prompt the user again.
 		}
 		

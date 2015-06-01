@@ -49,7 +49,7 @@ public class AdministratorUI extends UI {
         boolean stayLoggedIn = true;
 
         if (theChoice <= 0 || theChoice > 3) {
-            System.out.println("Invalid command selected. Please try again.\n");
+            displayInvalidCommandEntered();
         }
         else { // valid input was given
             switch (theChoice) { // no default case needed because of original

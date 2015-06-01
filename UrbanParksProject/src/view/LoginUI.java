@@ -68,7 +68,7 @@ public class LoginUI extends UI {
     			break;
     		}
     	} else { // invalid choice selected
-    		displayInvalidChoice();
+    		displayInvalidCommandEntered();
     		handleLoginAndReg();
     	}
     	// If the command or information entered was invalid, we try and try again.
@@ -183,7 +183,7 @@ public class LoginUI extends UI {
             case 3:
                 return "Administrator";
             default:
-                displayInvalidChoice();
+                displayInvalidCommandEntered();
                 return getUserType();
         }
     }
@@ -201,10 +201,6 @@ public class LoginUI extends UI {
     
     private void displayExit() {
         System.out.println("\n--End Program--");
-    }
-
-    private void displayInvalidChoice() {
-        System.out.println("\nSorry, but your choice was invalid.");
     }
 
     private void displayDuplicateEmailError() {

@@ -41,7 +41,7 @@ public class ParkManagerUI extends UI {
 			case 2: displayJobs(); break;
 			case 3: viewJobVolunteers(); break;
 			case 4: stayLoggedIn = false; break;
-			default: displayInvalidNumber(); break;
+			default: displayInvalidCommandEntered(); break;
 			}
 		}
 	}
@@ -283,12 +283,5 @@ public class ParkManagerUI extends UI {
 		} else {
 			System.out.println("Job not added...\nReturning to Park Manager Menu...");
 		}
-	}
-	
-	/**
-	 * Tell the user that they entered an invalid number.
-	 */
-	private void displayInvalidNumber() {
-		System.out.println("You did not enter a valid number.");
 	}
 }
