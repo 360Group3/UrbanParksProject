@@ -20,8 +20,8 @@ public class AdministratorUI extends UI {
     /**
      * Constructs an AdministratorUI object.
      * 
-     * @param theAdmin
-     *            the administrator
+     * @param theAdminEmail
+     *            the administrator's email
      */
 	public AdministratorUI(String theAdminEmail) {
 		super();
