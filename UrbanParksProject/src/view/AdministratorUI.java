@@ -61,7 +61,7 @@ public class AdministratorUI extends UI {
                     searchByLastName();
                     break;
                 case 3: // logout
-                    System.out.println("Logging out now.\n");
+                    displayLogoutMessage();
                     stayLoggedIn = false;
                     break;
             }

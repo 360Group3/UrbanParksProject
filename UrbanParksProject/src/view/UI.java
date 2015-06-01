@@ -62,4 +62,11 @@ public abstract class UI {
     protected void displayInvalidCommandEntered() {
     	System.out.println("Invalid command entered. Please try again.\n");
     }
+    
+    /**
+     * All UIs display this message when the user selects to logout of their menu.
+     */
+    protected void displayLogoutMessage() {
+    	System.out.println("Logging out now.\n");
+    }
 }

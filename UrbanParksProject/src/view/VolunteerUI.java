@@ -99,6 +99,7 @@ public class VolunteerUI extends UI {
 		case "quit":
 		case "4":
 			status = false; //return false if user wants to exit.
+			displayLogoutMessage();
 			break;
 		default: 
 			displayInvalidCommandEntered();
