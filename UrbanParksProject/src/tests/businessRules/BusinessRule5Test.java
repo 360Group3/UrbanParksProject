@@ -64,6 +64,14 @@ public class BusinessRule5Test {
 		Job defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07122015", "07122015", "ten@uw.edu", 
 				new ArrayList<List<String>>());
 		assertTrue(new BusinessRule5().futureTest(defeatFrieza));
+		
+        defeatFrieza = new Job(0, "Namek", 0, 1, 5, "07312015", "07312015", "ten@uw.edu", 
+                new ArrayList<List<String>>());
+        assertTrue(new BusinessRule5().futureTest(defeatFrieza));
+        
+        defeatFrieza = new Job(0, "Namek", 0, 1, 5, "08012015", "08012015", "ten@uw.edu", 
+                new ArrayList<List<String>>());
+        assertTrue(new BusinessRule5().futureTest(defeatFrieza));
 	}
 	
 	/**

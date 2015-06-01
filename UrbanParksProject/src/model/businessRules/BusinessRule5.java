@@ -33,12 +33,8 @@ public class BusinessRule5 {
 	 */
 	public boolean futureTest(Job theJob) {
         Calendar then = new GregorianCalendar();
-        then.add(Calendar.DAY_OF_MONTH, 90);
+        then.add(Calendar.MONTH, 3);
         
-		if (theJob.getStartDate().after(then)) {
-			return false;
-		}
-		
-		return true;
+        return theJob.getStartDate().before(then);
 	}
 }
