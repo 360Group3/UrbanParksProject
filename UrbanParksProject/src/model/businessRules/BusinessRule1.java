@@ -13,6 +13,6 @@ public class BusinessRule1 {
     public static final int MAX_JOBS = 30;
 
     public boolean test(JobList theJobList) {
-        return theJobList.getNumberOfJobs() <= MAX_JOBS;
+        return theJobList.getNumberOfPendingJobs() <= MAX_JOBS;
     }
 }
